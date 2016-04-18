@@ -8,7 +8,7 @@ var resultsData = RESULT_DATA;
 
 module.exports = function(app) {
 
-	app.get('/api/helloworld', function(req, res) {
+	app.get('/api/results', function(req, res) {
 
 		var result = {
 			results: [ ]
