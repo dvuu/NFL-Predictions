@@ -1,10 +1,30 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta charset="UTF-8">
+		<link href="index.css" rel="stylesheet" type="text/css">
 		<script type="text/javascript" src="./ext/jquery-1.12.3.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js"></script>
+    	<script type="text/javascript" src="./ext/plotly-latest.min.js"></script>
 		<script type="text/javascript" src="index.js"></script>
+		<script type="text/javascript" src="chart.js"></script>
+		<title>NFL Predictions</title>
 	</head>
 	<body>
-		<h1>Hello World!</h1>
+		<div>
+			<h1>NFL Predictions 2011-2015</h1>
+		</div>
+		<div class="nav">
+			<div class="gamesDropdown dropdown">
+				<p>Games</p>
+				<div class="dropdown-content">
+					<!-- list of games -->
+				</div>
+			</div>
+		</div>
+		<div id="chart">
+			<!-- chart -->
+		</div>
 	</body>
 </html>
