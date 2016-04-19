@@ -30,18 +30,16 @@ module.exports = function(app) {
 				obj.playId = RESULT_DATA[i].pid;	
 				obj.time = RESULT_DATA[i].Seconds;
 				obj.type = RESULT_DATA[i].type;
-				if (RESULT_DATA[i].v !== RESULT_DATA[i].off) {
-					obj.homePrediction = RESULT_DATA[i].OffWinPred;
-				}
-				else{
-					obj.homePrediction = (1 - RESULT_DATA[i].OffWinPred);
-				}
-				if (RESULT_DATA[i].v == RESULT_DATA[i].off) {
-					obj.visitorPrediction = RESULT_DATA[i].OffWinPred;
-				}
-				else{
-					obj.visitorPrediction = (1 - RESULT_DATA[i].OffWinPred);
-				}
+				obj.homeWp = (1 - RESULT_DATA[i].VisitorWP);
+				obj.visitorWp = RESULT_DATA[i].VisitorWP;
+				// if (RESULT_DATA[i].v !== RESULT_DATA[i].off) {
+				// 	obj.homePrediction = RESULT_DATA[i].OffWinPred;
+				// 	obj.visitorPrediction = (1 - RESULT_DATA[i].OffWinPred);
+				// }
+				// else{
+				// 	obj.homePrediction = (1 - RESULT_DATA[i].OffWinPred);
+				// 	obj.visitorPrediction = RESULT_DATA[i].OffWinPred;
+				// }
 				plays.push(obj);
 			}
 		}
