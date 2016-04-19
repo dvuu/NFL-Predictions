@@ -4,9 +4,19 @@ var RESULT_DATA = JSON.parse(fs.readFileSync('../data/results.json'));
 var _ = require('underscore');
 var url = require('url');
 
-function games() {
+// function filterGames(minGameId) {
+// 	var i = 0;
+// 	while (i < minGameId) {
+// 		GAME_DATA.shift();
+// 		++i;
+// 	}
+// }
+// filterGames(2980);
+
+// grabs basic information from all games
+function allGames() {
 	var result = [ ];
-	for (var i = 0; i < GAME_DATA.length; i++) {
+	for (var i = 2980; i < GAME_DATA.length; ++i) {
 		var obj = {
 			gameId: GAME_DATA[i].gid,
 			season: GAME_DATA[i].seas,
@@ -18,50 +28,63 @@ function games() {
 	}
 	return result;
 };
+var ALL_GAMES = allGames();
 
 module.exports = function(app) {
 
-	// Returns list of all games
+	// Returns list of all games.
 	app.get('/api/games', function(req, res) {
 		console.log("Client requested list of all games...");
-		var result = games();
 		res.writeHead(200,{'Content-Type': 'application/json'});
-	    res.end(JSON.stringify(result));
+	    res.end(JSON.stringify(ALL_GAMES));
 	});
-	// Return list of games from a season
-	app.get('/api/gamesBySeason/:seas', function(req, res) {
-		var season = req.params.seas;
+
+	// Return list of games from a season.
+	app.get('/api/gamesBySeason/:season', function(req, res) {
+		var season = req.params.season;
 		console.log("Client requested list of all games from season: " + season + "...");
-		var allGames = games();
 		var result = [ ];
-		for (var i = 0; i < allGames.length; i++) {
-		 	if(allGames[i].season == season){
-		 		result.push(allGames[i]);
+		for (var i = 0; i < ALL_GAMES.length; ++i) {
+		 	if(ALL_GAMES[i].season == season){
+		 		result.push(ALL_GAMES[i]);
 		 	}
 	 	}
 		res.writeHead(200,{'Content-Type': 'application/json'});
     	res.end(JSON.stringify(result));
     });
 
-	app.get('/api/gamesByWeek/:seas/:week', function(req, res) {
-		var season = req.params.seas;
+	// Return list of all games from a week of a season.
+	app.get('/api/gamesByWeek/:season/:week', function(req, res) {
+		var season = req.params.season;
 		var week = req.params.week;
+		console.log("Client requested list of all games from season: " + season + ": Week " + week + "...");
+		var result = [ ];
+		for (var i = 0; i < ALL_GAMES.length; ++i) {
+		 	if(ALL_GAMES[i].season == season && ALL_GAMES[i].week == week){
+		 		result.push(ALL_GAMES[i]);
+		 	}
+	 	}
+
 
 		res.writeHead(200,{'Content-Type': 'application/json'});
-        res.end(JSON.stringify(plays));
+        res.end(JSON.stringify(result));
     });
 
-	app.get('/api/plays/:gid', function(req, res) {
-		var gameId = req.params.gid;
+	//
+	app.get('/api/plays/:gameId', function(req, res) {
+		var gameId = req.params.gameId;
 		var plays = [ ];
-		for (var i = 0; i < RESULT_DATA.length; i++) {
+		for (var i = 0; i < RESULT_DATA.length; ++i) {
 			if (gameId == RESULT_DATA[i].gid) {
-				var obj = {};
-				obj.playId = RESULT_DATA[i].pid;	
-				obj.time = RESULT_DATA[i].Seconds;
-				obj.type = RESULT_DATA[i].type;
-				obj.homeWp = (1 - RESULT_DATA[i].VisitorWP);
-				obj.visitorWp = RESULT_DATA[i].VisitorWP;
+				var obj = {
+					playId: RESULT_DATA[i].pid,
+					time: RESULT_DATA[i].Seconds,
+					type: RESULT_DATA[i].type,
+					homeWp: (1 - RESULT_DATA[i].VisitorWP),
+					visitorWp: RESULT_DATA[i].VisitorWP
+				};
+
+				// Solution 1: didn't know about visitorWP
 				// if (RESULT_DATA[i].v !== RESULT_DATA[i].off) {
 				// 	obj.homePrediction = RESULT_DATA[i].OffWinPred;
 				// 	obj.visitorPrediction = (1 - RESULT_DATA[i].OffWinPred);
