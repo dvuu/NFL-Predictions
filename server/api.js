@@ -28,7 +28,7 @@ module.exports = function(app) {
 			if (gameId == RESULT_DATA[i].gid) {
 				var obj = {};
 				obj.playId = RESULT_DATA[i].pid;	
-				obj.time = RESULT_DATA[i].seconds;
+				obj.time = RESULT_DATA[i].Seconds;
 				obj.type = RESULT_DATA[i].type;
 				if (RESULT_DATA[i].v !== RESULT_DATA[i].off) {
 					obj.homePrediction = RESULT_DATA[i].OffWinPred;
