@@ -1,64 +1,69 @@
-var rawDataURL = 'https://raw.githubusercontent.com/plotly/datasets/master/2016-weather-data-seattle.csv';
-var xField = 'Date';
-var yField = 'Mean_TemperatureC';
+// look at game 3987
 
-var selectorOptions = {
-    buttons: [{
-        step: 'month',
-        stepmode: 'backward',
-        count: 1,
-        label: '1m'
-    }, {
-        step: 'month',
-        stepmode: 'backward',
-        count: 6,
-        label: '6m'
-    }, {
-        step: 'year',
-        stepmode: 'todate',
-        count: 1,
-        label: 'YTD'
-    }, {
-        step: 'year',
-        stepmode: 'backward',
-        count: 1,
-        label: '1y'
-    }, {
-        step: 'all',
-    }],
-};
+$.ajax({ url: '/api/plays/3987', success: function(result) {
+    var playSeries = {
+        x: [ ],
+        y: [ ],
+        mode: 'lines',
+        type: 'scatter',
 
-Plotly.d3.csv(rawDataURL, function(err, rawData) {
-    if(err) throw err;
-
-    var data = prepData(rawData);
-    var layout = {
-        title: 'Time series with range slider and selectors',
-        xaxis: {
-            rangeselector: selectorOptions,
-            rangeslider: {}
-        },
-        yaxis: {
-            fixedrange: true
-        }
     };
 
-    Plotly.plot('chart', data, layout);
-});
+    // var trace2 = {
+    //     x: [0, 100],
+    //     y: [0, 1],
+    //     mode: 'lines',
+    //     type: 'scatter'
+    // };
 
-function prepData(rawData) {
-    var x = [];
-    var y = [];
+    _.each(result, function(play) {
+        playSeries.x.push(play.time);
+        playSeries.y.push(play.homeWp);
+    })
 
-    rawData.forEach(function(datum, i) {
+    var layout = {
+        xaxis: {
+            autorange: 'reversed'
+        },
+        yaxis: {
+            range: [0, 1]
+        }
+    }
 
-        x.push(new Date(datum[xField]));
-        y.push(datum[yField]);
-    });
+    var data = [playSeries];
 
-    return [{
-        mode: 'lines',
-        x: x,
-        y: y
-    }];
-}
+    Plotly.newPlot('chart', data, layout);
+}});
+
+
+
+
+    // var selectorOptions = {
+    //     buttons: [{
+    //         step: 'month',
+    //         stepmode: 'backward',
+    //         count: 1,
+    //         label: '1m'
+    //     },
+    //     {
+    //         step: 'month',
+    //         stepmode: 'backward',
+    //         count: 6,
+    //         label: '6m'
+    //     },
+    //     {
+    //         step: 'year',
+    //         stepmode: 'todate',
+    //         count: 1,
+    //         label: 'YTD'
+    //     },
+    //     {
+    //         step: 'year',
+    //         stepmode: 'backward',
+    //         count: 1,
+    //         label: '1y'
+    //     },
+    //     {
+    //         step: 'all',
+    //     }],
+    // };
