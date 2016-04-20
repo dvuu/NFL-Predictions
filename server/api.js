@@ -22,7 +22,7 @@ function allGames() {
 			season: GAME_DATA[i].seas,
 			home: GAME_DATA[i].h,
 			visitor: GAME_DATA[i].v,
-			week: GAME_DATA[i].wk
+			week: GAME_DATA[i].wk,
 		};
 		result.push(obj);
 	}
@@ -40,7 +40,7 @@ module.exports = function(app) {
 	});
 
 	// Return list of games from a season.
-	app.get('/api/gamesBySeason/:season', function(req, res) {
+	app.get('/api/games/:season', function(req, res) {
 		var season = req.params.season;
 		console.log("Client requested list of all games from season: " + season + "...");
 		var result = [ ];
@@ -54,7 +54,7 @@ module.exports = function(app) {
     });
 
 	// Return list of all games from a week of a season.
-	app.get('/api/gamesByWeek/:season/:week', function(req, res) {
+	app.get('/api/games/:season/:week', function(req, res) {
 		var season = req.params.season;
 		var week = req.params.week;
 		console.log("Client requested list of all games from season: " + season + ": Week " + week + "...");
@@ -64,8 +64,21 @@ module.exports = function(app) {
 		 		result.push(ALL_GAMES[i]);
 		 	}
 	 	}
+		res.writeHead(200,{'Content-Type': 'application/json'});
+        res.end(JSON.stringify(result));
+    });
 
+/**/
 
+	app.get('/api/gamesByTeam/:teamAbbreviation', function(req, res) {
+		var team = req.params.teamAbbreviation;
+		console.log("Client requested list of all games from the selected team: " + team + "...");
+		var result = [ ];
+		for (var i = 0; i < ALL_GAMES.length; ++i) {
+		 	if(ALL_GAMES[i].visitor == team || ALL_GAMES[i].home == team){
+		 		result.push(ALL_GAMES[i]);
+		 	}
+	 	}
 		res.writeHead(200,{'Content-Type': 'application/json'});
         res.end(JSON.stringify(result));
     });
@@ -77,6 +90,7 @@ module.exports = function(app) {
 		for (var i = 0; i < RESULT_DATA.length; ++i) {
 			if (gameId == RESULT_DATA[i].gid) {
 				var obj = {
+					gameId: RESULT_DATA[i].gid,
 					playId: RESULT_DATA[i].pid,
 					time: RESULT_DATA[i].Seconds,
 					type: RESULT_DATA[i].type,
@@ -93,6 +107,37 @@ module.exports = function(app) {
 				// 	obj.homePrediction = (1 - RESULT_DATA[i].OffWinPred);
 				// 	obj.visitorPrediction = RESULT_DATA[i].OffWinPred;
 				// }
+				plays.push(obj);
+			}
+		}
+		res.writeHead(200,{'Content-Type': 'application/json'});
+        res.end(JSON.stringify(plays));
+    });
+
+// Grabs games by quarter where quarter is time left in seconds (e.g 3600 -> 2700 seconds = 1st quarter)
+    app.get('/api/plays/:gameId/:quarter', function(req, res) {
+		var gameId = req.params.gameId;
+		var quarter =req.params.quarter;
+		var plays = [ ];
+		var quarterStart = undefined;
+		var quarterEnd = (3600 - (quarter * 900));
+		if (quarter == 1) {
+			quarterStart = 3600;
+		}
+		else{
+			quarterStart = (3600 - (900 * (quarter-1)));
+		}
+		for (var i = 0; i < RESULT_DATA.length; ++i) {
+			var play = RESULT_DATA[i];
+			if (gameId == play.gid && play.Seconds <= quarterStart && play.Seconds > quarterEnd) {
+				var obj = {
+					gameId: play.gid,
+					playId: play.pid,
+					time: play.Seconds,
+					type: play.type,
+					homeWp: (1 - play.VisitorWP),
+					visitorWp: play.VisitorWP
+				};
 				plays.push(obj);
 			}
 		}
