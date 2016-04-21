@@ -14,7 +14,7 @@ function buildChartFromData(result, title) {
     //     y: [0, 1],
     //     mode: 'lines',
     //     type: 'scatter'
-    // };
+    // };,
 
     _.each(result, function(play) {
         playSeries.x.push(play.time);
@@ -25,11 +25,14 @@ function buildChartFromData(result, title) {
         title: title,
         xaxis: {
             title: 'Game time left',
-            autorange: 'reversed'
+            range: [3700, 0], // add padding so the labels aren't slammed against the axes
+            dtick: 900,
+            zeroline: false
+
         },
         yaxis: {
             title: 'Prediction',
-            range: [0, 1]
+            range: [-0.1, 1], // add padding so the labels aren't slammed against the axes
         }
     };
 
