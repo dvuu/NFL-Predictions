@@ -16,7 +16,7 @@ function buildChartFromData(result, title, homeTeam) {
         title: title,
         xaxis: {
             title: 'Game time left',
-            range: [3700, 0], // add padding so the labels aren't slammed against the axes
+            range: [3700, -500], // add padding so the labels aren't slammed against the axes
             dtick: 900,
             zeroline: false
         },

@@ -22,13 +22,48 @@ function allGames() {
 			season: GAME_DATA[i].seas,
 			home: GAME_DATA[i].h,
 			visitor: GAME_DATA[i].v,
-			week: GAME_DATA[i].wk,
+			week: GAME_DATA[i].wk
 		};
 		result.push(obj);
 	}
 	return result;
 };
 var ALL_GAMES = allGames();
+
+
+//change JSON to have overtime.
+function fixSecondsForOvertime(plays) {
+	var	result = [ ];
+	var hitOT = false;
+	for (var i = 0; i < plays.length; ++i) {
+		var isNotFirstPlay = (i !== 0);
+		var isOutOfOrder = (isNotFirstPlay && (plays[i - 1].time < plays[i].time));
+		if (isOutOfOrder)
+			hitOT = true;
+		if (hitOT) {
+			var obj = {
+				gameId: plays[i].gameId,
+				playId: plays[i].playId,
+				time:  (plays[i].time) - 900,
+				type: plays[i].type,
+				homeWp: plays[i].homeWp,
+				visitorWp: plays[i].visitorWp
+			}
+		}
+		else {
+			var obj = {
+				gameId: plays[i].gameId,
+				playId: plays[i].playId,
+				time:  plays[i].time,
+				type: plays[i].type,
+				homeWp: plays[i].homeWp,
+				visitorWp: plays[i].visitorWp
+			}
+		}
+		result.push(obj);
+	}
+	return result;
+}
 
 module.exports = function(app) {
 
@@ -98,7 +133,6 @@ module.exports = function(app) {
 					homeWp: (1 - RESULT_DATA[i].VisitorWP),
 					visitorWp: RESULT_DATA[i].VisitorWP
 				};
-
 				// Solution 1: didn't know about visitorWP
 				// if (RESULT_DATA[i].v !== RESULT_DATA[i].off) {
 				// 	obj.homePrediction = RESULT_DATA[i].OffWinPred;
@@ -111,6 +145,7 @@ module.exports = function(app) {
 				plays.push(obj);
 			}
 		}
+		plays = fixSecondsForOvertime(plays);
 		res.writeHead(200,{'Content-Type': 'application/json'});
         res.end(JSON.stringify(plays));
     });
