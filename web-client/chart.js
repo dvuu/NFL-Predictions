@@ -16,13 +16,18 @@ function buildChartFromData(result, title, homeTeam) {
         title: title,
         xaxis: {
             title: 'Game time left',
-            autorange: 'reversed'
+            range: [3700, 0], // add padding so the labels aren't slammed against the axes
+            dtick: 900,
+            zeroline: false
         },
         yaxis: {
             title: homeTeam + ' Win Probability',
             range: [0, 1]
         },
-        showLegend: true
+        showLegend: true,
+            title: 'Prediction',
+            range: [-0.1, 1], // add padding so the labels aren't slammed against the axes
+        }
     };
     var data = [playSeries];
     Plotly.newPlot('chart', data, layout, {displayModeBar: false});
