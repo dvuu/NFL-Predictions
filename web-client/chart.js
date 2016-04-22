@@ -11,7 +11,7 @@ function buildChartFromData(result, title, homeTeam) {
     _.each(result, function(play) {
         playSeries.x.push(play.time);
         playSeries.y.push(play.homeWp);
-    })
+    });
     var layout = {
         title: title,
         xaxis: {
@@ -25,14 +25,11 @@ function buildChartFromData(result, title, homeTeam) {
             range: [0, 1]
         },
         showLegend: true,
-            title: 'Prediction',
-            range: [-0.1, 1], // add padding so the labels aren't slammed against the axes
-        }
-    };
+        range: [-0.1, 1], // add padding so the labels aren't slammed against the axes
+    }
     var data = [playSeries];
     Plotly.newPlot('chart', data, layout, {displayModeBar: false});
 }
-
 
 
 

@@ -86,6 +86,7 @@ module.exports = function(app) {
 	//
 	app.get('/api/plays/:gameId', function(req, res) {
 		var gameId = req.params.gameId;
+		console.log("Client requested plays from " + gameId + "...");
 		var plays = [ ];
 		for (var i = 0; i < RESULT_DATA.length; ++i) {
 			if (gameId == RESULT_DATA[i].gid) {
