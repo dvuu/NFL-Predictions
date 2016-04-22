@@ -9,6 +9,11 @@ function fetchAndDisplayPlays(url, title, homeTeam) {
 	}});
 }
 
+function buildSeasonsFilter() {
+	$('.seasonsDropdown .dropdown-content').empty();
+	var seasons = [2011, 2012, 2013, 2014, 2015];
+}
+
 function buildGamesFilter() {
 	$('.gamesDropdown .dropdown-content').empty();
 	$.ajax({ url: '/api/games', success: function(result) {
@@ -28,3 +33,8 @@ function buildGamesFilter() {
 		console.log('error');
 	}});
 }
+
+
+
+
+

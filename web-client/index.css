@@ -8,6 +8,7 @@ body {
 }
 
 .title h1 {
+	color: #1798C1;
 	margin-left: 20px;
 }
 
@@ -36,7 +37,7 @@ body {
 	color: #aaaaaa;
 	display: none;
 	position: absolute;
-	min-width: 310px;
+	min-width: 240px;
 	max-height: 200px;
 	z-index: inherit;
 	overflow-y: scroll;
