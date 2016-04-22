@@ -36,7 +36,7 @@ body {
 	color: #aaaaaa;
 	display: none;
 	position: absolute;
-	min-width: 300px;
+	min-width: 310px;
 	max-height: 200px;
 	z-index: inherit;
 	overflow-y: scroll;

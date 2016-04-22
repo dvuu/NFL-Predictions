@@ -1,6 +1,6 @@
 // look at game 3987
 
-function buildChartFromData(result, title) {
+function buildChartFromData(result, title, homeTeam) {
     var playSeries = {
         x: [ ],
         y: [ ],
@@ -8,19 +8,10 @@ function buildChartFromData(result, title) {
         type: 'scatter',
 
     };
-
-    // var trace2 = {
-    //     x: [0, 100],
-    //     y: [0, 1],
-    //     mode: 'lines',
-    //     type: 'scatter'
-    // };
-
     _.each(result, function(play) {
         playSeries.x.push(play.time);
         playSeries.y.push(play.homeWp);
     })
-
     var layout = {
         title: title,
         xaxis: {
@@ -28,14 +19,13 @@ function buildChartFromData(result, title) {
             autorange: 'reversed'
         },
         yaxis: {
-            title: 'Prediction',
+            title: homeTeam + ' Win Probability',
             range: [0, 1]
-        }
+        },
+        showLegend: true
     };
-
     var data = [playSeries];
-
-    Plotly.newPlot('chart', data, layout);
+    Plotly.newPlot('chart', data, layout, {displayModeBar: false});
 }
 
 
