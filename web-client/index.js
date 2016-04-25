@@ -12,7 +12,6 @@ $(document).ready(function() {
 function parseQueryString() {
 	var queryString = window.location.search;
 	var queryParam = queryString.substr(5, 4);
-	console.log(queryParam);
 	var url = '/api/plays/' + queryParam;
 	$.ajax({ url: '/api/games', success: function(result) {
 		for (var i = 0; i < result.length; ++i) {
@@ -29,7 +28,6 @@ function parseQueryString() {
 function fetchAndDisplayPlays(url, title, homeTeam) {
 	$.ajax({ url: url, success: function(result) {
 		var lastPlay = result[result.length-1].time;
-		console.log(lastPlay);
 		buildChartFromData(result, title, lastPlay, homeTeam);
 	}});
 }
