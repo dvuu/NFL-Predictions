@@ -1,6 +1,6 @@
 // look at game 3987
 
-function buildChartFromData(plays, title, homeTeam) {
+function buildChartFromData(plays, title, lastPlay, homeTeam) {
     var playSeries = {
         x: [ ],
         y: [ ],
@@ -16,7 +16,7 @@ function buildChartFromData(plays, title, homeTeam) {
         title: title,
         xaxis: {
             title: 'Game time left',
-            range: [3700, -500], // add padding so the labels aren't slammed against the axes
+            range: [3700, (lastPlay + -100)], // add padding so the labels aren't slammed against the axes
             dtick: 900,
             zeroline: false
         },
