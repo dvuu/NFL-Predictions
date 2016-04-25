@@ -11,20 +11,14 @@ function fetchAndDisplayPlays(url, title, homeTeam) {
 }
 
 function buildSeasonsFilter() {
-	$('.seasonDropdown .dropdown-content').empty();
-	var results = [
-		{year: 2011},
-		{year: 2012},
-		{year: 2013},
-		{year: 2014},
-		{year: 2015}
-	];
-	_.each(results, function(season) {
+	$('.seasonsDropdown .dropdown-content').empty();
+	var results = [2011,2012,2013,2014,2015];
+	for (var i = 0; i < results.length; ++i) {
 		var $listItem = $('<a class="links"></a>');
-		var $div = $('<div><span>' + season.year + '</span></div>');
+		var $div = $('<div><span>' + results[i] + '</span></div>');
 		$listItem.append($div);
-		$('.seasonDropdown .dropdown-content').append($listItem);
-	});
+		$('.seasonsDropdown .dropdown-content').append($listItem);
+	};
 }
 
 function buildGamesFilter() {
@@ -32,7 +26,7 @@ function buildGamesFilter() {
 	$.ajax({ url: '/api/games', success: function(result) {
 		_.each(result, function(game) {
 			var gameTitle = game.season + ' - Week ' + game.week 
-				+ ': ' + game.home + ' @ ' + game.visitor;
+				+ ': ' + game.visitor + ' @ ' + game.home;
 			var $listItem = $('<a class="links"></a>');
 			var $div = $('<div><span>' + gameTitle + '</span></div>');
 			$listItem.append($div);
