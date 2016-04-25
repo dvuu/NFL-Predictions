@@ -1,6 +1,6 @@
 // look at game 3987
 
-function buildChartFromData(result, title, homeTeam) {
+function buildChartFromData(plays, title, homeTeam) {
     var playSeries = {
         x: [ ],
         y: [ ],
@@ -8,7 +8,7 @@ function buildChartFromData(result, title, homeTeam) {
         type: 'scatter',
 
     };
-    _.each(result, function(play) {
+    _.each(plays, function(play) {
         playSeries.x.push(play.time);
         playSeries.y.push(play.homeWp);
     });

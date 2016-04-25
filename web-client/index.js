@@ -1,8 +1,30 @@
 $(document).ready(function() {
+	buildSeasonsFilter();
+	buildWeeksFilter();
 	buildGamesFilter();
 	buildChartFromData();
-	buildSeasonsFilter();
+	parseQueryString();
+	window.addEventListener('popstate', function(e) {
+		parseQueryString();
+	});
 });
+
+function parseQueryString() {
+	var queryString = window.location.search;
+	var queryParam = queryString.substr(5, 4);
+	console.log(queryParam);
+	var url = '/api/plays/' + queryParam;
+	$.ajax({ url: '/api/games', success: function(result) {
+		for (var i = 0; i < result.length; ++i) {
+			if (queryParam == result[i].gameId) {
+				var gameTitle = result[i].season + ' - Week ' + result[i].week 
+				+ ': ' + result[i].visitor + ' @ ' + result[i].home; 
+				var homeTeam = result[i].home;
+			}
+		}
+		fetchAndDisplayPlays(url, gameTitle, homeTeam);
+	}});
+}	
 
 function fetchAndDisplayPlays(url, title, homeTeam) {
 	$.ajax({ url: url, success: function(result) {
@@ -12,13 +34,24 @@ function fetchAndDisplayPlays(url, title, homeTeam) {
 
 function buildSeasonsFilter() {
 	$('.seasonsDropdown .dropdown-content').empty();
-	var results = [2011,2012,2013,2014,2015];
+	var results = [2011, 2012, 2013, 2014, 2015];
 	for (var i = 0; i < results.length; ++i) {
 		var $listItem = $('<a class="links"></a>');
-		var $div = $('<div><span>' + results[i] + '</span></div>');
+		var $div = $('<div><span>' + 'Season: ' + results[i] + '</span></div>');
 		$listItem.append($div);
 		$('.seasonsDropdown .dropdown-content').append($listItem);
-	};
+	}
+}
+
+function buildWeeksFilter() {
+	$('.weeksDropdown .dropdown-content').empty();
+	var results = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
+	for (var i = 0; i < results.length; ++i) {
+		var $listItem = $('<a class="links"></a>');
+		var $div = $('<div><span>' + 'Week: ' + results[i] + '</span></div>');
+		$listItem.append($div);
+		$('.weeksDropdown .dropdown-content').append($listItem);
+	}
 }
 
 function buildGamesFilter() {
@@ -31,6 +64,7 @@ function buildGamesFilter() {
 			var $div = $('<div><span>' + gameTitle + '</span></div>');
 			$listItem.append($div);
 			$listItem.click(function(e) {
+				history.pushState(null, null, '/?gid=' + game.gameId);
 				var playUrl = '/api/plays/' + game.gameId;
 				fetchAndDisplayPlays(playUrl, gameTitle, game.home);
 			});
