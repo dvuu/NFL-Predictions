@@ -1,6 +1,7 @@
 $(document).ready(function() {
 	buildGamesFilter();
 	buildChartFromData();
+	buildSeasonsFilter();
 });
 
 function fetchAndDisplayPlays(url, title, homeTeam) {
@@ -10,8 +11,20 @@ function fetchAndDisplayPlays(url, title, homeTeam) {
 }
 
 function buildSeasonsFilter() {
-	$('.seasonsDropdown .dropdown-content').empty();
-	var seasons = [2011, 2012, 2013, 2014, 2015];
+	$('.seasonDropdown .dropdown-content').empty();
+	var results = [
+		{year: 2011},
+		{year: 2012},
+		{year: 2013},
+		{year: 2014},
+		{year: 2015}
+	];
+	_.each(results, function(season) {
+		var $listItem = $('<a class="links"></a>');
+		var $div = $('<div><span>' + season.year + '</span></div>');
+		$listItem.append($div);
+		$('.seasonDropdown .dropdown-content').append($listItem);
+	});
 }
 
 function buildGamesFilter() {
