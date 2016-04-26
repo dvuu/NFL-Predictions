@@ -28,7 +28,7 @@ function renderFromQueryString() {
 				setSelectedWeekText(result[i].week);
 				setSelectedGameText(gameTitle(result[i]));
 				buildGamesFilter(result[i].season, result[i].week);
-				fetchAndDisplayPlays(url, gameTitle(result[i]), result[i].home);
+				fetchAndDisplayPlays(url, chartTitle(result[i]), result[i].home);
 				break;
 			}
 		}
@@ -56,7 +56,7 @@ function fetchAndDisplayPlays(url, title, homeTeam) {
 
 function buildSeasonsFilter() {
 	$('.seasonsDropdown .dropdown-content').empty();
-	var results = [2011, 2012, 2013, 2014, 2015];
+	var results = [2012, 2013, 2014, 2015];
 	_.each(results, function(season) {
 		var $listItem = $('<a class="links"></a>');
 		var $div = $('<div><span>' + season + '</span></div>');

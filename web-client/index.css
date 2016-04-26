@@ -23,6 +23,7 @@ nav {
 	position: relative;
 	display: inline-block;
 	cursor: pointer;
+	min-width: 60px;
 }
 
 .category {
@@ -35,8 +36,9 @@ nav {
 
 .dropdown p {
 	color: white;
-	padding-left: 20px;
-	padding-right: 20px;
+	padding-right: 10px;
+	padding-left: 10px;
+	text-align: center;
 }
 
 .dropdown-content {
@@ -55,12 +57,21 @@ nav {
 }
 
 .season-content {
-	min-width: 50px;
+	min-width: 60px;
 	padding-bottom: 5px;
 }
 
 .week-content {
-	min-width: 60px;
+	min-width: 75px;
+}
+
+.game-content {
+	min-width: 115px;
+}
+
+.game-content .links div {
+	padding-left: 10px;
+	text-align: left;
 }
 
 .dropdown-content a div:hover {
