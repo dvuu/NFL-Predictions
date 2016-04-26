@@ -6,9 +6,11 @@ function buildChartFromData(plays, title, lastPlay, homeTeam) {
         y: [ ],
         mode: 'lines',
         type: 'scatter',
-
+        text: [ ]
     };
     _.each(plays, function(play) {
+        var string = 'Play: ' + play.type;
+        playSeries.text.push(string);
         playSeries.x.push(play.time);
         playSeries.y.push(play.homeWp);
     });
