@@ -16,7 +16,7 @@ var url = require('url');
 // grabs basic information from all games
 function allGames() {
 	var result = [ ];
-	for (var i = 2980; i < GAME_DATA.length; ++i) {
+	for (var i = 3189; i < GAME_DATA.length; ++i) {
 		var obj = {
 			gameId: GAME_DATA[i].gid,
 			season: GAME_DATA[i].seas,
