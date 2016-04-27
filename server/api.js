@@ -75,6 +75,26 @@ function fixSecondsForOvertime(plays) {
 	return result;
 }
 
+function getPlaysForGame(gameId){
+	var plays = [ ];
+	for (var i = 0; i < RESULT_DATA.length; ++i) {
+		if (gameId == RESULT_DATA[i].gid) {
+			var obj = {
+				gameId: RESULT_DATA[i].gid,
+				playId: RESULT_DATA[i].pid,
+				time: RESULT_DATA[i].Seconds,
+				type: RESULT_DATA[i].type,
+				homeWp: (1 - RESULT_DATA[i].VisitorWP),
+				visitorWp: RESULT_DATA[i].VisitorWP,
+				InOT: RESULT_DATA[i].InOT
+			};
+			plays.push(obj);
+		}
+	}
+	plays = fixSecondsForOvertime(plays);
+	return plays;
+}
+
 module.exports = function(app) {
 
 	// Returns list of all games.
@@ -131,34 +151,44 @@ module.exports = function(app) {
 	//
 	app.get('/api/plays/:gameId', function(req, res) {
 		var gameId = req.params.gameId;
-		console.log("Client requested plays from " + gameId + "...");
-		var plays = [ ];
-		for (var i = 0; i < RESULT_DATA.length; ++i) {
-			if (gameId == RESULT_DATA[i].gid) {
-				var obj = {
-					gameId: RESULT_DATA[i].gid,
-					playId: RESULT_DATA[i].pid,
-					time: RESULT_DATA[i].Seconds,
-					type: RESULT_DATA[i].type,
-					homeWp: (1 - RESULT_DATA[i].VisitorWP),
-					visitorWp: RESULT_DATA[i].VisitorWP,
-					InOT: RESULT_DATA[i].InOT
-				};
-				// Solution 1: didn't know about visitorWP
-				// if (RESULT_DATA[i].v !== RESULT_DATA[i].off) {
-				// 	obj.homePrediction = RESULT_DATA[i].OffWinPred;
-				// 	obj.visitorPrediction = (1 - RESULT_DATA[i].OffWinPred);
-				// }
-				// else{
-				// 	obj.homePrediction = (1 - RESULT_DATA[i].OffWinPred);
-				// 	obj.visitorPrediction = RESULT_DATA[i].OffWinPred;
-				// }
-				plays.push(obj);
-			}
-		}
-		plays = fixSecondsForOvertime(plays);
+		console.log("Client requested plays from game " + gameId + "...");
+		var plays = getPlaysForGame(gameId);
 		res.writeHead(200,{'Content-Type': 'application/json'});
         res.end(JSON.stringify(plays));
+    });
+
+    function wpDiffComparison(a, b) {
+    	return Math.abs(b.homeWpDiff)- Math.abs(a.homeWpDiff);
+    }
+    function findBigestPlays(plays, n) {
+    	var sortedPlays = plays.sort(wpDiffComparison);
+		return sortedPlays.slice(0, n);
+    }
+
+    app.get('/api/topTen/:gameId', function(req, res) {
+    	var gameId = req.params.gameId;
+    	console.log("Client requested top ten plays for game " + gameId + "...");
+    	var newPlays = [ ];
+    	var plays = getPlaysForGame(gameId);
+    	for (var i = 0; i < plays.length; ++i) {
+    		var notLastPlay = (i < (plays.length - 1));
+			if (notLastPlay) {
+				var curentWP = (1 - plays[i].visitorWp);
+				var futureWP = (1 - plays[i + 1].visitorWp);
+				var obj = {
+					gameId: plays[i].gameId,
+					playId: plays[i].playId,
+					time: plays[i].time,
+					type: plays[i].type,
+					homeWpDiff: futureWP - curentWP
+				};
+				newPlays.push(obj);
+			}
+		}
+		var topTen = findBigestPlays(newPlays, 10);
+
+		res.writeHead(200,{'Content-Type': 'application/json'});
+        res.end(JSON.stringify(topTen));
     });
 
 // Grabs games by quarter where quarter is time left in seconds (e.g 3600 -> 2700 seconds = 1st quarter)
