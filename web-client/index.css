@@ -8,8 +8,12 @@ body {
 }
 
 .title h1 {
-	color: #1798C1;
 	margin-left: 20px;
+}
+
+.title a {
+	text-decoration: none;
+	color: #1798C1;
 }
 
 nav {
@@ -36,8 +40,8 @@ nav {
 
 .dropdown p {
 	color: white;
-	padding-right: 10px;
-	padding-left: 10px;
+	margin: 0;
+	padding: 16px 10px 16px 10px;
 	text-align: center;
 }
 
@@ -66,7 +70,7 @@ nav {
 }
 
 .game-content {
-	min-width: 115px;
+	min-width: 120px;
 }
 
 .game-content .links div {
@@ -93,3 +97,20 @@ nav {
 	align-content: center;
 	margin: 0 auto;
 }
+
+.activeFilterItem {
+	color: white;
+}
+
+.activeFilterItem:hover {
+	color: white !important;
+}
+
+
+
+
+
+
+
+
+
