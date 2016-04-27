@@ -29,6 +29,7 @@ function renderFromQueryString() {
 				setSelectedGameText(gameTitle(result[i]));
 				buildGamesFilter(result[i].season, result[i].week);
 				fetchAndDisplayPlays(url, chartTitle(result[i]), result[i].home);
+				console.log('Requested gameId: ' + result[i].gameId);
 				break;
 			}
 		}
@@ -62,6 +63,8 @@ function buildSeasonsFilter() {
 		var $div = $('<div><span>' + season + '</span></div>');
 		$listItem.append($div);
 		$listItem.click(function (e) {
+			$('.seasonsDropdown .links div').removeClass('activeFilterItem');
+            $(e.currentTarget).children('div').addClass('activeFilterItem');
 			buildChartFromData();
 			setSelectedGameText(' -- ');
 			setSelectedWeekText(' -- ');
@@ -80,6 +83,8 @@ function buildWeeksFilter(season) {
 		var $div = $('<div><span>' + week + '</span></div>');
 		$listItem.append($div);
 		$listItem.click(function (e) {
+			$('.weeksDropdown .links div').removeClass('activeFilterItem');
+            $(e.currentTarget).children('div').addClass('activeFilterItem');
 			buildChartFromData();
 			setSelectedWeekText(week);
 			setSelectedGameText(' -- ');
@@ -98,10 +103,13 @@ function buildGamesFilter(season, week) {
 				var $div = $('<div><span>' + gameTitle(game) + '</span></div>');
 				$listItem.append($div);
 				$listItem.click(function (e) {
+					$('.gamesDropdown .links div').removeClass('activeFilterItem');
+		            $(e.currentTarget).children('div').addClass('activeFilterItem');
 					setSelectedGameText(gameTitle(game));
 					history.pushState(null, null, '/?gid=' + game.gameId);
 					var playUrl = '/api/plays/' + game.gameId;
 					fetchAndDisplayPlays(playUrl, chartTitle(game), game.home);
+					console.log('Requested gameId: ' + game.gameId);
 				});
 				$('.gamesDropdown .dropdown-content').append($listItem);
 			}
