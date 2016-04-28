@@ -11,7 +11,7 @@ function buildChartFromData(plays, title, lastPlay, homeTeam) {
     };
     _.each(plays, function(play) {
         var homeWp = (play.homeWp * 100);
-        var string = 'Home Win Prediction: ' + homeWp.toFixed(2) + '%' + '<br>Play: ' + play.type;
+        var string = homeTeam + ' Win Probability: ' + homeWp.toFixed(2) + '%' + '<br>Play: ' + play.type;
         playSeries.text.push(string);
         playSeries.x.push(play.time);
         playSeries.y.push(homeWp.toFixed(2));

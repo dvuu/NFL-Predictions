@@ -32,10 +32,7 @@ var ALL_GAMES = allGames();
 
 
 //change JSON to have overtime.
-function fixSecondsForOvertime(plays) {
-	var	result = [ ];
-
-	// First solution: assumes that any play with game time greater than previous game is overtime
+// First solution: assumes that any play with game time greater than previous game is overtime
 	// Penalties that give time back are assumed to be overtime, making this solution not work.
 	// ----------------------------
 	// var hitOT = false;
@@ -46,14 +43,19 @@ function fixSecondsForOvertime(plays) {
 	// 		hitOT = true;
 	// 	if (hitOT) {
 	// ---------------------------
-
+function fixSecondsForOvertime(plays) {
+	var	result = [ ];
 	for (var i = 0; i < plays.length; ++i) {
 		if(plays[i].InOT){
 			var obj = {
 				gameId: plays[i].gameId,
+				winner: plays[i].Winner,
 				playId: plays[i].playId,
 				time:  (plays[i].time) - 900,
 				type: plays[i].type,
+				down: plays[i].Down,
+				ptsOffense: plays[i].ptso,
+				ptsDefense: plays[i].ptsd,
 				homeWp: plays[i].homeWp,
 				visitorWp: plays[i].visitorWp,
 				InOT: plays[i].InOT
@@ -62,9 +64,13 @@ function fixSecondsForOvertime(plays) {
 		else {
 			var obj = {
 				gameId: plays[i].gameId,
+				winner: plays[i].Winner,
 				playId: plays[i].playId,
 				time:  plays[i].time,
 				type: plays[i].type,
+				down: plays[i].Down,
+				ptsOffense: plays[i].ptso,
+				ptsDefense: plays[i].ptsd,
 				homeWp: plays[i].homeWp,
 				visitorWp: plays[i].visitorWp,
 				InOT: plays[i].InOT
@@ -81,9 +87,13 @@ function getPlaysForGame(gameId){
 		if (gameId == RESULT_DATA[i].gid) {
 			var obj = {
 				gameId: RESULT_DATA[i].gid,
+				winner: RESULT_DATA[i].Winner,
 				playId: RESULT_DATA[i].pid,
 				time: RESULT_DATA[i].Seconds,
 				type: RESULT_DATA[i].type,
+				down: RESULT_DATA[i].Down,
+				ptsOffense: RESULT_DATA[i].ptso,
+				ptsDefense: RESULT_DATA[i].ptsd,
 				homeWp: (1 - RESULT_DATA[i].VisitorWP),
 				visitorWp: RESULT_DATA[i].VisitorWP,
 				InOT: RESULT_DATA[i].InOT
