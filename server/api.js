@@ -164,7 +164,7 @@ module.exports = function(app) {
     	var sortedPlays = plays.sort(wpDiffComparison);
 		return sortedPlays.slice(0, n);
     }
-
+    // returns top 10 plays from a game
     app.get('/api/topTen/:gameId', function(req, res) {
     	var gameId = req.params.gameId;
     	console.log("Client requested top ten plays for game " + gameId + "...");
@@ -189,6 +189,30 @@ module.exports = function(app) {
 
 		res.writeHead(200,{'Content-Type': 'application/json'});
         res.end(JSON.stringify(topTen));
+    });
+
+    //returns top 10 plays from all games combined 
+    app.get('/api/topTen', function(req, res) {
+    	console.log("Client is requested Top Ten plays from all all games combined...")
+    	var results = [ ];
+    	for (var i = 0; i < RESULT_DATA.length - 1; i++) {
+    		if (RESULT_DATA[i].gid !== RESULT_DATA[i + 1].gid) {
+    			continue;
+    		}
+    		var curentWP = (1 - RESULT_DATA[i].VisitorWP);
+			var futureWP = (1 - RESULT_DATA[i + 1].VisitorWP);
+			var obj = {
+    			gameId: RESULT_DATA[i].gid,
+				playId: RESULT_DATA[i].pid,
+				time: RESULT_DATA[i].Seconds,
+				type: RESULT_DATA[i].type,
+				homeWpDiff: futureWP - curentWP
+    		};
+	    	results.push(obj);	
+    	}
+    	var allTopTen = findBigestPlays(results, 100)
+    	res.writeHead(200,{'Content-Type': 'application/json'});
+        res.end(JSON.stringify(allTopTen));
     });
 
 // Grabs games by quarter where quarter is time left in seconds (e.g 3600 -> 2700 seconds = 1st quarter)
