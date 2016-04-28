@@ -1,17 +1,14 @@
 body {
 	font-family: Helvetica-light;
 	margin: 0 auto;
-}
-
-.content {
 	align-content: center;
 }
 
-.title h1 {
+.header h1 {
 	margin-left: 20px;
 }
 
-.title a {
+.header a {
 	text-decoration: none;
 	color: #1798C1;
 }
