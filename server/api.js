@@ -49,8 +49,10 @@ function fixSecondsForOvertime(plays) {
 		if(plays[i].InOT){
 			var obj = {
 				gameId: plays[i].gameId,
-				winner: plays[i].Winner,
+				winner: plays[i].winner,
 				playId: plays[i].playId,
+				offense: plays[i].offense,
+				defense: plays[i].defense,
 				time:  (plays[i].time) - 900,
 				type: plays[i].type,
 				down: plays[i].down,
@@ -64,8 +66,10 @@ function fixSecondsForOvertime(plays) {
 		else {
 			var obj = {
 				gameId: plays[i].gameId,
-				winner: plays[i].Winner,
+				winner: plays[i].winner,
 				playId: plays[i].playId,
+				offense: plays[i].offense,
+				defense: plays[i].defense,
 				time:  plays[i].time,
 				type: plays[i].type,
 				down: plays[i].down,
@@ -89,6 +93,8 @@ function getPlaysForGame(gameId){
 				gameId: RESULT_DATA[i].gid,
 				winner: RESULT_DATA[i].Winner,
 				playId: RESULT_DATA[i].pid,
+				offense: RESULT_DATA[i].off,
+				defense: RESULT_DATA[i].def,
 				time: RESULT_DATA[i].Seconds,
 				type: RESULT_DATA[i].type,
 				down: RESULT_DATA[i].Down,

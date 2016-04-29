@@ -9,6 +9,10 @@ body {
 }
 
 .header a {
+	color: #1798C1;
+}
+
+.header a:hover {
 	text-decoration: none;
 	color: #1798C1;
 }
@@ -55,6 +59,7 @@ nav {
 
 .links div {
 	text-align: center;
+	color: #aaa;
 }
 
 .season-content {
@@ -75,8 +80,9 @@ nav {
 	text-align: left;
 }
 
-.dropdown-content a div:hover {
+.dropdown-content a div span:hover {
 	color: white;
+	text-decoration: none;
 }
 
 .dropdown:hover {
