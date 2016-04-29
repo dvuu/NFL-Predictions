@@ -7,13 +7,13 @@ function buildChartFromData(plays, title, lastPlay, homeTeam) {
         mode: 'lines',
         type: 'scatter',
         text: [ ],
-        hoverinfo: 'text'
+        hoverinfo: 'text',
     };
     _.each(plays, function(play) {
         var homeWp = (play.homeWp * 100);
         var string = homeTeam + ' Win Probability: ' + homeWp.toFixed(2) + '%' + '<br>Play: '+ play.type 
                     + '<br>OFF/Score: ' + play.offense + ': ' + play.ptsOffense + '<br>DEF/Score: ' + play.defense 
-                    + ': ' + play.ptsDefense + '<br>Down: ' + play.down + '<br>Time left: ' + play.time;
+                    + ': ' + play.ptsDefense + '<br>Down: ' + play.down + '<br>Time left: ' + play.time + ' secs';
         playSeries.text.push(string);
         playSeries.x.push(play.time);
         playSeries.y.push(homeWp.toFixed(2));
