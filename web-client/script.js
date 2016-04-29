@@ -9,6 +9,18 @@ $(document).ready(function() {
 	});
 });
 
+function setSelectedSeasonText(season) {
+	$('.seasonsDropdown p').text(season);
+}
+
+function setSelectedWeekText(week) {
+	$('.weeksDropdown p').text(week);
+}
+
+function setSelectedGameText(title) {
+	$('.gamesDropdown p').text(title);
+}
+
 function gameTitle(gameObj) {
 	return (gameObj.visitor + ' @ ' + gameObj.home); 
 }
@@ -37,18 +49,6 @@ function renderFromQueryString() {
 	}});
 }	
 
-function setSelectedSeasonText(season) {
-	$('.seasonsDropdown p').text(season);
-}
-
-function setSelectedWeekText(week) {
-	$('.weeksDropdown p').text(week);
-}
-
-function setSelectedGameText(title) {
-	$('.gamesDropdown p').text(title);
-}
-
 function fetchAndDisplayPlays(url, title, homeTeam) {
 	$.ajax({ url: url, success: function(result) {
 		var lastPlay = result[result.length-1].time;
@@ -67,9 +67,9 @@ function buildSeasonsFilter() {
 			$('.seasonsDropdown .links div').removeClass('activeFilterItem');
             $(e.currentTarget).children('div').addClass('activeFilterItem');
 			buildChartFromData();
-			setSelectedGameText(' -- ');
-			setSelectedWeekText(' -- ');
 			setSelectedSeasonText(season);
+			setSelectedWeekText(' -- ');
+			setSelectedGameText(' -- ');
 			buildWeeksFilter(season);
 		});
 		$('.seasonsDropdown .dropdown-content').append($listItem);
@@ -97,23 +97,21 @@ function buildWeeksFilter(season) {
 
 function buildGamesFilter(season, week) {
 	$('.gamesDropdown .dropdown-content').empty();
-	$.ajax({ url: '/api/games', success: function(result) {
+	$.ajax({ url: '/api/games/' + season + '/' + week, success: function(result) {
 		_.each(result, function(game) {
-			if (season == game.season && week == game.week) {
-				var $listItem = $('<a class="links"></a>');
-				var $div = $('<div><span>' + gameTitle(game) + '</span></div>');
-				$listItem.append($div);
-				$listItem.click(function (e) {
-					$('.gamesDropdown .links div').removeClass('activeFilterItem');
-		            $(e.currentTarget).children('div').addClass('activeFilterItem');
-					setSelectedGameText(gameTitle(game));
-					history.pushState(null, null, '/?gid=' + game.gameId);
-					var playUrl = '/api/plays/' + game.gameId;
-					fetchAndDisplayPlays(playUrl, chartTitle(game), game.home);
-					console.log('Requested gameId: ' + game.gameId);
-				});
-				$('.gamesDropdown .dropdown-content').append($listItem);
-			}
+			var $listItem = $('<a class="links"></a>');
+			var $div = $('<div><span>' + gameTitle(game) + '</span></div>');
+			$listItem.append($div);
+			$listItem.click(function (e) {
+				$('.gamesDropdown .links div').removeClass('activeFilterItem');
+	            $(e.currentTarget).children('div').addClass('activeFilterItem');
+				setSelectedGameText(gameTitle(game));
+				history.pushState(null, null, '/?gid=' + game.gameId);
+				var playUrl = '/api/plays/' + game.gameId;
+				fetchAndDisplayPlays(playUrl, chartTitle(game), game.home);
+				console.log('Requested gameId: ' + game.gameId);
+			});
+			$('.gamesDropdown .dropdown-content').append($listItem);
 		});
 	}, error: function() {
 		console.log('error');
