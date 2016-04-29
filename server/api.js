@@ -20,9 +20,11 @@ function allGames() {
 		var obj = {
 			gameId: GAME_DATA[i].gid,
 			season: GAME_DATA[i].seas,
+			week: GAME_DATA[i].wk,
 			home: GAME_DATA[i].h,
 			visitor: GAME_DATA[i].v,
-			week: GAME_DATA[i].wk
+			ptsHome: GAME_DATA[i].ptsh,
+			ptsVisitor: GAME_DATA[i].ptsv
 		};
 		result.push(obj);
 	}
