@@ -113,11 +113,21 @@ nav {
 	margin: 0 auto !important;
 }
 
-.statsContainer {
+.topPlaysContainer {
 	background-color: red;
 }
 
-.stats {
+.topPlays {
+	background-color: yellow;
+	height: 450px;
+}
+
+.playsInfoContainer {
+	background-color: blue;
+}
+
+.playInfo {
+	background-color: green;
 	height: 450px;
 }
 
