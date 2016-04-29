@@ -95,21 +95,31 @@ nav {
 }
 
 #chart {
-	height: 500px;
-	width: 1000px;
+	/*height: 450px;
+	width: 900px;*/
 	align-content: center;
-	margin: 0 auto;
 }
 
 .activeFilterItem {
-	color: white;
+	color: white !important;
 }
 
 .activeFilterItem:hover {
 	color: white !important;
 }
 
+.row {
+	width: 1200px;
+	margin: 0 auto !important;
+}
 
+.statsContainer {
+	background-color: red;
+}
+
+.stats {
+	height: 450px;
+}
 
 
 
