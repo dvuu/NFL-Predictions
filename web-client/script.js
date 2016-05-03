@@ -1,6 +1,7 @@
 $(document).ready(function() {
 	buildSeasonsFilter();
 	buildWeeksFilter();
+	buildGamesFilter();
 	buildChartFromData();
 	renderFromQueryString();
 	window.addEventListener('popstate', function(e) {
@@ -93,6 +94,19 @@ function buildWeeksFilter(season) {
 		$('.weeksDropdown .dropdown-content').append($listItem);
 	});
 }
+function playDescription(play) {
+	return play.type + ' play with ' + play.time + ' seconds left.'
+}
+function displayTopTen(gameId){
+	$('.topPlays').empty();
+	$.ajax({ url: '/api/topTen/' + gameId, success: function(topTen) {
+		_.each(topTen, function(play) {
+			var topTenDiv = $('.topPlays');
+			var playElement = $('<div><span>' + playDescription(play) + '</span></div>');
+			topTenDiv.append(playElement);
+		});
+	}});
+}
 
 function onGameClick(e, game) {
 	$('.gamesDropdown .links div').removeClass('activeFilterItem');
@@ -101,6 +115,7 @@ function onGameClick(e, game) {
 	history.pushState(null, null, '/?gid=' + game.gameId);
 	var playUrl = '/api/plays/' + game.gameId;
 	fetchAndDisplayPlays(playUrl, chartTitle(game), game.home);
+	displayTopTen(game.gameId);
 	console.log('Requested gameId: ' + game.gameId);
 };
 
