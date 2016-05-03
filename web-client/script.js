@@ -94,16 +94,24 @@ function buildWeeksFilter(season) {
 		$('.weeksDropdown .dropdown-content').append($listItem);
 	});
 }
+
 function playDescription(play) {
-	return play.type + ' play with ' + play.time + ' seconds left.';
+	var homeWpDiff = Math.floor(play.homeWpDiff * 1000) / 10;
+	if (play.homeWpDiff > 0) {
+	 	return '<span>' + play.type + ' play at ' + play.time + ' seconds left. <span class="posWp">(+' + homeWpDiff + '%)</span></span>';
+	}
+	else{
+	 	return '<span>' + play.type + ' play with ' + play.time + ' seconds left. <span class="negWp">(' + homeWpDiff + '%)</span></span>';
+	}
 }
+
 function displayTopTen(gameId){
 	$('.topPlays').empty();
 	$.ajax({ url: '/api/topTen/' + gameId, success: function(topTen) {
-		var topTenDiv = $('.topPlays');
+		var $topTenDiv = $('.topPlays');
 		_.each(topTen, function(play) {
-			var playElement = $('<div><span>' + playDescription(play) + '</span></div>');
-			topTenDiv.append(playElement);
+			var $playElement = $('<div class="homeWP">' + playDescription(play) + '</div>');
+			$topTenDiv.append($playElement);
 		});
 	}});
 }

@@ -50,6 +50,8 @@ function fixSecondsForOvertime(plays) {
 	for (var i = 0; i < plays.length; ++i) {
 		if(plays[i].InOT){
 			var obj = {
+				visitor: plays[i].visitor,
+				home: plays[i].home,
 				gameId: plays[i].gameId,
 				winner: plays[i].winner,
 				playId: plays[i].playId,
@@ -67,6 +69,8 @@ function fixSecondsForOvertime(plays) {
 		}
 		else {
 			var obj = {
+				visitor: plays[i].visitor,
+				home: plays[i].home,
 				gameId: plays[i].gameId,
 				winner: plays[i].winner,
 				playId: plays[i].playId,
@@ -86,12 +90,22 @@ function fixSecondsForOvertime(plays) {
 	}
 	return result;
 }
-
+function findTheHomeTeam(visitor, off, def) {
+	if (visitor == off) {
+		return def;
+	}
+	else{
+		return off;
+	}
+}
 function getPlaysForGame(gameId){
 	var plays = [ ];
 	for (var i = 0; i < RESULT_DATA.length; ++i) {
 		if (gameId == RESULT_DATA[i].gid) {
+			var homeTeam = findTheHomeTeam(RESULT_DATA[i].v, RESULT_DATA[i].off, RESULT_DATA[i].def);
 			var obj = {
+				visitor: RESULT_DATA[i].v,
+				home: homeTeam, 
 				gameId: RESULT_DATA[i].gid,
 				winner: RESULT_DATA[i].Winner,
 				playId: RESULT_DATA[i].pid,
@@ -194,6 +208,10 @@ module.exports = function(app) {
 				var curentWP = (1 - plays[i].visitorWp);
 				var futureWP = (1 - plays[i + 1].visitorWp);
 				var obj = {
+					home: plays[i].home,
+					visitor: plays[i].visitor,
+					offense: plays[i].offense,
+					defense: plays[i].defense,
 					gameId: plays[i].gameId,
 					playId: plays[i].playId,
 					time: plays[i].time,
