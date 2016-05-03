@@ -1,0 +1,73 @@
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    padding: 10px 10px;
+}
+.dropdown:hover {
+    z-index: 1;
+}
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a div:hover {
+    color: white;
+}
+
+.dropdown-content {
+    align-content: center;
+    color: #ffffff;
+    display: none;
+    position: absolute;
+    z-index: inherit;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    background-color: #444444;
+    border-radius: 2px;
+    margin-top: 5px;
+}
+
+.dropdown .caret {
+    color: #cccccc;
+}
+
+.dropdown .selection {
+    color: white;
+    margin: 0;
+    padding-right: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.category {
+    color: #cccccc;
+    margin-left: 20px;
+}
+.selection {
+    color: white;
+}
+
+.category:hover {
+    cursor: default;
+}
+
+.activeFilterItem {
+    color: white;
+}
+
+.activeFilterItem:hover {
+    color: white !important;
+}
+
+.dropdownLink {
+    color: white;
+}
+.dropdownLink div:hover {
+    background-color: #cccccc;
+}
+
+.dropdownLink div {
+    text-align: center;
+}

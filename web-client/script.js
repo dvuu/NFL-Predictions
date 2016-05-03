@@ -10,15 +10,15 @@ $(document).ready(function() {
 });
 
 function setSelectedSeasonText(season) {
-	$('.seasonsDropdown p').text(season);
+	$('.seasonsDropdown .selection').text(season);
 }
 
 function setSelectedWeekText(week) {
-	$('.weeksDropdown p').text(week);
+	$('.weeksDropdown .selection').text(week);
 }
 
 function setSelectedGameText(title) {
-	$('.gamesDropdown p').text(title);
+	$('.gamesDropdown .selection').text(title);
 }
 
 function gameTitle(gameObj) {
@@ -60,11 +60,11 @@ function buildSeasonsFilter() {
 	$('.seasonsDropdown .dropdown-content').empty();
 	var results = [2012, 2013, 2014, 2015];
 	_.each(results, function(season) {
-		var $listItem = $('<a class="links"></a>');
+		var $listItem = $('<a class="dropdownLink"></a>');
 		var $div = $('<div><span>' + season + '</span></div>');
 		$listItem.append($div);
 		$listItem.click(function (e) {
-			$('.seasonsDropdown .links div').removeClass('activeFilterItem');
+			$('.seasonsDropdown .dropdownLink div').removeClass('activeFilterItem');
             $(e.currentTarget).children('div').addClass('activeFilterItem');
 			buildChartFromData();
 			setSelectedSeasonText(season);
@@ -80,11 +80,11 @@ function buildWeeksFilter(season) {
 	$('.weeksDropdown .dropdown-content').empty();
 	var results = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
 	_.each(results, function(week) {
-		var $listItem = $('<a class="links"></a>');
+		var $listItem = $('<a class="dropdownLink"></a>');
 		var $div = $('<div><span>' + week + '</span></div>');
 		$listItem.append($div);
 		$listItem.click(function (e) {
-			$('.weeksDropdown .links div').removeClass('activeFilterItem');
+			$('.weeksDropdown .dropdownLink div').removeClass('activeFilterItem');
             $(e.currentTarget).children('div').addClass('activeFilterItem');
 			buildChartFromData();
 			setSelectedWeekText(week);
@@ -109,7 +109,7 @@ function displayTopTen(gameId){
 }
 
 function onGameClick(e, game) {
-	$('.gamesDropdown .links div').removeClass('activeFilterItem');
+	$('.gamesDropdown .dropdownLink div').removeClass('activeFilterItem');
     $(e.currentTarget).children('div').addClass('activeFilterItem');
 	setSelectedGameText(gameTitle(game));
 	history.pushState(null, null, '/?gid=' + game.gameId);
@@ -123,7 +123,7 @@ function buildGamesFilter(season, week) {
 	$('.gamesDropdown .dropdown-content').empty();
 	$.ajax({ url: '/api/games/' + season + '/' + week, success: function(result) {
 		_.each(result, function(game) {
-			var $listItem = $('<a class="links"></a>');
+			var $listItem = $('<a class="dropdownLink"></a>');
 			var $div = $('<div><span>' + gameTitle(game) + '</span></div>');
 			$listItem.append($div);
 			$listItem.click(function (e) {
