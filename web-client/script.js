@@ -95,13 +95,13 @@ function buildWeeksFilter(season) {
 	});
 }
 function playDescription(play) {
-	return play.type + ' play with ' + play.time + ' seconds left.'
+	return play.type + ' play with ' + play.time + ' seconds left.';
 }
 function displayTopTen(gameId){
 	$('.topPlays').empty();
 	$.ajax({ url: '/api/topTen/' + gameId, success: function(topTen) {
+		var topTenDiv = $('.topPlays');
 		_.each(topTen, function(play) {
-			var topTenDiv = $('.topPlays');
 			var playElement = $('<div><span>' + playDescription(play) + '</span></div>');
 			topTenDiv.append(playElement);
 		});
@@ -122,6 +122,7 @@ function onGameClick(e, game) {
 function buildGamesFilter(season, week) {
 	$('.gamesDropdown .dropdown-content').empty();
 	$.ajax({ url: '/api/games/' + season + '/' + week, success: function(result) {
+
 		_.each(result, function(game) {
 			var $listItem = $('<a class="links"></a>');
 			var $div = $('<div><span>' + gameTitle(game) + '</span></div>');

@@ -101,24 +101,19 @@ nav {
 }
 
 .activeFilterItem {
-	color: white !important;
+	color: white;
 }
 
 .activeFilterItem:hover {
-	color: white !important;
+	color: white;
 }
 
 .row {
 	width: 1200px;
-	margin: 0 auto !important;
-}
-
-.topPlaysContainer {
-	background-color: red;
+	margin: 0 auto;
 }
 
 .topPlays {
-	background-color: yellow;
 	height: 450px;
 }
 
