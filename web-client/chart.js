@@ -1,6 +1,10 @@
 // look at game 3987
 
 function buildChartFromData(plays, title, lastPlay, homeTeam) {
+    var $chart = $('#chart');
+    var $playOne = $('.playOne');
+    var $playTwo = $('.playTwo');
+
     var playSeries = {
         x: [ ],
         y: [ ],
@@ -39,8 +43,33 @@ function buildChartFromData(plays, title, lastPlay, homeTeam) {
             color: '#7f7f7f'
         }
     }
-    var data = [playSeries];
-    Plotly.newPlot('chart', data, layout, {displayModeBar: false});
+
+    Plotly.newPlot('chart', [playSeries], layout, {displayModeBar: false});
+
+    $chart[0].on('plotly_hover', function(data) {
+        if (data.points.length <= 0)
+            return;
+        if (data.points.length > 1) {
+            console.error("Only expected one point for hover");
+            return;
+        }
+        var point = data.points[0];
+        var index = point.pointNumber;
+        var playOne = plays[index];
+        var playTwo = plays[index + 1];
+        $playOne.html('<p>' + homeTeam + ' Win Probability: ' + (playOne.homeWp * 100).toFixed(2) + '%' + '<br>Play: '+ playOne.type 
+                    + '<br>OFF/Score: ' + playOne.offense + ': ' + playOne.ptsOffense + '<br>DEF/Score: ' + playOne.defense 
+                    + ': ' + playOne.ptsDefense + '<br>Down: ' + playOne.down + '<br>Time left: ' + playOne.time + ' secs' + '</p>');
+
+        $playTwo.html('<p>' + homeTeam + ' Win Probability: ' + (playTwo.homeWp * 100).toFixed(2) + '%' + '<br>Play: '+ playTwo.type 
+                    + '<br>OFF/Score: ' + playTwo.offense + ': ' + playTwo.ptsOffense + '<br>DEF/Score: ' + playTwo.defense 
+                    + ': ' + playTwo.ptsDefense + '<br>Down: ' + playTwo.down + '<br>Time left: ' + playTwo.time + ' secs' + '</p>');
+     });
+
+    $chart[0].on('plotly_unhover', function(data) {
+        $playOne.html('');
+        $playTwo.html('');
+    });
 }
 
 

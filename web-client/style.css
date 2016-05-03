@@ -50,16 +50,10 @@ nav {
 
 .row {
 	width: 1200px;
-	margin: 0 auto;
+	margin: 0 auto !important;
 }
 
-
-.playsInfoContainer {
-	background-color: blue;
-}
-
-.playInfo {
-	background-color: green;
+.playsInfo {
 	height: 450px;
 }
 
