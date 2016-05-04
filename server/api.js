@@ -216,6 +216,7 @@ module.exports = function(app) {
 					playId: plays[i].playId,
 					time: plays[i].time,
 					type: plays[i].type,
+					homeWp: plays[i].homeWp,
 					homeWpDiff: futureWP - curentWP
 				};
 				newPlays.push(obj);

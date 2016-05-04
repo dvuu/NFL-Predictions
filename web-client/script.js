@@ -2,7 +2,6 @@ $(document).ready(function() {
 	buildSeasonsFilter();
 	buildWeeksFilter();
 	buildGamesFilter();
-	buildChartFromData();
 	renderFromQueryString();
 	window.addEventListener('popstate', function(e) {
 		renderFromQueryString();
@@ -50,10 +49,15 @@ function renderFromQueryString() {
 }	
 
 function renderGame(gameId, title, homeTeam) {
-	var url = '/api/plays/' + gameId;
-	$.ajax({ url: url, success: function(result) {
-		var lastPlay = result[result.length-1].time;
-		buildChartFromData(result, title, lastPlay, homeTeam);
+	var playsUrl = '/api/plays/' + gameId;
+	var topTenUrl = '/api/topTen/' + gameId;
+	$.ajax({ url: playsUrl, success: function(playsResult) {
+		var lastPlay = playsResult[playsResult.length-1].time;
+		$('.topPlays').empty();
+		$.ajax({ url: topTenUrl, success: function(topTenResult) {
+			displayTopTen(topTenResult);
+			buildChartFromData(playsResult, topTenResult, title, lastPlay, homeTeam);
+		}});
 		displayTopTen(gameId);
 	}});
 }
@@ -103,19 +107,16 @@ function playDescription(play) {
 	 	return '<span>' + play.type + ' play at ' + play.time + ' seconds left. <span class="posWp">(+' + homeWpDiff + '%)</span></span>';
 	}
 	else{
-	 	return '<span>' + play.type + ' play with ' + play.time + ' seconds left. <span class="negWp">(' + homeWpDiff + '%)</span></span>';
+	 	return '<span>' + play.type + ' play at ' + play.time + ' seconds left. <span class="negWp">(' + homeWpDiff + '%)</span></span>';
 	}
 }
 
-function displayTopTen(gameId){
-	$('.topPlays').empty();
-	$.ajax({ url: '/api/topTen/' + gameId, success: function(topTen) {
-		var $topTenDiv = $('.topPlays');
-		_.each(topTen, function(play) {
-			var $playElement = $('<div class="homeWP">' + playDescription(play) + '</div>');
-			$topTenDiv.append($playElement);
-		});
-	}});
+function displayTopTen(topTenResult){
+	var $topTenDiv = $('.topPlays');
+	_.each(topTenResult, function(play) {
+		var $playElement = $('<div class="homeWP">' + playDescription(play) + '</div>');
+		$topTenDiv.append($playElement);
+	});
 }
 
 function onGameClick(e, game) {

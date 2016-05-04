@@ -1,6 +1,6 @@
 // look at game 3987
 
-function buildChartFromData(plays, title, lastPlay, homeTeam) {
+function buildChartFromData(playsResult, topTenResult, title, lastPlay, homeTeam) {
     var $chart = $('#chart');
     var $playOne = $('.playOne');
     var $playTwo = $('.playTwo');
@@ -14,7 +14,14 @@ function buildChartFromData(plays, title, lastPlay, homeTeam) {
         hoverinfo: 'text',
     };
 
-    _.each(plays, function(play) {
+    // var topTenSeries = {
+    //     x: [ ],
+    //     y: [ ],
+    //     mode: 'markers',
+    //     type: 'scatter'
+    // }
+
+    _.each(playsResult, function(play) {
         var homeWp = (play.homeWp * 100);
         var string = homeTeam + ' Win Probability: ' + homeWp.toFixed(2) + '%' + '<br>Play: '+ play.type 
                     + '<br>OFF/Score: ' + play.offense + ': ' + play.ptsOffense + '<br>DEF/Score: ' + play.defense 
@@ -23,6 +30,12 @@ function buildChartFromData(plays, title, lastPlay, homeTeam) {
         playSeries.x.push(play.time);
         playSeries.y.push(homeWp.toFixed(2));
     });
+
+    // _.each(topTenResult, function(topPlay) {
+    //     var homeWp = (topPlay.homeWp * 100);
+    //     topTenSeries.x.push(topPlay.time);
+    //     topTenSeries.y.push(homeWp.toFixed(2));
+    // });
 
     var layout = {
         title: title,
@@ -39,16 +52,36 @@ function buildChartFromData(plays, title, lastPlay, homeTeam) {
         showLegend: true,
         range: [-0.1, 1], // add padding so the labels aren't slammed against the axes
 
-         font: {
+        font: {
             family: 'Helvetica',
             size: 18,
             color: '#7f7f7f'
-        }
+        },
+
+        shapes: [
+            {
+                type: 'line',
+                x0: 3700,
+                y0: 50,
+                x1: (lastPlay + -100),
+                y1: 50,
+                line: {
+                    dash: 'dash',
+                    color: '#7f7f7f'
+                }
+            }
+        ]
     }
 
     Plotly.newPlot('chart', [playSeries], layout, {displayModeBar: false});
 
-    $chart[0].on('plotly_hover', function(data) {
+    function playInfoString(playsObj) {
+        return ('<p>' + homeTeam + ' Win Probability: ' + (playsObj.homeWp * 100).toFixed(2) + '%' + '<br>Play: '+ playsObj.type 
+            + '<br>OFF/Score: ' + playsObj.offense + ': ' + playsObj.ptsOffense + '<br>DEF/Score: ' + playsObj.defense 
+            + ': ' + playsObj.ptsDefense + '<br>Down: ' + playsObj.down + '<br>Time left: ' + playsObj.time + ' secs' + '</p>');
+    }
+
+    $chart[0].on('plotly_click', function(data) {
         if (data.points.length <= 0)
             return;
         if (data.points.length > 1) {
@@ -57,19 +90,16 @@ function buildChartFromData(plays, title, lastPlay, homeTeam) {
         }
         var point = data.points[0];
         var index = point.pointNumber;
-        var playOne = plays[index];
-        var playTwo = plays[index + 1];
-        var string = '<p>' + homeTeam + ' Win Probability: ' + (playOne.homeWp * 100).toFixed(2) + '%' + '<br>Play: '+ playOne.type 
-                    + '<br>OFF/Score: ' + playOne.offense + ': ' + playOne.ptsOffense + '<br>DEF/Score: ' + playOne.defense 
-                    + ': ' + playOne.ptsDefense + '<br>Down: ' + playOne.down + '<br>Time left: ' + playOne.time + ' secs' + '</p>';
-        $playOne.html(string);
-        $playTwo.html(string);
+        var playOne = playsResult[index];
+        var playTwo = playsResult[index + 1];
+        $playOne.html(playInfoString(playOne));
+        $playTwo.html(playInfoString(playTwo));
      });
 
-    $chart[0].on('plotly_unhover', function(data) {
-        $playOne.html('');
-        $playTwo.html('');
-    });
+    // $chart[0].on('plotly_unhover', function(data) {
+    //     $playOne.html('');
+    //     $playTwo.html('');
+    // });
 }
 
 
