@@ -41,7 +41,7 @@ function renderFromQueryString() {
 				setSelectedWeekText(result[i].week);
 				setSelectedGameText(gameTitle(result[i]));
 				buildGamesFilter(result[i].season, result[i].week);
-				renderGame(result[i].gameId, chartTitle(result[i]), result[i].home);
+				renderGame(result[i]);
 				console.log('Requested gameId: ' + result[i].gameId);
 				break;
 			}
@@ -49,13 +49,19 @@ function renderFromQueryString() {
 	}});
 }	
 
-function renderGame(gameId, title, homeTeam) {
-	var url = '/api/plays/' + gameId;
+function renderGame(game) {
+	var url = '/api/plays/' + game.gameId;
 	$.ajax({ url: url, success: function(result) {
 		var lastPlay = result[result.length-1].time;
-		buildChartFromData(result, title, lastPlay, homeTeam);
-		displayTopTen(gameId);
+		buildChartFromData(result, chartTitle(game), lastPlay, game.home);
+		displayTopTen(game.gameId);
 	}});
+	$('.homeLogo, .awayLogo').removeClass(function(idx, css) {
+		var match = css.match(/team\-.*/);
+		return match ? match.join(' ') : null;
+	});
+	$('.homeLogo').addClass('team-' + game.home.toLowerCase());
+	$('.awayLogo').addClass('team-' + game.visitor.toLowerCase());
 }
 
 function buildSeasonsFilter() {
@@ -123,7 +129,7 @@ function onGameClick(e, game) {
     $(e.currentTarget).children('div').addClass('activeFilterItem');
 	setSelectedGameText(gameTitle(game));
 	history.pushState(null, null, '/?gid=' + game.gameId);
-	renderGame(game.gameId, chartTitle(game), game.home);
+	renderGame(game);
 	console.log('Requested gameId: ' + game.gameId);
 };
 

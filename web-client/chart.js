@@ -39,7 +39,7 @@ function buildChartFromData(plays, title, lastPlay, homeTeam) {
         showLegend: true,
         range: [-0.1, 1], // add padding so the labels aren't slammed against the axes
 
-         font: {
+        font: {
             family: 'Helvetica',
             size: 18,
             color: '#7f7f7f'
