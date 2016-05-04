@@ -1,37 +1,9 @@
-var fs = require('fs');
-var GAME_DATA = JSON.parse(fs.readFileSync('../data/games.json'));
-var RESULT_DATA = JSON.parse(fs.readFileSync('../data/results.json'));
 var _ = require('underscore');
 var url = require('url');
-
-// function filterGames(minGameId) {
-// 	var i = 0;
-// 	while (i < minGameId) {
-// 		GAME_DATA.shift();
-// 		++i;
-// 	}
-// }
-// filterGames(2980);
-
-// grabs basic information from all games
-function allGames() {
-	var result = [ ];
-	for (var i = 3189; i < GAME_DATA.length; ++i) {
-		var obj = {
-			gameId: GAME_DATA[i].gid,
-			season: GAME_DATA[i].seas,
-			week: GAME_DATA[i].wk,
-			home: GAME_DATA[i].h,
-			visitor: GAME_DATA[i].v,
-			ptsHome: GAME_DATA[i].ptsh,
-			ptsVisitor: GAME_DATA[i].ptsv
-		};
-		result.push(obj);
-	}
-	return result;
-};
-var ALL_GAMES = allGames();
-
+var data = require('./data.js');
+data.initialize(function() {
+	console.log("Data has been parsed. App is now ready");
+});
 
 //change JSON to have overtime.
 // First solution: assumes that any play with game time greater than previous game is overtime
@@ -100,25 +72,25 @@ function findTheHomeTeam(visitor, off, def) {
 }
 function getPlaysForGame(gameId){
 	var plays = [ ];
-	for (var i = 0; i < RESULT_DATA.length; ++i) {
-		if (gameId == RESULT_DATA[i].gid) {
-			var homeTeam = findTheHomeTeam(RESULT_DATA[i].v, RESULT_DATA[i].off, RESULT_DATA[i].def);
+	for (var i = 0; i < data.PLAYS.length; ++i) {
+		if (gameId == data.PLAYS[i].gid) {
+			var homeTeam = findTheHomeTeam(data.PLAYS[i].v, data.PLAYS[i].off, data.PLAYS[i].def);
 			var obj = {
-				visitor: RESULT_DATA[i].v,
+				visitor: data.PLAYS[i].v,
 				home: homeTeam, 
-				gameId: RESULT_DATA[i].gid,
-				winner: RESULT_DATA[i].Winner,
-				playId: RESULT_DATA[i].pid,
-				offense: RESULT_DATA[i].off,
-				defense: RESULT_DATA[i].def,
-				time: RESULT_DATA[i].Seconds,
-				type: RESULT_DATA[i].type,
-				down: RESULT_DATA[i].Down,
-				ptsOffense: RESULT_DATA[i].ptso,
-				ptsDefense: RESULT_DATA[i].ptsd,
-				homeWp: (1 - RESULT_DATA[i].VisitorWP),
-				visitorWp: RESULT_DATA[i].VisitorWP,
-				InOT: RESULT_DATA[i].InOT
+				gameId: data.PLAYS[i].gid,
+				winner: data.PLAYS[i].Winner,
+				playId: data.PLAYS[i].pid,
+				offense: data.PLAYS[i].off,
+				defense: data.PLAYS[i].def,
+				time: data.PLAYS[i].Seconds,
+				type: data.PLAYS[i].type,
+				down: data.PLAYS[i].Down,
+				ptsOffense: data.PLAYS[i].ptso,
+				ptsDefense: data.PLAYS[i].ptsd,
+				homeWp: (1 - data.PLAYS[i].VisitorWP),
+				visitorWp: data.PLAYS[i].VisitorWP,
+				InOT: data.PLAYS[i].InOT
 			};
 			plays.push(obj);
 		}
@@ -133,7 +105,7 @@ module.exports = function(app) {
 	app.get('/api/games', function(req, res) {
 		console.log("Client requested list of all games...");
 		res.writeHead(200,{'Content-Type': 'application/json'});
-	    res.end(JSON.stringify(ALL_GAMES));
+	    res.end(JSON.stringify(data.GAMES));
 	});
 
 	// Return list of games from a season.
@@ -141,9 +113,9 @@ module.exports = function(app) {
 		var season = req.params.season;
 		console.log("Client requested list of all games from season: " + season + "...");
 		var result = [ ];
-		for (var i = 0; i < ALL_GAMES.length; ++i) {
-		 	if(ALL_GAMES[i].season == season){
-		 		result.push(ALL_GAMES[i]);
+		for (var i = 0; i < data.GAMES.length; ++i) {
+		 	if(data.GAMES[i].season == season){
+		 		result.push(data.GAMES[i]);
 		 	}
 	 	}
 		res.writeHead(200,{'Content-Type': 'application/json'});
@@ -156,9 +128,9 @@ module.exports = function(app) {
 		var week = req.params.week;
 		console.log("Client requested list of all games from season: " + season + ": Week " + week + "...");
 		var result = [ ];
-		for (var i = 0; i < ALL_GAMES.length; ++i) {
-		 	if(ALL_GAMES[i].season == season && ALL_GAMES[i].week == week){
-		 		result.push(ALL_GAMES[i]);
+		for (var i = 0; i < data.GAMES.length; ++i) {
+		 	if(data.GAMES[i].season == season && data.GAMES[i].week == week){
+		 		result.push(data.GAMES[i]);
 		 	}
 	 	}
 		res.writeHead(200,{'Content-Type': 'application/json'});
@@ -171,9 +143,9 @@ module.exports = function(app) {
 		var team = req.params.teamAbbreviation;
 		console.log("Client requested list of all games from the selected team: " + team + "...");
 		var result = [ ];
-		for (var i = 0; i < ALL_GAMES.length; ++i) {
-		 	if(ALL_GAMES[i].visitor == team || ALL_GAMES[i].home == team){
-		 		result.push(ALL_GAMES[i]);
+		for (var i = 0; i < data.GAMES.length; ++i) {
+		 	if(data.GAMES[i].visitor == team || data.GAMES[i].home == team){
+		 		result.push(data.GAMES[i]);
 		 	}
 	 	}
 		res.writeHead(200,{'Content-Type': 'application/json'});
@@ -231,17 +203,17 @@ module.exports = function(app) {
     app.get('/api/topTen', function(req, res) {
     	console.log("Client is requested Top Ten plays from all all games combined...")
     	var results = [ ];
-    	for (var i = 0; i < RESULT_DATA.length - 1; i++) {
-    		if (RESULT_DATA[i].gid !== RESULT_DATA[i + 1].gid) {
+    	for (var i = 0; i < data.PLAYS.length - 1; i++) {
+    		if (data.PLAYS[i].gid !== data.PLAYS[i + 1].gid) {
     			continue;
     		}
-    		var curentWP = (1 - RESULT_DATA[i].VisitorWP);
-			var futureWP = (1 - RESULT_DATA[i + 1].VisitorWP);
+    		var curentWP = (1 - data.PLAYS[i].VisitorWP);
+			var futureWP = (1 - data.PLAYS[i + 1].VisitorWP);
 			var obj = {
-    			gameId: RESULT_DATA[i].gid,
-				playId: RESULT_DATA[i].pid,
-				time: RESULT_DATA[i].Seconds,
-				type: RESULT_DATA[i].type,
+    			gameId: data.PLAYS[i].gid,
+				playId: data.PLAYS[i].pid,
+				time: data.PLAYS[i].Seconds,
+				type: data.PLAYS[i].type,
 				homeWpDiff: futureWP - curentWP
     		};
 	    	results.push(obj);	
@@ -264,8 +236,8 @@ module.exports = function(app) {
 		else{
 			quarterStart = (3600 - (900 * (quarter-1)));
 		}
-		for (var i = 0; i < RESULT_DATA.length; ++i) {
-			var play = RESULT_DATA[i];
+		for (var i = 0; i < data.PLAYS.length; ++i) {
+			var play = data.PLAYS[i];
 			if (gameId == play.gid && play.Seconds <= quarterStart && play.Seconds > quarterEnd) {
 				var obj = {
 					gameId: play.gid,
