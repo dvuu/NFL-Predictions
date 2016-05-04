@@ -13,6 +13,7 @@ function buildChartFromData(plays, title, lastPlay, homeTeam) {
         text: [ ],
         hoverinfo: 'text',
     };
+
     _.each(plays, function(play) {
         var homeWp = (play.homeWp * 100);
         var string = homeTeam + ' Win Probability: ' + homeWp.toFixed(2) + '%' + '<br>Play: '+ play.type 
@@ -22,6 +23,7 @@ function buildChartFromData(plays, title, lastPlay, homeTeam) {
         playSeries.x.push(play.time);
         playSeries.y.push(homeWp.toFixed(2));
     });
+
     var layout = {
         title: title,
         xaxis: {
@@ -57,13 +59,11 @@ function buildChartFromData(plays, title, lastPlay, homeTeam) {
         var index = point.pointNumber;
         var playOne = plays[index];
         var playTwo = plays[index + 1];
-        $playOne.html('<p>' + homeTeam + ' Win Probability: ' + (playOne.homeWp * 100).toFixed(2) + '%' + '<br>Play: '+ playOne.type 
+        var string = '<p>' + homeTeam + ' Win Probability: ' + (playOne.homeWp * 100).toFixed(2) + '%' + '<br>Play: '+ playOne.type 
                     + '<br>OFF/Score: ' + playOne.offense + ': ' + playOne.ptsOffense + '<br>DEF/Score: ' + playOne.defense 
-                    + ': ' + playOne.ptsDefense + '<br>Down: ' + playOne.down + '<br>Time left: ' + playOne.time + ' secs' + '</p>');
-
-        $playTwo.html('<p>' + homeTeam + ' Win Probability: ' + (playTwo.homeWp * 100).toFixed(2) + '%' + '<br>Play: '+ playTwo.type 
-                    + '<br>OFF/Score: ' + playTwo.offense + ': ' + playTwo.ptsOffense + '<br>DEF/Score: ' + playTwo.defense 
-                    + ': ' + playTwo.ptsDefense + '<br>Down: ' + playTwo.down + '<br>Time left: ' + playTwo.time + ' secs' + '</p>');
+                    + ': ' + playOne.ptsDefense + '<br>Down: ' + playOne.down + '<br>Time left: ' + playOne.time + ' secs' + '</p>';
+        $playOne.html(string);
+        $playTwo.html(string);
      });
 
     $chart[0].on('plotly_unhover', function(data) {

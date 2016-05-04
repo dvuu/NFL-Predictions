@@ -54,18 +54,20 @@
 }
 
 .activeFilterItem {
+    background-color: #777;
     color: white;
 }
 
 .activeFilterItem:hover {
+    background-color: #777;
     color: white !important;
 }
 
 .dropdownLink {
-    color: white;
+    color: #ccc;
 }
 .dropdownLink div:hover {
-    background-color: #cccccc;
+    color: #fff;
 }
 
 .dropdownLink div {
