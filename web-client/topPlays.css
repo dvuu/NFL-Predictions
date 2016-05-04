@@ -1,5 +1,10 @@
 .topPlays {
 	height: 450px;
+	color: #5f5f5f;
+}
+
+.topPlaysTitle {
+	color: #6f6f6f;
 }
 
 .posWp{
