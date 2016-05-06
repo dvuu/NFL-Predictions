@@ -111,4 +111,3 @@ function buildChartFromData(playsResult, topTenResult, game) {
 
 
 
-    
