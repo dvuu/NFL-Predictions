@@ -21,84 +21,117 @@ function fixSecondsForOvertime(plays) {
 	var	result = [ ];
 	for (var i = 0; i < plays.length; ++i) {
 		if(plays[i].InOT){
-			var obj = {
-				visitor: plays[i].visitor,
-				home: plays[i].home,
-				gameId: plays[i].gameId,
-				winner: plays[i].winner,
-				playId: plays[i].playId,
-				offense: plays[i].offense,
-				defense: plays[i].defense,
-				time:  (plays[i].time) - 900,
-				type: plays[i].type,
-				down: plays[i].down,
-				ptsOffense: plays[i].ptsOffense,
-				ptsDefense: plays[i].ptsDefense,
-				homeWp: plays[i].homeWp,
-				visitorWp: plays[i].visitorWp,
-				InOT: plays[i].InOT
+			var play = {
+				idx: i,
+				gameId: data.PLAYS[i].gid,
+				home: findHomeTeam(data.PLAYS[i].v, data.PLAYS[i].off, data.PLAYS[i].def),
+				visitor: data.PLAYS[i].v,
+				playId: data.PLAYS[i].pid,
+				offense: data.PLAYS[i].off,
+				defense: data.PLAYS[i].def,
+				type: data.PLAYS[i].type,
+				driveSequence: data.PLAYS[i].dseq,
+				length: data.PLAYS[i].len,
+				quarter: data.PLAYS[i].qtr,
+				minute: data.PLAYS[i].MIN,
+				seconds: data.PLAYS[i].sec,
+				ptsOffense: data.PLAYS[i].ptso,
+				ptsDefense: data.PLAYS[i].ptsd,
+				timeoutsOffense: data.PLAYS[i].TIMO,
+				timeoutsDefense: data.PLAYS[i].TIMD,
+				down: data.PLAYS[i].Down,
+				yardsToGoForFirstDown: data.PLAYS[i].YTG,
+				yardLineFromOwnGoal: data.PLAYS[i].YardLine,
+				fieldZone: data.PLAYS[i].zone,
+				firstDown: data.PLAYS[i].fd,
+				shotGun: data.PLAYS[i].sg,
+				noHuddle: data.PLAYS[i].nh,
+				pointsScored: data.PLAYS[i].pts,
+				tackle: data.PLAYS[i].tck,
+				sack: data.PLAYS[i].sk,
+				penalty: data.PLAYS[i].pen,
+				interception: data.PLAYS[i].ints,
+				fumble: data.PLAYS[i].fum,
+				safety: data.PLAYS[i].saf,
+				block: data.PLAYS[i].blk,
+				offensiveLineI: data.PLAYS[i].olid,
+				winner: data.PLAYS[i].Winner,
+				totalPtsScr: data.PLAYS[i].TOTp,
+				scoreDiff: data.PLAYS[i].Score,
+				inOvertime: data.PLAYS[i].InOT,
+				secondsLeftInGame: (data.PLAYS[i].Seconds - 900),
+				AdjustedScore: data.PLAYS[i].AdjustedScore,
+				vegasSpread: data.PLAYS[i].Spread,
+				actualGameOutcome: data.PLAYS[i].Result,
+				homeWp: (1 - data.PLAYS[i].VisitorWP),
+				visitorWp: data.PLAYS[i].VisitorWP
 			}
 		}
 		else {
-			var obj = {
-				visitor: plays[i].visitor,
-				home: plays[i].home,
-				gameId: plays[i].gameId,
-				winner: plays[i].winner,
-				playId: plays[i].playId,
-				offense: plays[i].offense,
-				defense: plays[i].defense,
-				time:  plays[i].time,
-				type: plays[i].type,
-				down: plays[i].down,
-				ptsOffense: plays[i].ptsOffense,
-				ptsDefense: plays[i].ptsDefense,
-				homeWp: plays[i].homeWp,
-				visitorWp: plays[i].visitorWp,
-				InOT: plays[i].InOT
-			}
+			var play = plays[i];
 		}
-		result.push(obj);
+		result.push(play);
 	}
 	return result;
 }
 
 function findHomeTeam(visitor, off, def) {
-	if (visitor == off) {
-		return def;
-	}
-	else{
-		return off;
-	}
+	return (visitor == off ? def : off);
 }
 
 function getPlaysForGame(gameId){
 	var plays = [ ];
 	for (var i = 0; i < data.PLAYS.length; ++i) {
 		if (gameId == data.PLAYS[i].gid) {
-			var homeTeam = findHomeTeam(data.PLAYS[i].v, data.PLAYS[i].off, data.PLAYS[i].def);
 			var obj = {
-				visitor: data.PLAYS[i].v,
-				home: homeTeam, 
+				idx: i,
 				gameId: data.PLAYS[i].gid,
-				winner: data.PLAYS[i].Winner,
+				home: findHomeTeam(data.PLAYS[i].v, data.PLAYS[i].off, data.PLAYS[i].def),
+				visitor: data.PLAYS[i].v,
 				playId: data.PLAYS[i].pid,
 				offense: data.PLAYS[i].off,
 				defense: data.PLAYS[i].def,
-				time: data.PLAYS[i].Seconds,
 				type: data.PLAYS[i].type,
-				down: data.PLAYS[i].Down,
+				driveSequence: data.PLAYS[i].dseq,
+				length: data.PLAYS[i].len,
+				quarter: data.PLAYS[i].qtr,
+				minute: data.PLAYS[i].MIN,
+				seconds: data.PLAYS[i].sec,
 				ptsOffense: data.PLAYS[i].ptso,
 				ptsDefense: data.PLAYS[i].ptsd,
+				timeoutsOffense: data.PLAYS[i].TIMO,
+				timeoutsDefense: data.PLAYS[i].TIMD,
+				down: data.PLAYS[i].Down,
+				yardsToGoForFirstDown: data.PLAYS[i].YTG,
+				yardLineFromOwnGoal: data.PLAYS[i].YardLine,
+				fieldZone: data.PLAYS[i].zone,
+				firstDown: data.PLAYS[i].fd,
+				shotGun: data.PLAYS[i].sg,
+				noHuddle: data.PLAYS[i].nh,
+				pointsScored: data.PLAYS[i].pts,
+				tackle: data.PLAYS[i].tck,
+				sack: data.PLAYS[i].sk,
+				penalty: data.PLAYS[i].pen,
+				interception: data.PLAYS[i].ints,
+				fumble: data.PLAYS[i].fum,
+				safety: data.PLAYS[i].saf,
+				block: data.PLAYS[i].blk,
+				offensiveLineI: data.PLAYS[i].olid,
+				winner: data.PLAYS[i].Winner,
+				totalPtsScr: data.PLAYS[i].TOTp,
+				scoreDiff: data.PLAYS[i].Score,
+				inOvertime: data.PLAYS[i].InOT,
+				time: data.PLAYS[i].Seconds,
+				AdjustedScore: data.PLAYS[i].AdjustedScore,
+				vegasSpread: data.PLAYS[i].Spread,
+				actualGameOutcome: data.PLAYS[i].Result,
 				homeWp: (1 - data.PLAYS[i].VisitorWP),
-				visitorWp: data.PLAYS[i].VisitorWP,
-				InOT: data.PLAYS[i].InOT
+				visitorWp: data.PLAYS[i].VisitorWP
 			};
 			plays.push(obj);
 		}
 	}
-	plays = fixSecondsForOvertime(plays);
-	return plays;
+	return (fixSecondsForOvertime(plays));
 }
 
 module.exports = function(app) {
@@ -174,89 +207,41 @@ module.exports = function(app) {
     app.get('/api/topTen/:gameId', function(req, res) {
     	var gameId = req.params.gameId;
     	console.log("Client requested top ten plays for game " + gameId + "...");
-    	var newPlays = [ ];
     	var plays = getPlaysForGame(gameId);
     	for (var i = 0; i < plays.length; ++i) {
     		var notLastPlay = (i < (plays.length - 1));
 			if (notLastPlay) {
 				var curentWP = (1 - plays[i].visitorWp);
 				var futureWP = (1 - plays[i + 1].visitorWp);
-				var obj = {
-					home: plays[i].home,
-					visitor: plays[i].visitor,
-					offense: plays[i].offense,
-					defense: plays[i].defense,
-					gameId: plays[i].gameId,
-					playId: plays[i].playId,
-					time: plays[i].time,
-					type: plays[i].type,
-					homeWp: plays[i].homeWp,
-					visitorWp: plays[i].visitorWp,
-					// check with greg
-					homeWpDiff: futureWP - curentWP
-				};
-				newPlays.push(obj);
-			}
-		}
-		var topTen = findBigestPlays(newPlays, 10);
-
-		res.writeHead(200,{'Content-Type': 'application/json'});
-        res.end(JSON.stringify(topTen));
-    });
-
-    //returns top 10 plays from all games combined 
-    app.get('/api/topTen', function(req, res) {
-    	console.log("Client is requested Top Ten plays from all all games combined...")
-    	var results = [ ];
-    	for (var i = 0; i < data.PLAYS.length - 1; i++) {
-    		if (data.PLAYS[i].gid !== data.PLAYS[i + 1].gid) {
-    			continue;
-    		}
-    		var curentWP = (1 - data.PLAYS[i].VisitorWP);
-			var futureWP = (1 - data.PLAYS[i + 1].VisitorWP);
-			var obj = {
-    			gameId: data.PLAYS[i].gid,
-				playId: data.PLAYS[i].pid,
-				time: data.PLAYS[i].Seconds,
-				type: data.PLAYS[i].type,
-				homeWpDiff: futureWP - curentWP
-    		};
-	    	results.push(obj);	
-    	}
-    	var allTopTen = findBigestPlays(results, 100)
-    	res.writeHead(200,{'Content-Type': 'application/json'});
-        res.end(JSON.stringify(allTopTen));
-    });
-
-// Grabs games by quarter where quarter is time left in seconds (e.g 3600 -> 2700 seconds = 1st quarter)
-    app.get('/api/plays/:gameId/:quarter', function(req, res) {
-		var gameId = req.params.gameId;
-		var quarter =req.params.quarter;
-		var plays = [ ];
-		var quarterStart = undefined;
-		var quarterEnd = (3600 - (quarter * 900));
-		if (quarter == 1) {
-			quarterStart = 3600;
-		}
-		else{
-			quarterStart = (3600 - (900 * (quarter-1)));
-		}
-		for (var i = 0; i < data.PLAYS.length; ++i) {
-			var play = data.PLAYS[i];
-			if (gameId == play.gid && play.Seconds <= quarterStart && play.Seconds > quarterEnd) {
-				var obj = {
-					gameId: play.gid,
-					playId: play.pid,
-					time: play.Seconds,
-					type: play.type,
-					homeWp: (1 - play.VisitorWP),
-					visitorWp: play.VisitorWP
-				};
-				plays.push(obj);
+				plays[i].homeWpDiff = (futureWP - curentWP);
 			}
 		}
 		res.writeHead(200,{'Content-Type': 'application/json'});
-        res.end(JSON.stringify(plays));
+        res.end(JSON.stringify(findBigestPlays(plays, 10)));
     });
+}
 
-};
+//     //returns top 10 plays from all games combined 
+//     app.get('/api/topTen', function(req, res) {
+//     	console.log("Client is requested Top Ten plays from all all games combined...")
+//     	var results = [ ];
+//     	for (var i = 0; i < data.PLAYS.length - 1; i++) {
+//     		if (data.PLAYS[i].gid !== data.PLAYS[i + 1].gid) {
+//     			continue;
+//     		}
+//     		var curentWP = (1 - data.PLAYS[i].VisitorWP);
+// 			var futureWP = (1 - data.PLAYS[i + 1].VisitorWP);
+// 			var obj = {
+//     			gameId: data.PLAYS[i].gid,
+// 				playId: data.PLAYS[i].pid,
+// 				time: data.PLAYS[i].Seconds,
+// 				type: data.PLAYS[i].type,
+// 				homeWpDiff: futureWP - curentWP
+//     		};
+// 	    	results.push(obj);	
+//     	}
+//     	var allTopTen = findBigestPlays(results, 100)
+//     	res.writeHead(200,{'Content-Type': 'application/json'});
+//         res.end(JSON.stringify(allTopTen));
+//     });
+// }
