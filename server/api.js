@@ -22,6 +22,7 @@ function fixSecondsForOvertime(plays) {
 	for (var i = 0; i < plays.length; ++i) {
 		if(plays[i].InOT){
 			var obj = {
+				idx: i,
 				visitor: plays[i].visitor,
 				home: plays[i].home,
 				gameId: plays[i].gameId,
@@ -41,6 +42,7 @@ function fixSecondsForOvertime(plays) {
 		}
 		else {
 			var obj = {
+				idx: i,
 				visitor: plays[i].visitor,
 				home: plays[i].home,
 				gameId: plays[i].gameId,
@@ -78,6 +80,7 @@ function getPlaysForGame(gameId){
 		if (gameId == data.PLAYS[i].gid) {
 			var homeTeam = findHomeTeam(data.PLAYS[i].v, data.PLAYS[i].off, data.PLAYS[i].def);
 			var obj = {
+				idx: i,
 				visitor: data.PLAYS[i].v,
 				home: homeTeam, 
 				gameId: data.PLAYS[i].gid,
@@ -182,6 +185,7 @@ module.exports = function(app) {
 				var curentWP = (1 - plays[i].visitorWp);
 				var futureWP = (1 - plays[i + 1].visitorWp);
 				var obj = {
+					idx: i,
 					home: plays[i].home,
 					visitor: plays[i].visitor,
 					offense: plays[i].offense,
