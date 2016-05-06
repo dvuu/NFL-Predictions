@@ -73,7 +73,7 @@ function typeify(value) {
 // grabs basic information from all games
 function gameDataSubset(gameData) {
     var result = [ ];
-    for (var i = 3189; i < gameData.length; ++i) {
+    for (var i = 3188; i < gameData.length; ++i) {
         var obj = {
             gameId: gameData[i].gid,
             season: gameData[i].seas,
