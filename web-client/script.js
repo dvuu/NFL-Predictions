@@ -111,8 +111,16 @@ function playDescription(play) {
 function displayTopTen(topTenResult){
 	var $topTenDiv = $('.topPlays');
 	_.each(topTenResult, function(play) {
-		var $playElement = $('<div class="homeWP">' + playDescription(play) + '</div>');
+		var $playElement = $('<div class="topPlay">' + playDescription(play) + '</div>');
 		$topTenDiv.append($playElement);
+		//event function that when you hover top ten it will dislay where it is located on the chart
+		$playElement.on('mouseover', function( ){
+			console.dir(play);
+			Plotly.Fx.hover('chart',[
+  				{curveNumber:0, pointNumber: play.idx},
+  				{curveNumber:0, pointNumber: (play.idx + 1)}
+  			]);;
+		});
 	});
 }
 
