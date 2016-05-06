@@ -24,11 +24,6 @@ function gameTitle(gameObj) {
 	return (gameObj.visitor + ' @ ' + gameObj.home); 
 }
 
-function chartTitle(gameObj) {
-	return (gameObj.season + ' - Week ' + gameObj.week + ': ' + gameObj.visitor + ': ' + gameObj.ptsVisitor 
-			+ ' @ ' + gameObj.home + ': ' + gameObj.ptsHome);
-}
-
 function renderFromQueryString() {
 	var queryString = window.location.search;
 	var queryParam = queryString.substr(5, 4);
@@ -49,19 +44,18 @@ function renderFromQueryString() {
 }	
 
 function renderGame(game) {
-	var url = '/api/plays/' + game.gameId;
+	var playUrl = '/api/plays/' + game.gameId;
 	var topTenUrl = '/api/topTen/' + game.gameId;
-	$.ajax({ url: url, success: function(result) {
-		var lastPlay = result[result.length-1].time;
+	$.ajax({ url: playUrl, success: function(playsResult) {
 		$('.topPlays').empty();
 		$.ajax({ url: topTenUrl, success: function(topTenResult) {
-			buildChartFromData(result, topTenResult, chartTitle(game), lastPlay, game.home);
+			buildChartFromData(playsResult, topTenResult, game);
 			displayTopTen(topTenResult);
 		}});
 	}});
 	$('.homeLogo, .awayLogo').removeClass(function(idx, css) {
-		var match = css.match(/team\-.*/);
-		return match ? match.join(' ') : null;
+		var match = css.match(/team\-\w*/);
+		return (match ? match.join(' ') : null);
 	});
 	$('.homeLogo').addClass('team-' + game.home.toLowerCase());
 	$('.awayLogo').addClass('team-' + game.visitor.toLowerCase());
@@ -77,7 +71,6 @@ function buildSeasonsFilter() {
 		$listItem.click(function (e) {
 			$('.seasonsDropdown .dropdownLink div').removeClass('activeFilterItem');
             $(e.currentTarget).children('div').addClass('activeFilterItem');
-			buildChartFromData();
 			setSelectedSeasonText(season);
 			setSelectedWeekText(' -- ');
 			setSelectedGameText(' -- ');
@@ -97,7 +90,6 @@ function buildWeeksFilter(season) {
 		$listItem.click(function (e) {
 			$('.weeksDropdown .dropdownLink div').removeClass('activeFilterItem');
             $(e.currentTarget).children('div').addClass('activeFilterItem');
-			buildChartFromData();
 			setSelectedWeekText(week);
 			setSelectedGameText(' -- ');
 			buildGamesFilter(season, week);
@@ -136,7 +128,6 @@ function onGameClick(e, game) {
 function buildGamesFilter(season, week) {
 	$('.gamesDropdown .dropdown-content').empty();
 	$.ajax({ url: '/api/games/' + season + '/' + week, success: function(result) {
-
 		_.each(result, function(game) {
 			var $listItem = $('<a class="dropdownLink"></a>');
 			var $div = $('<div><span>' + gameTitle(game) + '</span></div>');

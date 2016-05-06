@@ -1,9 +1,15 @@
-// look at game 3987
 
-function buildChartFromData(playsResult, topTenResult, title, lastPlay, homeTeam) {
+function chartTitle(gameObj) {
+    return (gameObj.season + ' - Week ' + gameObj.week + ': ' + gameObj.visitor + ': ' + gameObj.ptsVisitor 
+            + ' @ ' + gameObj.home + ': ' + gameObj.ptsHome);
+}
+
+function buildChartFromData(playsResult, topTenResult, game) {
     var $chart = $('#chart');
     var $playOne = $('.playOne');
     var $playTwo = $('.playTwo');
+
+    var lastPlay = playsResult[playsResult.length-1].time;
 
     var playSeries = {
         x: [ ],
@@ -12,6 +18,7 @@ function buildChartFromData(playsResult, topTenResult, title, lastPlay, homeTeam
         type: 'scatter',
         text: [ ],
         hoverinfo: 'text',
+        fill: 'tozeroy'
     };
 
     // var topTenSeries = {
@@ -23,7 +30,7 @@ function buildChartFromData(playsResult, topTenResult, title, lastPlay, homeTeam
 
     _.each(playsResult, function(play) {
         var homeWp = (play.homeWp * 100);
-        var string = homeTeam + ' Win Probability: ' + homeWp.toFixed(2) + '%' + '<br>Play: '+ play.type 
+        var string = play.home + ' Win Probability: ' + homeWp.toFixed(2) + '%' + '<br>Play: '+ play.type 
                     + '<br>OFF/Score: ' + play.offense + ': ' + play.ptsOffense + '<br>DEF/Score: ' + play.defense 
                     + ': ' + play.ptsDefense + '<br>Down: ' + play.down + '<br>Time left: ' + play.time + ' secs';
         playSeries.text.push(string);
@@ -38,7 +45,7 @@ function buildChartFromData(playsResult, topTenResult, title, lastPlay, homeTeam
     // });
 
     var layout = {
-        title: title,
+        title: chartTitle(game),
         xaxis: {
             title: 'Game time remaining (seconds)',
             range: [3700, (lastPlay + -100)], // add padding so the labels aren't slammed against the axes
@@ -46,7 +53,7 @@ function buildChartFromData(playsResult, topTenResult, title, lastPlay, homeTeam
             zeroline: false
         },
         yaxis: {
-            title: homeTeam + ' Win Probability (%)',
+            title: game.home + ' Win Probability (%)',
             range: [0, 100]
         },
         showLegend: true,
@@ -71,12 +78,12 @@ function buildChartFromData(playsResult, topTenResult, title, lastPlay, homeTeam
                 }
             }
         ]
-    }
+    };
 
     Plotly.newPlot('chart', [playSeries], layout, {displayModeBar: false});
 
     function playInfoString(playsObj) {
-        return ('<p>' + homeTeam + ' Win Probability: ' + (playsObj.homeWp * 100).toFixed(2) + '%' + '<br>Play: '+ playsObj.type 
+        return ('<p>' + playsObj.home + ' Win Probability: ' + (playsObj.homeWp * 100).toFixed(2) + '%' + '<br>Play: '+ playsObj.type 
             + '<br>OFF/Score: ' + playsObj.offense + ': ' + playsObj.ptsOffense + '<br>DEF/Score: ' + playsObj.defense 
             + ': ' + playsObj.ptsDefense + '<br>Down: ' + playsObj.down + '<br>Time left: ' + playsObj.time + ' secs' + '</p>');
     }
