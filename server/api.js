@@ -5,7 +5,7 @@ data.initialize(function() {
 	console.log("Data has been parsed. App is now ready");
 });
 
-//change JSON to have overtime.
+// Changes overtime seconds to negative
 // First solution: assumes that any play with game time greater than previous game is overtime
 	// Penalties that give time back are assumed to be overtime, making this solution not work.
 	// ----------------------------
@@ -62,7 +62,8 @@ function fixSecondsForOvertime(plays) {
 	}
 	return result;
 }
-function findTheHomeTeam(visitor, off, def) {
+
+function findHomeTeam(visitor, off, def) {
 	if (visitor == off) {
 		return def;
 	}
@@ -70,11 +71,12 @@ function findTheHomeTeam(visitor, off, def) {
 		return off;
 	}
 }
+
 function getPlaysForGame(gameId){
 	var plays = [ ];
 	for (var i = 0; i < data.PLAYS.length; ++i) {
 		if (gameId == data.PLAYS[i].gid) {
-			var homeTeam = findTheHomeTeam(data.PLAYS[i].v, data.PLAYS[i].off, data.PLAYS[i].def);
+			var homeTeam = findHomeTeam(data.PLAYS[i].v, data.PLAYS[i].off, data.PLAYS[i].def);
 			var obj = {
 				visitor: data.PLAYS[i].v,
 				home: homeTeam, 
@@ -189,6 +191,8 @@ module.exports = function(app) {
 					time: plays[i].time,
 					type: plays[i].type,
 					homeWp: plays[i].homeWp,
+					visitorWp: plays[i].visitorWp,
+					// check with greg
 					homeWpDiff: futureWP - curentWP
 				};
 				newPlays.push(obj);

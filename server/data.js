@@ -44,7 +44,8 @@ function readCsv(filename, callback) {
             // Create an object per line
             var obj = { };
             _.each(lineValues, function(value, idx) {
-                obj[columns[idx]] = typeify(value);
+                var key = columns[idx];
+                obj[key] = typeify(value);
             });
             ret.push(obj);
         }
