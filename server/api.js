@@ -28,6 +28,20 @@ function fixSecondsForOvertime(plays) {
 	return result;
 }
 
+function addWinPredictionDifference (plays) {
+	var result = [ ];
+	for (var i = 0; i < plays.length; ++i) {
+		var notLastPlay = (i < (plays.length - 1));
+		if (notLastPlay) {
+			var curentWP = (plays[i].homeWp);
+			var futureWP = (plays[i + 1].homeWp);
+			plays[i].homeWpDiff = (futureWP - curentWP);
+			result.push(plays[i]);
+		}
+	}
+	return result;
+}
+
 function findHomeTeam(visitor, off, def) {
 	return (visitor == off ? def : off);
 }
@@ -85,7 +99,9 @@ function getPlaysForGame(gameId){
 			plays.push(obj);
 		}
 	}
-	return (fixSecondsForOvertime(plays));
+	var fixedPlays = fixSecondsForOvertime(plays);
+	var plays = addWinPredictionDifference(fixedPlays);
+	return plays;
 }
 
 module.exports = function(app) {
@@ -162,14 +178,6 @@ module.exports = function(app) {
     	var gameId = req.params.gameId;
     	console.log("Client requested top ten plays for game " + gameId + "...");
     	var plays = getPlaysForGame(gameId);
-    	for (var i = 0; i < plays.length; ++i) {
-    		var notLastPlay = (i < (plays.length - 1));
-			if (notLastPlay) {
-				var curentWP = (1 - plays[i].visitorWp);
-				var futureWP = (1 - plays[i + 1].visitorWp);
-				plays[i].homeWpDiff = (futureWP - curentWP);
-			}
-		}
 		res.writeHead(200,{'Content-Type': 'application/json'});
         res.end(JSON.stringify(findBigestPlays(plays, 10)));
     });
