@@ -20,7 +20,7 @@ data.initialize(function() {
 function fixSecondsForOvertime(plays) {
 	var	result = [ ];
 	for (var i = 0; i < plays.length; ++i) {
-		if(plays[i].InOT){
+		if(plays[i].inOvertime){
 			var play = {
 				idx: i,
 				gameId: data.PLAYS[i].gid,
