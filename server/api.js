@@ -20,56 +20,9 @@ data.initialize(function() {
 function fixSecondsForOvertime(plays) {
 	var	result = [ ];
 	for (var i = 0; i < plays.length; ++i) {
-		if(plays[i].inOvertime){
-			var play = {
-				idx: i,
-				gameId: data.PLAYS[i].gid,
-				home: findHomeTeam(data.PLAYS[i].v, data.PLAYS[i].off, data.PLAYS[i].def),
-				visitor: data.PLAYS[i].v,
-				playId: data.PLAYS[i].pid,
-				offense: data.PLAYS[i].off,
-				defense: data.PLAYS[i].def,
-				type: data.PLAYS[i].type,
-				driveSequence: data.PLAYS[i].dseq,
-				length: data.PLAYS[i].len,
-				quarter: data.PLAYS[i].qtr,
-				minute: data.PLAYS[i].MIN,
-				seconds: data.PLAYS[i].sec,
-				ptsOffense: data.PLAYS[i].ptso,
-				ptsDefense: data.PLAYS[i].ptsd,
-				timeoutsOffense: data.PLAYS[i].TIMO,
-				timeoutsDefense: data.PLAYS[i].TIMD,
-				down: data.PLAYS[i].Down,
-				yardsToGoForFirstDown: data.PLAYS[i].YTG,
-				yardLineFromOwnGoal: data.PLAYS[i].YardLine,
-				fieldZone: data.PLAYS[i].zone,
-				firstDown: data.PLAYS[i].fd,
-				shotGun: data.PLAYS[i].sg,
-				noHuddle: data.PLAYS[i].nh,
-				pointsScored: data.PLAYS[i].pts,
-				tackle: data.PLAYS[i].tck,
-				sack: data.PLAYS[i].sk,
-				penalty: data.PLAYS[i].pen,
-				interception: data.PLAYS[i].ints,
-				fumble: data.PLAYS[i].fum,
-				safety: data.PLAYS[i].saf,
-				block: data.PLAYS[i].blk,
-				offensiveLineI: data.PLAYS[i].olid,
-				winner: data.PLAYS[i].Winner,
-				totalPtsScr: data.PLAYS[i].TOTp,
-				scoreDiff: data.PLAYS[i].Score,
-				inOvertime: data.PLAYS[i].InOT,
-				time: (data.PLAYS[i].Seconds - 900),
-				AdjustedScore: data.PLAYS[i].AdjustedScore,
-				vegasSpread: data.PLAYS[i].Spread,
-				actualGameOutcome: data.PLAYS[i].Result,
-				homeWp: (1 - data.PLAYS[i].VisitorWP),
-				visitorWp: data.PLAYS[i].VisitorWP
-			}
-		}
-		else {
-			var play = plays[i];
-		}
+		var play = plays[i];
+		if(plays[i].inOvertime)
+			play.time = play.time - 900;
 		result.push(play);
 	}
 	return result;
