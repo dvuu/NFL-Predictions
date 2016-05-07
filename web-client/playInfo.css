@@ -2,3 +2,16 @@
 	align-content: center;
 	text-align: center;
 }
+
+.arrow {
+	font-size: 40px;
+	color: #6f6f6f;
+}
+
+.playOne, .playTwo {
+	color: #5f5f5f;
+}
+
+.swing {
+	font-size: 24px;
+}

@@ -91,7 +91,12 @@ function buildChartFromData(playsResult, topTenResult, game) {
 
     function swingString(playsResult) {
         var homeWpDiff = (playsResult.homeWpDiff * 100).toFixed(2);
-        return ('<p>' + playsResult.homeWpDiff + '% swing<br><span class="arrow">></span></p>');
+        if (homeWpDiff > 0) {
+            return ('<p>' + '<span class="posWp swing">+' + homeWpDiff + '%</span><br><span class="arrow">></span></p>');
+        }
+        else {
+            return ('<p>' + '<span class="negWp swing">' + homeWpDiff + '%</span><br><span class="arrow">></span></p>');
+        }
     }
 
     $chart[0].on('plotly_click', function(data) {
@@ -107,7 +112,7 @@ function buildChartFromData(playsResult, topTenResult, game) {
         var playTwo = playsResult[index + 1];
         $playOne.html(playInfoString(playOne));
         $playTwo.html(playInfoString(playTwo));
-        $playSwing.html(swingString);
+        $playSwing.html(swingString(playOne));
      });
 
     // $chart[0].on('plotly_unhover', function(data) {
