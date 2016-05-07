@@ -101,21 +101,20 @@ function buildWeeksFilter(season) {
 function playDescription(play) {
 	var homeWpDiff = Math.floor(play.homeWpDiff * 1000) / 10;
 	if (play.homeWpDiff > 0) {
-	 	return '<span>' + play.type + ' play at ' + play.time + ' seconds left. <span class="posWp">(+' + homeWpDiff + '%)</span></span>';
+	 	return '<span>' + play.type + ' at ' + play.minute + ':' + play.seconds + ' minutes left in Q' + play.quarter + ' <span class="posWp">(+' + homeWpDiff + '%)</span></span>';
 	}
 	else{
-	 	return '<span>' + play.type + ' play at ' + play.time + ' seconds left. <span class="negWp">(' + homeWpDiff + '%)</span></span>';
+	 	return '<span>' + play.type + ' at ' + play.minute + ':' + play.seconds + ' minutes left in Q' + play.quarter + ' <span class="negWp">(+' + homeWpDiff + '%)</span></span>';
 	}
 }
 
-function displayTopTen(topTenResult){
+function displayTopTen(topTenResult) {
 	var $topTenDiv = $('.topPlays');
 	_.each(topTenResult, function(play) {
 		var $playElement = $('<div class="topPlay">' + playDescription(play) + '</div>');
 		$topTenDiv.append($playElement);
 		//event function that when you hover top ten it will dislay where it is located on the chart
-		$playElement.on('mouseover', function( ){
-			console.dir(play);
+		$playElement.on('mouseover', function( ) {
 			Plotly.Fx.hover('chart',[
   				{curveNumber:0, pointNumber: play.idx},
   				{curveNumber:0, pointNumber: (play.idx + 1)}
