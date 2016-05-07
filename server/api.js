@@ -81,10 +81,11 @@ function findHomeTeam(visitor, off, def) {
 
 function getPlaysForGame(gameId){
 	var plays = [ ];
+	var curIdx = 0;
 	for (var i = 0; i < data.PLAYS.length; ++i) {
 		if (gameId == data.PLAYS[i].gid) {
 			var obj = {
-				idx: i,
+				idx: curIdx++,
 				gameId: data.PLAYS[i].gid,
 				home: findHomeTeam(data.PLAYS[i].v, data.PLAYS[i].off, data.PLAYS[i].def),
 				visitor: data.PLAYS[i].v,
