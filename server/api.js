@@ -59,7 +59,7 @@ function fixSecondsForOvertime(plays) {
 				totalPtsScr: data.PLAYS[i].TOTp,
 				scoreDiff: data.PLAYS[i].Score,
 				inOvertime: data.PLAYS[i].InOT,
-				secondsLeftInGame: (data.PLAYS[i].Seconds - 900),
+				time: (data.PLAYS[i].Seconds - 900),
 				AdjustedScore: data.PLAYS[i].AdjustedScore,
 				vegasSpread: data.PLAYS[i].Spread,
 				actualGameOutcome: data.PLAYS[i].Result,
