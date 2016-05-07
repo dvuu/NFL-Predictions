@@ -7,6 +7,7 @@ function chartTitle(gameObj) {
 function buildChartFromData(playsResult, topTenResult, game) {
     var $chart = $('#chart');
     var $playOne = $('.playOne');
+    var $playSwing = $('.playSwing');
     var $playTwo = $('.playTwo');
 
     var lastPlay = playsResult[playsResult.length-1].time;
@@ -82,10 +83,15 @@ function buildChartFromData(playsResult, topTenResult, game) {
 
     Plotly.newPlot('chart', [playSeries], layout, {displayModeBar: false});
 
-    function playInfoString(playsObj) {
-        return ('<p>' + playsObj.home + ' Win Probability: ' + (playsObj.homeWp * 100).toFixed(2) + '%' + '<br>Play: '+ playsObj.type 
-            + '<br>OFF/Score: ' + playsObj.offense + ': ' + playsObj.ptsOffense + '<br>DEF/Score: ' + playsObj.defense 
-            + ': ' + playsObj.ptsDefense + '<br>Down: ' + playsObj.down + '<br>Time left: ' + playsObj.time + ' secs' + '</p>');
+    function playInfoString(playsResult) {
+        return ('<p>' + playsResult.home + ' Win Probability: ' + (playsResult.homeWp * 100).toFixed(2) + '%' + '<br>Play: '+ playsResult.type 
+            + '<br>OFF/Score: ' + playsResult.offense + ': ' + playsResult.ptsOffense + '<br>DEF/Score: ' + playsResult.defense 
+            + ': ' + playsResult.ptsDefense + '<br>Down: ' + playsResult.down + '<br>Time left: ' + playsResult.time + ' secs' + '</p>');
+    }
+
+    function swingString(playsResult) {
+        var homeWpDiff = (playsResult.homeWpDiff * 100).toFixed(2);
+        return ('<p>' + playsResult.homeWpDiff + '% swing<br><span class="arrow">></span></p>');
     }
 
     $chart[0].on('plotly_click', function(data) {
@@ -101,6 +107,7 @@ function buildChartFromData(playsResult, topTenResult, game) {
         var playTwo = playsResult[index + 1];
         $playOne.html(playInfoString(playOne));
         $playTwo.html(playInfoString(playTwo));
+        $playSwing.html(swingString);
      });
 
     // $chart[0].on('plotly_unhover', function(data) {
