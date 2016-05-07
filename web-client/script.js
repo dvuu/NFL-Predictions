@@ -100,12 +100,22 @@ function buildWeeksFilter(season) {
 }
 
 function playDescription(play) {
-	var homeWpDiff = Math.floor(play.homeWpDiff * 1000) / 10;
+	var homeWpDiff = (play.homeWpDiff * 100).toFixed(2);
 	if (play.homeWpDiff > 0) {
-	 	return '<span>' + play.type + ' at ' + play.minute + ':' + play.seconds + ' minutes left in Q' + play.quarter + ' <span class="posWp">(+' + homeWpDiff + '%)</span></span>';
+		if (play.seconds < 10) {
+		 	return '<span>' + play.type + ' at ' + play.minute + ':0' + play.seconds + ' minutes left in Q' + play.quarter + ' <span class="posWp">(+' + homeWpDiff + '%)</span></span>';
+		} 
+		else {
+			return '<span>' + play.type + ' at ' + play.minute + ':' + play.seconds + ' minutes left in Q' + play.quarter + ' <span class="posWp">(+' + homeWpDiff + '%)</span></span>';
+		}
 	}
-	else{
-	 	return '<span>' + play.type + ' at ' + play.minute + ':' + play.seconds + ' minutes left in Q' + play.quarter + ' <span class="negWp">(+' + homeWpDiff + '%)</span></span>';
+	else {
+		if (play.seconds < 10) {
+	 		return '<span>' + play.type + ' at ' + play.minute + ':0' + play.seconds + ' minutes left in Q' + play.quarter + ' <span class="negWp">(' + homeWpDiff + '%)</span></span>';
+		}
+		else {
+			return '<span>' + play.type + ' at ' + play.minute + ':' + play.seconds + ' minutes left in Q' + play.quarter + ' <span class="negWp">(' + homeWpDiff + '%)</span></span>';
+		}
 	}
 }
 
