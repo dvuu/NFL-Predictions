@@ -1,7 +1,7 @@
 
 function chartTitle(gameObj) {
-    return (gameObj.season + ' - Week ' + gameObj.week + ': ' + gameObj.visitor + ': ' + gameObj.ptsVisitor 
-            + ' @ ' + gameObj.home + ': ' + gameObj.ptsHome);
+    return (gameObj.season + ' - Week ' + gameObj.week + ': ' + gameObj.visitor 
+        + ': ' + gameObj.ptsVisitor + ' @ ' + gameObj.home + ': ' + gameObj.ptsHome);
 }
 
 function buildChartFromData(playsResult, topTenResult, game) {
@@ -31,9 +31,11 @@ function buildChartFromData(playsResult, topTenResult, game) {
 
     _.each(playsResult, function(play) {
         var homeWp = (play.homeWp * 100);
-        var string = play.home + ' Win Probability: ' + homeWp.toFixed(2) + '%' + '<br>Play: '+ play.type 
-                    + '<br>OFF/Score: ' + play.offense + ': ' + play.ptsOffense + '<br>DEF/Score: ' + play.defense 
-                    + ': ' + play.ptsDefense + '<br>Down: ' + play.down + '<br>Time left: ' + play.time + ' secs';
+        var string = play.home + ' Win Probability: ' + homeWp.toFixed(2) + '%' 
+            + '<br>Play: '+ play.type + '<br>OFF/Score: ' + play.offense + ': ' 
+            + play.ptsOffense + '<br>DEF/Score: ' + play.defense + ': ' 
+            + play.ptsDefense + '<br>Down: ' + play.down + '<br>Time left: ' 
+            + play.time + ' secs';
         playSeries.text.push(string);
         playSeries.x.push(play.time);
         playSeries.y.push(homeWp.toFixed(2));
@@ -84,18 +86,39 @@ function buildChartFromData(playsResult, topTenResult, game) {
     Plotly.newPlot('chart', [playSeries], layout, {displayModeBar: false});
 
     function playInfoString(playsResult) {
-        return ('<p>' + playsResult.home + ' Win Probability: ' + (playsResult.homeWp * 100).toFixed(2) + '%' + '<br>Play: '+ playsResult.type 
-            + '<br>OFF/Score: ' + playsResult.offense + ': ' + playsResult.ptsOffense + '<br>DEF/Score: ' + playsResult.defense 
-            + ': ' + playsResult.ptsDefense + '<br>Down: ' + playsResult.down + '<br>Time left: ' + playsResult.time + ' secs' + '</p>');
+        return ('<p>' + playsResult.visitor + ': ' + playsResult.ptsVisitor + ' @ ' 
+            + playsResult.home + ': ' + playsResult.ptsHome + '</p>');
     }
 
     function swingString(playsResult) {
         var homeWpDiff = (playsResult.homeWpDiff * 100).toFixed(2);
-        if (homeWpDiff > 0) {
-            return ('<p>' + '<span class="posWp swing">+' + homeWpDiff + '%</span><br><span class="arrow">></span></p>');
+        if (playsResult.home == playsResult.offense) {
+            if (homeWpDiff > 0) {
+                return ('<p><span class="arrow">→</span>' 
+                    + '<br><span class="posWp swing">+' + homeWpDiff + '%</span>' 
+                    + '<br>Offense: ' + playsResult.offense + '<br>Score: +' 
+                    + playsResult.ptsHomeGain + '</p>');
+            }
+            else {
+                return ('<p><span class="arrow">→</span>' 
+                    + '<br><span class="negWp swing">' + homeWpDiff + '%</span>' 
+                    + '<br>Offense: ' + playsResult.offense + '<br>Score: +' 
+                    + playsResult.ptsHomeGain + '</p>');
+            }
         }
         else {
-            return ('<p>' + '<span class="negWp swing">' + homeWpDiff + '%</span><br><span class="arrow">></span></p>');
+            if (homeWpDiff > 0) {
+                return ('<p><span class="arrow">→</span>' 
+                    + '<br><span class="posWp swing">+' + homeWpDiff + '%</span>' 
+                    + '<br>Offense: ' + playsResult.offense + '<br>Score: +' 
+                    + playsResult.ptsVisitorGain + '</p>');
+            }
+            else {
+                return ('<p><span class="arrow">→</span>' 
+                    + '<br><span class="negWp swing">' + homeWpDiff + '%</span>' 
+                    + '<br>Offense: ' + playsResult.offense + '<br>Score: +' 
+                    + playsResult.ptsVisitorGain + '</p>');
+            }
         }
     }
 
