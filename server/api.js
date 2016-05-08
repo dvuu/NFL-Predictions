@@ -59,9 +59,10 @@ function getPlaysForGame(gameId){
 			plays.push(obj);
 		}
 	}
-	var fixedOt = fixSecondsForOvertime(plays);
-	var addedScore = addHomeAndVisitorScore(fixedOt)
-	var fixedPlays = addWinPredictionDifference(addedScore);
+	var fix1 = fixSecondsForOvertime(plays);
+	var fix2 = addHomeAndVisitorScore(fix1);
+	var fix3 = addPointsGainPerPlay(fix2);
+	var fixedPlays = addWinPredictionDifference(fix3);
 	return fixedPlays;
 }
 
@@ -95,8 +96,22 @@ function addHomeAndVisitorScore(plays) {
 	return result;
 }
 
+// Adds points gain per play propety
+function addPointsGainPerPlay(plays) {
+	var result = [ ];
+	for (var i = 0; i < plays.length; ++i) {
+		var notLastPlay = (i < (plays.length - 1));
+		if (notLastPlay) {
+			plays[i].ptsHomeGain = (plays[i + 1].ptsHome - plays[i].ptsHome);
+			plays[i].ptsVisitorGain = (plays[i + 1].ptsVisitor - plays[i].ptsVisitor);
+			result.push(plays[i]);
+		}
+	}
+	return result;
+}
+
 // Adds win prediction difference
-function addWinPredictionDifference (plays) {
+function addWinPredictionDifference(plays) {
 	var result = [ ];
 	for (var i = 0; i < plays.length; ++i) {
 		var notLastPlay = (i < (plays.length - 1));
