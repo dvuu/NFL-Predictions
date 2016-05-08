@@ -5,47 +5,6 @@ data.initialize(function() {
 	console.log("Data has been parsed. App is now ready");
 });
 
-// Changes overtime seconds to negative
-// First solution: assumes that any play with game time greater than previous game is overtime
-	// Penalties that give time back are assumed to be overtime, making this solution not work.
-	// ----------------------------
-	// var hitOT = false;
-	// for (var i = 0; i < plays.length; ++i) {
-	// 	var isNotFirstPlay = (i !== 0);
-	// 	var isOutOfOrder = (isNotFirstPlay && (plays[i - 1].time < plays[i].time));
-	// 	if (isOutOfOrder)
-	// 		hitOT = true;
-	// 	if (hitOT) {
-	// ---------------------------
-function fixSecondsForOvertime(plays) {
-	var	result = [ ];
-	for (var i = 0; i < plays.length; ++i) {
-		var play = plays[i];
-		if(plays[i].inOvertime)
-			play.time = play.time - 900;
-		result.push(play);
-	}
-	return result;
-}
-
-function addWinPredictionDifference (plays) {
-	var result = [ ];
-	for (var i = 0; i < plays.length; ++i) {
-		var notLastPlay = (i < (plays.length - 1));
-		if (notLastPlay) {
-			var curentWP = (plays[i].homeWp);
-			var futureWP = (plays[i + 1].homeWp);
-			plays[i].homeWpDiff = (futureWP - curentWP);
-			result.push(plays[i]);
-		}
-	}
-	return result;
-}
-
-function findHomeTeam(visitor, off, def) {
-	return (visitor == off ? def : off);
-}
-
 function getPlaysForGame(gameId){
 	var plays = [ ];
 	var curIdx = 0;
@@ -99,9 +58,67 @@ function getPlaysForGame(gameId){
 			plays.push(obj);
 		}
 	}
-	var fixedPlays = fixSecondsForOvertime(plays);
-	var plays = addWinPredictionDifference(fixedPlays);
-	return plays;
+	var fixedOt = fixSecondsForOvertime(plays);
+	var addedScore = addHomeAndVisitorScore(fixedOt)
+	var fixedPlays = addWinPredictionDifference(addedScore);
+	return fixedPlays;
+}
+
+// Changes overtime seconds to negative
+// First solution: assumes that any play with game time greater than previous game is overtime
+	// Penalties that give time back are assumed to be overtime, making this solution not work.
+	// ----------------------------
+	// var hitOT = false;
+	// for (var i = 0; i < plays.length; ++i) {
+	// 	var isNotFirstPlay = (i !== 0);
+	// 	var isOutOfOrder = (isNotFirstPlay && (plays[i - 1].time < plays[i].time));
+	// 	if (isOutOfOrder)
+	// 		hitOT = true;
+	// 	if (hitOT) {
+	// ---------------------------
+function fixSecondsForOvertime(plays) {
+	var	result = [ ];
+	for (var i = 0; i < plays.length; ++i) {
+		if (plays[i].inOvertime)
+			plays[i].time = plays[i].time - 900;
+		result.push(plays[i]);
+	}
+	return result;
+}
+
+function addHomeAndVisitorScore(plays) {
+	var result = [ ];
+	for (var i = 0; i < plays.length; ++i) {
+		if (plays[i].home == plays[i].offense) {
+			plays[i].ptsHome = plays[i].ptsOffense;
+			plays[i].ptsVisitor = plays[i].ptsDefense;
+			result.push(plays[i]);
+		}
+		else {
+			plays[i].ptsHome = plays[i].ptsDefense;
+			plays[i].ptsVisitor = plays[i].ptsOffense;
+			result.push(plays[i]);
+		}
+	}
+	return result;
+}
+
+function addWinPredictionDifference (plays) {
+	var result = [ ];
+	for (var i = 0; i < plays.length; ++i) {
+		var notLastPlay = (i < (plays.length - 1));
+		if (notLastPlay) {
+			var curentWP = (plays[i].homeWp);
+			var futureWP = (plays[i + 1].homeWp);
+			plays[i].homeWpDiff = (futureWP - curentWP);
+			result.push(plays[i]);
+		}
+	}
+	return result;
+}
+
+function findHomeTeam(visitor, off, def) {
+	return (visitor == off ? def : off);
 }
 
 module.exports = function(app) {
