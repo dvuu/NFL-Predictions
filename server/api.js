@@ -5,6 +5,7 @@ data.initialize(function() {
 	console.log("Data has been parsed. App is now ready");
 });
 
+// Creates array of plays
 function getPlaysForGame(gameId){
 	var plays = [ ];
 	var curIdx = 0;
@@ -64,18 +65,8 @@ function getPlaysForGame(gameId){
 	return fixedPlays;
 }
 
-// Changes overtime seconds to negative
-// First solution: assumes that any play with game time greater than previous game is overtime
-	// Penalties that give time back are assumed to be overtime, making this solution not work.
-	// ----------------------------
-	// var hitOT = false;
-	// for (var i = 0; i < plays.length; ++i) {
-	// 	var isNotFirstPlay = (i !== 0);
-	// 	var isOutOfOrder = (isNotFirstPlay && (plays[i - 1].time < plays[i].time));
-	// 	if (isOutOfOrder)
-	// 		hitOT = true;
-	// 	if (hitOT) {
-	// ---------------------------
+// Use InOT value evaluate if seconds left is in overtime
+// if true, -900. assuming OT < 900secs (900 secs in a quarter)
 function fixSecondsForOvertime(plays) {
 	var	result = [ ];
 	for (var i = 0; i < plays.length; ++i) {
@@ -86,6 +77,7 @@ function fixSecondsForOvertime(plays) {
 	return result;
 }
 
+// Adds home and visitor score from ptsOffense and ptsDefense
 function addHomeAndVisitorScore(plays) {
 	var result = [ ];
 	for (var i = 0; i < plays.length; ++i) {
@@ -103,6 +95,7 @@ function addHomeAndVisitorScore(plays) {
 	return result;
 }
 
+// Adds win prediction difference
 function addWinPredictionDifference (plays) {
 	var result = [ ];
 	for (var i = 0; i < plays.length; ++i) {
@@ -117,6 +110,7 @@ function addWinPredictionDifference (plays) {
 	return result;
 }
 
+// Finds home team
 function findHomeTeam(visitor, off, def) {
 	return (visitor == off ? def : off);
 }
@@ -174,7 +168,7 @@ module.exports = function(app) {
         res.end(JSON.stringify(result));
     });
 
-	//
+	// returns all plays
 	app.get('/api/plays/:gameId', function(req, res) {
 		var gameId = req.params.gameId;
 		console.log("Client requested plays from game " + gameId + "...");
