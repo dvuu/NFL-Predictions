@@ -1,3 +1,7 @@
+.playsInfo {
+	align-content: center;
+}
+
 .playOne, .playSwing, .playTwo {
 	align-content: center;
 	text-align: center;
