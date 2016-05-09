@@ -54,14 +54,18 @@ function getPlaysForGame(gameId){
 				vegasSpread: data.PLAYS[i].Spread,
 				actualGameOutcome: data.PLAYS[i].Result,
 				homeWp: (1 - data.PLAYS[i].VisitorWP),
-				visitorWp: data.PLAYS[i].VisitorWP
+				visitorWp: data.PLAYS[i].VisitorWP,
+				ptsHome: (addHomeScoreGained(data.PLAYS[i].v, data.PLAYS[i].off,
+					data.PLAYS[i].def, data.PLAYS[i].ptso, data.PLAYS[i].ptsd)),
+				ptsVisitor: (addVisitorScoreGained(data.PLAYS[i].v, data.PLAYS[i].off,
+					data.PLAYS[i].ptso, data.PLAYS[i].ptsd))
 			};
 			plays.push(obj);
 		}
 	}
 	// var fix1 = fixSecondsForOvertime(plays);
-	var fix2 = addHomeAndVisitorScore(plays);
-	var fix3 = addPointsGainPerPlay(fix2);
+	// var fix2 = addHomeAndVisitorScore(plays);
+	var fix3 = addPointsGainPerPlay(plays);
 	var fixedPlays = addWinPredictionDifference(fix3);
 	return fixedPlays;
 }
@@ -72,22 +76,15 @@ function fixSecondsForOvertime(overtime, time) {
 	return (overtime ? time = time - 900 : time);
 }
 
-// Adds home and visitor score from ptsOffense and ptsDefense
-function addHomeAndVisitorScore(plays) {
-	var result = [ ];
-	for (var i = 0; i < plays.length; ++i) {
-		if (plays[i].home == plays[i].offense) {
-			plays[i].ptsHome = plays[i].ptsOffense;
-			plays[i].ptsVisitor = plays[i].ptsDefense;
-			result.push(plays[i]);
-		}
-		else {
-			plays[i].ptsHome = plays[i].ptsDefense;
-			plays[i].ptsVisitor = plays[i].ptsOffense;
-			result.push(plays[i]);
-		}
-	}
-	return result;
+// Adds home score gained per play from ptsOffense and ptsDefense
+function addHomeScoreGained(visitor, off, def, ptsOff, ptsDef) {
+	var home = findHomeTeam(visitor, off, def);
+	return (home == off ? ptsOff : ptsDef);
+}
+
+// Adds visitor score gained per play from ptsOffense and ptsDefense
+function addVisitorScoreGained(visitor, off, ptsOff, ptsDef) {
+	return (visitor == off ? ptsOff : ptsDef);
 }
 
 // Adds points gained per play propety
