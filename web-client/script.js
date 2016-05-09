@@ -104,26 +104,26 @@ function playDescription(play) {
 	var homeWpDiff = (play.homeWpDiff * 100).toFixed(2);
 	if (play.homeWpDiff > 0) {
 		if (play.seconds < 10) {
-		 	return '<span>' + play.type + ' at ' + play.minute + ':0' 
-		 	+ play.seconds + ' minutes left in Q' + play.quarter 
-		 	+ ' <span class="posWp">(+' + homeWpDiff + '%)</span></span>';
+		 	return ('<span>' + play.type + ' by ' + play.offense + ' at ' + play.minute 
+		 	+ ':0' + play.seconds + ' minutes left in Q' + play.quarter 
+		 	+ ' <span class="posWp">(+' + homeWpDiff + '%)</span></span>');
 		} 
 		else {
-			return '<span>' + play.type + ' at ' + play.minute + ':' 
-			+ play.seconds + ' minutes left in Q' + play.quarter 
-			+ ' <span class="posWp">(+' + homeWpDiff + '%)</span></span>';
+			return ('<span>' + play.type + ' by ' + play.offense + ' at ' + play.minute 
+			+ ':' + play.seconds + ' minutes left in Q' + play.quarter 
+			+ ' <span class="posWp">(+' + homeWpDiff + '%)</span></span>');
 		}
 	}
 	else {
 		if (play.seconds < 10) {
-	 		return '<span>' + play.type + ' at ' + play.minute + ':0' 
-	 		+ play.seconds + ' minutes left in Q' + play.quarter 
-	 		+ ' <span class="negWp">(' + homeWpDiff + '%)</span></span>';
+	 		return ('<span>' + play.type + ' by ' + play.offense + ' at ' + play.minute 
+	 		+ ':0' + play.seconds + ' minutes left in Q' + play.quarter 
+	 		+ ' <span class="negWp">(' + homeWpDiff + '%)</span></span>');
 		}
 		else {
-			return '<span>' + play.type + ' at ' + play.minute + ':' 
+			return ('<span>' + play.type + ' by ' + play.offense + ' at ' + play.minute + ':' 
 			+ play.seconds + ' minutes left in Q' + play.quarter 
-			+ ' <span class="negWp">(' + homeWpDiff + '%)</span></span>';
+			+ ' <span class="negWp">(' + homeWpDiff + '%)</span></span>');
 		}
 	}
 }
