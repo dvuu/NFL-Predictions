@@ -6,10 +6,22 @@ function buildChartFromData(playsResult, topTenResult, game) {
 
     var lastPlay = playsResult[playsResult.length-1].time;
 
+    function createHomeAndVisitorMarker(play) {
+        if (play.home == play.offense) {
+            return 'rgb(9, 27, 227)'
+        }
+        else{
+            return 'rgb(201, 4, 4)'
+        }
+    }
+
     var playSeries = {
         x: [ ],
         y: [ ],
         mode: 'lines+markers',
+        marker: {
+            color: [ ]
+        },
         type: 'scatter',
         text: [ ],
         hoverinfo: 'text',
@@ -22,6 +34,7 @@ function buildChartFromData(playsResult, topTenResult, game) {
         playSeries.text.push(string);
         playSeries.x.push(play.time);
         playSeries.y.push(homeWp);
+        playSeries.marker.color.push(createHomeAndVisitorMarker(play));
     });
 
     var layout = {
