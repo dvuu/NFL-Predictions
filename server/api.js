@@ -122,14 +122,22 @@ function addWinPredictionDifference(plays) {
 	for (var i = 0; i < plays.length; ++i) {
 		var notLastPlay = (i < (plays.length - 1));
 		if (notLastPlay) {
-			var currentHomeWp = (plays[i].homeWp);
-			var futureHomeWp = (plays[i + 1].homeWp);
-			var currentVisitorWp = (plays[i].visitorWp);
-			var futureVisitorWp = (plays[i + 1].visitorWp);
+			var currentHomeWp = plays[i].homeWp;
+			var futureHomeWp = plays[i + 1].homeWp;
+			var currentVisitorWp = plays[i].visitorWp;
+			var futureVisitorWp = plays[i + 1].visitorWp;
 			plays[i].homeWpDiff = (futureHomeWp - currentHomeWp);
 			plays[i].visitorWpDiff = (futureVisitorWp - currentVisitorWp);
 		}
 	}
+}
+
+function wpDiffComparison(a, b) {
+	return Math.abs(b.homeWpDiff)- Math.abs(a.homeWpDiff);
+}
+function findBigestPlays(plays, n) {
+	var sortedPlays = plays.sort(wpDiffComparison);
+	return sortedPlays.slice(0, n);
 }
 
 module.exports = function(app) {
@@ -194,13 +202,6 @@ module.exports = function(app) {
         res.end(JSON.stringify(plays));
     });
 
-    function wpDiffComparison(a, b) {
-    	return Math.abs(b.homeWpDiff)- Math.abs(a.homeWpDiff);
-    }
-    function findBigestPlays(plays, n) {
-    	var sortedPlays = plays.sort(wpDiffComparison);
-		return sortedPlays.slice(0, n);
-    }
     // returns top 10 plays from a game
     app.get('/api/topTen/:gameId', function(req, res) {
     	var gameId = req.params.gameId;
@@ -209,29 +210,28 @@ module.exports = function(app) {
 		res.writeHead(200,{'Content-Type': 'application/json'});
         res.end(JSON.stringify(findBigestPlays(plays, 10)));
     });
-}
 
-//     //returns top 10 plays from all games combined 
-//     app.get('/api/topTen', function(req, res) {
-//     	console.log("Client is requested Top Ten plays from all all games combined...")
-//     	var results = [ ];
-//     	for (var i = 0; i < data.PLAYS.length - 1; i++) {
-//     		if (data.PLAYS[i].gid !== data.PLAYS[i + 1].gid) {
-//     			continue;
-//     		}
-//     		var curentWP = (1 - data.PLAYS[i].VisitorWP);
-// 			var futureWP = (1 - data.PLAYS[i + 1].VisitorWP);
-// 			var obj = {
-//     			gameId: data.PLAYS[i].gid,
-// 				playId: data.PLAYS[i].pid,
-// 				time: data.PLAYS[i].Seconds,
-// 				type: data.PLAYS[i].type,
-// 				homeWpDiff: futureWP - curentWP
-//     		};
-// 	    	results.push(obj);	
-//     	}
-//     	var allTopTen = findBigestPlays(results, 100)
-//     	res.writeHead(200,{'Content-Type': 'application/json'});
-//         res.end(JSON.stringify(allTopTen));
-//     });
-// }
+    //returns top 10 plays from all games combined 
+    app.get('/api/topTen', function(req, res) {
+    	console.log("Client is requested Top Ten plays from all all games combined...")
+    	var results = [ ];
+    	for (var i = 0; i < data.PLAYS.length - 1; ++i) {
+    		if (data.PLAYS[i].gid !== data.PLAYS[i + 1].gid) {
+    			continue;
+    		}
+    		var curentWP = (data.PLAYS[i].homeWp);
+			var futureWP = (data.PLAYS[i + 1].homeWp);
+			var obj = {
+    			gameId: data.PLAYS[i].gid,
+				playId: data.PLAYS[i].pid,
+				type: data.PLAYS[i].type,
+				time: fixSecondsForOvertime(data.PLAYS[i].InOT, data.PLAYS[i].Seconds),
+				homeWpDiff: (futureWP - curentWP)
+    		};
+	    	results.push(obj);	
+    	}
+    	var allTopTen = findBigestPlays(results, 10)
+    	res.writeHead(200,{'Content-Type': 'application/json'});
+        res.end(JSON.stringify(allTopTen));
+    });
+}
