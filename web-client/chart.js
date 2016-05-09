@@ -117,21 +117,23 @@ function buildChartFromData(playsResult, topTenResult, game) {
         else {
             if (playsResult.seconds < 10) {
                 return ('<p>Q' + playsResult.quarter + ', ' + playsResult.minute + ':0' 
-                    + playsResult.visitor + ': ' + playsResult.ptsVisitor 
+                    + playsResult.seconds 
+                    + '<br>' + playsResult.visitor + ': ' + playsResult.ptsVisitor 
                     + '<span class="negWp"> (' + visitorWp + '%)</span>' 
                     + '<br>' + playsResult.home + ': ' + playsResult.ptsHome 
                     + '<span class="posWp"> (' + homeWp + '%)</span>' 
-                    + playsResult.seconds + '<br>Offense: ' + playsResult.offense 
+                    + '<br>Offense: ' + playsResult.offense 
                     + '<br>Play: ' + playsResult.type 
                     + '<br>Yard: ' + playsResult.offYardline + '</p>');
             }
             else {
                 return ('<p>Q' + playsResult.quarter + ', ' + playsResult.minute + ':' 
-                    + playsResult.visitor + ': ' + playsResult.ptsVisitor 
+                    + playsResult.seconds 
+                    + '<br>' + playsResult.visitor + ': ' + playsResult.ptsVisitor 
                     + '<span class="negWp"> (' + visitorWp + '%)</span>' 
                     + '<br>' + playsResult.home + ': ' + playsResult.ptsHome 
                     + '<span class="posWp"> (' + homeWp + '%)</span>' 
-                    + playsResult.seconds + '<br>Offense: ' + playsResult.offense 
+                    + '<br>Offense: ' + playsResult.offense 
                     + '<br>Play: ' + playsResult.type 
                     + '<br>Yard: ' + playsResult.offYardline + '</p>');
             }
