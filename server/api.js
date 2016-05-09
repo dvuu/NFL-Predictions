@@ -63,10 +63,10 @@ function getPlaysForGame(gameId){
 			plays.push(obj);
 		}
 	}
-	var fix1 = addPointsGainPerPlay(plays);
-	var fix2 = findYardsGainedPerPlay(fix1);
-	var fixedPlays = addWinPredictionDifference(fix2);
-	return fixedPlays;
+	addPointsGainPerPlay(plays);
+	findYardsGainedPerPlay(plays);
+	addWinPredictionDifference(plays);
+	return plays;
 }
 
 // Finds home team
@@ -93,7 +93,6 @@ function findVisitorScoreGained(visitor, off, ptsOff, ptsDef) {
 
 // Finds home and visitor yards gained per play
 function findYardsGainedPerPlay(plays) {
-	var result = [ ];
 	for (var i = 0; i < plays.length; ++i) {
 		var notLastPlay = (i < (plays.length - 1));
 		if (notLastPlay) {
@@ -103,29 +102,23 @@ function findYardsGainedPerPlay(plays) {
 			else {
 				plays[i].visitorYdsGained = (plays[i + 1].offYardline - plays[i].offYardline);
 			}
-			result.push(plays[i]);
 		}
 	}
-	return result;
 }
 
 // Calculates points gained per play propety
 function addPointsGainPerPlay(plays) {
-	var result = [ ];
 	for (var i = 0; i < plays.length; ++i) {
 		var notLastPlay = (i < (plays.length - 1));
 		if (notLastPlay) {
 			plays[i].ptsHomeGain = (plays[i + 1].ptsHome - plays[i].ptsHome);
 			plays[i].ptsVisitorGain = (plays[i + 1].ptsVisitor - plays[i].ptsVisitor);
-			result.push(plays[i]);
 		}
 	}
-	return result;
 }
 
 // Calculates win prediction difference
 function addWinPredictionDifference(plays) {
-	var result = [ ];
 	for (var i = 0; i < plays.length; ++i) {
 		var notLastPlay = (i < (plays.length - 1));
 		if (notLastPlay) {
@@ -135,10 +128,8 @@ function addWinPredictionDifference(plays) {
 			var futureVisitorWp = (plays[i + 1].visitorWp);
 			plays[i].homeWpDiff = (futureHomeWp - currentHomeWp);
 			plays[i].visitorWpDiff = (futureVisitorWp - currentVisitorWp);
-			result.push(plays[i]);
 		}
 	}
-	return result;
 }
 
 module.exports = function(app) {
