@@ -8,10 +8,10 @@ function buildChartFromData(playsResult, topTenResult, game) {
 
     function createHomeAndVisitorMarker(play) {
         if (play.home == play.offense) {
-            return 'rgb(9, 27, 227)'
+            return 'rgb(50, 67, 227)'
         }
         else{
-            return 'rgb(201, 4, 4)'
+            return 'rgb(243, 243, 67)'
         }
     }
 
