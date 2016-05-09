@@ -104,24 +104,24 @@ function playDescription(play) {
 	if (play.homeWpDiff > 0) {
 		if (play.seconds < 10) {
 		 	return ('<span>' + play.type + ' by ' + play.offense + ' at ' + play.minute 
-		 	+ ':0' + play.seconds + ' minutes left in Q' + play.quarter 
+		 	+ ':0' + play.seconds + ' in Q' + play.quarter 
 		 	+ ' <span class="posWp">(+' + homeWpDiff + '%)</span></span>');
 		} 
 		else {
 			return ('<span>' + play.type + ' by ' + play.offense + ' at ' + play.minute 
-			+ ':' + play.seconds + ' minutes left in Q' + play.quarter 
+			+ ':' + play.seconds + ' in Q' + play.quarter 
 			+ ' <span class="posWp">(+' + homeWpDiff + '%)</span></span>');
 		}
 	}
 	else {
 		if (play.seconds < 10) {
 	 		return ('<span>' + play.type + ' by ' + play.offense + ' at ' + play.minute 
-	 		+ ':0' + play.seconds + ' minutes left in Q' + play.quarter 
+	 		+ ':0' + play.seconds + ' in Q' + play.quarter 
 	 		+ ' <span class="negWp">(' + homeWpDiff + '%)</span></span>');
 		}
 		else {
 			return ('<span>' + play.type + ' by ' + play.offense + ' at ' + play.minute + ':' 
-			+ play.seconds + ' minutes left in Q' + play.quarter 
+			+ play.seconds + ' in Q' + play.quarter 
 			+ ' <span class="negWp">(' + homeWpDiff + '%)</span></span>');
 		}
 	}
