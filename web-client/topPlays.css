@@ -13,9 +13,9 @@
 }
 
 .posWp{
-	color: green;
+	color: green !important;
 }
 
 .negWp{
-	color: red;
+	color: red !important;
 }

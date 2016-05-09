@@ -8,14 +8,18 @@
 }
 
 .arrow {
-	font-size: 40px;
+	font-size: 30px;
 	color: #6f6f6f;
 }
 
-.playOne, .playTwo {
+.playOne, .playTwo, .playSwing {
 	color: #5f5f5f;
 }
 
+.playSwing p {
+	padding: 0;
+}
+
 .swing {
-	font-size: 24px;
+	font-size: 18px;
 }
