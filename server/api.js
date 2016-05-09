@@ -31,7 +31,7 @@ function getPlaysForGame(gameId){
 				timeoutsDefense: data.PLAYS[i].TIMD,
 				down: data.PLAYS[i].Down,
 				yardsToGoForFirstDown: data.PLAYS[i].YTG,
-				yardLineFromOwnGoal: data.PLAYS[i].YardLine,
+				offYardline: data.PLAYS[i].Yardline,
 				fieldZone: data.PLAYS[i].zone,
 				firstDown: data.PLAYS[i].fd,
 				shotGun: data.PLAYS[i].sg,
@@ -55,19 +55,23 @@ function getPlaysForGame(gameId){
 				actualGameOutcome: data.PLAYS[i].Result,
 				homeWp: (1 - data.PLAYS[i].VisitorWP),
 				visitorWp: data.PLAYS[i].VisitorWP,
-				ptsHome: (addHomeScoreGained(data.PLAYS[i].v, data.PLAYS[i].off,
+				ptsHome: (findHomeScoreGained(data.PLAYS[i].v, data.PLAYS[i].off,
 					data.PLAYS[i].def, data.PLAYS[i].ptso, data.PLAYS[i].ptsd)),
-				ptsVisitor: (addVisitorScoreGained(data.PLAYS[i].v, data.PLAYS[i].off,
+				ptsVisitor: (findVisitorScoreGained(data.PLAYS[i].v, data.PLAYS[i].off,
 					data.PLAYS[i].ptso, data.PLAYS[i].ptsd))
 			};
 			plays.push(obj);
 		}
 	}
-	// var fix1 = fixSecondsForOvertime(plays);
-	// var fix2 = addHomeAndVisitorScore(plays);
-	var fix3 = addPointsGainPerPlay(plays);
-	var fixedPlays = addWinPredictionDifference(fix3);
+	var fix1 = addPointsGainPerPlay(plays);
+	var fix2 = findYardsGainedPerPlay(fix1);
+	var fixedPlays = addWinPredictionDifference(fix2);
 	return fixedPlays;
+}
+
+// Finds home team
+function findHomeTeam(visitor, off, def) {
+	return (visitor == off ? def : off);
 }
 
 // Use InOT value evaluate if seconds left is in overtime
@@ -76,18 +80,36 @@ function fixSecondsForOvertime(overtime, time) {
 	return (overtime ? time = time - 900 : time);
 }
 
-// Adds home score gained per play from ptsOffense and ptsDefense
-function addHomeScoreGained(visitor, off, def, ptsOff, ptsDef) {
+// Finds home score gained per play from ptsOffense and ptsDefense
+function findHomeScoreGained(visitor, off, def, ptsOff, ptsDef) {
 	var home = findHomeTeam(visitor, off, def);
 	return (home == off ? ptsOff : ptsDef);
 }
 
-// Adds visitor score gained per play from ptsOffense and ptsDefense
-function addVisitorScoreGained(visitor, off, ptsOff, ptsDef) {
+// Finds visitor score gained per play from ptsOffense and ptsDefense
+function findVisitorScoreGained(visitor, off, ptsOff, ptsDef) {
 	return (visitor == off ? ptsOff : ptsDef);
 }
 
-// Adds points gained per play propety
+// Finds home and visitor yards gained per play
+function findYardsGainedPerPlay(plays) {
+	var result = [ ];
+	for (var i = 0; i < plays.length; ++i) {
+		var notLastPlay = (i < (plays.length - 1));
+		if (notLastPlay) {
+			if (plays[i].home == plays[i].offense) {
+				plays[i].homeYdsGained = (plays[i + 1].offYardline - plays[i].offYardline);
+			}
+			else {
+				plays[i].visitorYdsGained = (plays[i + 1].offYardline - plays[i].offYardline);
+			}
+			result.push(plays[i]);
+		}
+	}
+	return result;
+}
+
+// Calculates points gained per play propety
 function addPointsGainPerPlay(plays) {
 	var result = [ ];
 	for (var i = 0; i < plays.length; ++i) {
@@ -101,9 +123,7 @@ function addPointsGainPerPlay(plays) {
 	return result;
 }
 
-// Adds yards gained per play
-
-// Adds win prediction difference
+// Calculates win prediction difference
 function addWinPredictionDifference(plays) {
 	var result = [ ];
 	for (var i = 0; i < plays.length; ++i) {
@@ -116,11 +136,6 @@ function addWinPredictionDifference(plays) {
 		}
 	}
 	return result;
-}
-
-// Finds home team
-function findHomeTeam(visitor, off, def) {
-	return (visitor == off ? def : off);
 }
 
 module.exports = function(app) {
