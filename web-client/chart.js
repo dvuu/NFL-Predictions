@@ -31,11 +31,7 @@ function buildChartFromData(playsResult, topTenResult, game) {
 
     _.each(playsResult, function(play) {
         var homeWp = (play.homeWp * 100);
-        var string = play.home + ' Win Probability: ' + homeWp.toFixed(2) + '%' 
-            + '<br>Play: '+ play.type + '<br>OFF/Score: ' + play.offense + ': ' 
-            + play.ptsOffense + '<br>DEF/Score: ' + play.defense + ': ' 
-            + play.ptsDefense + '<br>Down: ' + play.down + '<br>Time left: ' 
-            + play.time + ' secs';
+        var string = playInfoString(play).replace(/<p>|<\/p>/g, '');
         playSeries.text.push(string);
         playSeries.x.push(play.time);
         playSeries.y.push(homeWp.toFixed(2));
@@ -90,7 +86,7 @@ function buildChartFromData(playsResult, topTenResult, game) {
     function playInfoString(playsResult) {
         var homeWp = (playsResult.homeWp * 100).toFixed(2);
         var visitorWp = (playsResult.visitorWp * 100).toFixed(2);
-        if (playsResult.homeWp < 50) {
+        if (homeWp < 50) {
             if (playsResult.seconds < 10) {
                 return ('<p>Q' + playsResult.quarter + ', ' + playsResult.minute + ':0' 
                     + playsResult.seconds 
@@ -98,9 +94,10 @@ function buildChartFromData(playsResult, topTenResult, game) {
                     + '<span class="posWp"> (' + visitorWp + '%)</span>' 
                     + '<br>' + playsResult.home + ': ' + playsResult.ptsHome 
                     + '<span class="negWp"> (' + homeWp + '%)</span>'
-                    + '<br>Offense: ' + playsResult.offense 
-                    + '<br>Play: ' + playsResult.type 
-                    + '<br>Yard: ' + playsResult.offYardline + '</p>');
+                    + '<br>Offense: ' + playsResult.offense
+                    + '<br>Down: ' + playsResult.down 
+                    + '<br>Yard: ' + playsResult.offYardline 
+                    + '<br>Play: ' + playsResult.type  + '</p>');
             }
             else {
                 return ('<p>Q' + playsResult.quarter + ', ' + playsResult.minute + ':' 
@@ -109,9 +106,10 @@ function buildChartFromData(playsResult, topTenResult, game) {
                     + '<span class="posWp"> (' + visitorWp + '%)</span>' 
                     + '<br>' + playsResult.home + ': ' + playsResult.ptsHome 
                     + '<span class="negWp"> (' + homeWp + '%)</span>'
-                    + '<br>Offense: ' + playsResult.offense 
-                    + '<br>Play: ' + playsResult.type 
-                    + '<br>Yard: ' + playsResult.offYardline + '</p>');
+                    + '<br>Offense: ' + playsResult.offense
+                    + '<br>Down: ' + playsResult.down 
+                    + '<br>Yard: ' + playsResult.offYardline 
+                    + '<br>Play: ' + playsResult.type  + '</p>');
             }
         }
         else {
@@ -122,9 +120,10 @@ function buildChartFromData(playsResult, topTenResult, game) {
                     + '<span class="negWp"> (' + visitorWp + '%)</span>' 
                     + '<br>' + playsResult.home + ': ' + playsResult.ptsHome 
                     + '<span class="posWp"> (' + homeWp + '%)</span>' 
-                    + '<br>Offense: ' + playsResult.offense 
-                    + '<br>Play: ' + playsResult.type 
-                    + '<br>Yard: ' + playsResult.offYardline + '</p>');
+                    + '<br>Offense: ' + playsResult.offense
+                    + '<br>Down: ' + playsResult.down 
+                    + '<br>Yard: ' + playsResult.offYardline 
+                    + '<br>Play: ' + playsResult.type  + '</p>');
             }
             else {
                 return ('<p>Q' + playsResult.quarter + ', ' + playsResult.minute + ':' 
@@ -133,9 +132,10 @@ function buildChartFromData(playsResult, topTenResult, game) {
                     + '<span class="negWp"> (' + visitorWp + '%)</span>' 
                     + '<br>' + playsResult.home + ': ' + playsResult.ptsHome 
                     + '<span class="posWp"> (' + homeWp + '%)</span>' 
-                    + '<br>Offense: ' + playsResult.offense 
-                    + '<br>Play: ' + playsResult.type 
-                    + '<br>Yard: ' + playsResult.offYardline + '</p>');
+                    + '<br>Offense: ' + playsResult.offense
+                    + '<br>Down: ' + playsResult.down 
+                    + '<br>Yard: ' + playsResult.offYardline 
+                    + '<br>Play: ' + playsResult.type  + '</p>');
             }
         }
     }
