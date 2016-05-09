@@ -51,7 +51,6 @@ function renderGame(game) {
 		$.ajax({ url: topTenUrl, success: function(topTenResult) {
 			buildChartFromData(playsResult, topTenResult, game);
 			displayTopTen(topTenResult);
-			$('.topPlaysTitle').text('Top Ten Plays');
 		}});
 	}});
 	$('.homeLogo, .awayLogo').removeClass(function(idx, css) {
@@ -129,6 +128,7 @@ function playDescription(play) {
 }
 
 function displayTopTen(topTenResult) {
+	$('.topPlaysTitle').text('TOP 10 PLAYS');
 	var $topTenDiv = $('.topPlays');
 	_.each(topTenResult, function(play) {
 		var $playElement = $('<div class="topPlay">' + playDescription(play) + '</div>');

@@ -1,3 +1,8 @@
+function chartTitle(gameObj) {
+    return (gameObj.season + ' - WEEK ' + gameObj.week + ': ' + gameObj.visitor 
+        + ': ' + gameObj.ptsVisitor + ' @ ' + gameObj.home + ': ' + gameObj.ptsHome);
+}
+
 function playInfoString(playsResult) {
     var homeWp = (playsResult.homeWp * 100).toFixed(2);
     var visitorWp = (playsResult.visitorWp * 100).toFixed(2);

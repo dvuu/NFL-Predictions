@@ -1,8 +1,3 @@
-function chartTitle(gameObj) {
-    return (gameObj.season + ' - Week ' + gameObj.week + ': ' + gameObj.visitor 
-        + ': ' + gameObj.ptsVisitor + ' @ ' + gameObj.home + ': ' + gameObj.ptsHome);
-}
-
 function buildChartFromData(playsResult, topTenResult, game) {
     var $chart = $('#chart');
     var $playOne = $('.playOne');
