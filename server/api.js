@@ -49,7 +49,7 @@ function getPlaysForGame(gameId){
 				totalPtsScr: data.PLAYS[i].TOTp,
 				scoreDiff: data.PLAYS[i].Score,
 				inOvertime: data.PLAYS[i].InOT,
-				time: data.PLAYS[i].Seconds,
+				time: fixSecondsForOvertime(data.PLAYS[i].InOT, data.PLAYS[i].Seconds),
 				AdjustedScore: data.PLAYS[i].AdjustedScore,
 				vegasSpread: data.PLAYS[i].Spread,
 				actualGameOutcome: data.PLAYS[i].Result,
@@ -59,8 +59,8 @@ function getPlaysForGame(gameId){
 			plays.push(obj);
 		}
 	}
-	var fix1 = fixSecondsForOvertime(plays);
-	var fix2 = addHomeAndVisitorScore(fix1);
+	// var fix1 = fixSecondsForOvertime(plays);
+	var fix2 = addHomeAndVisitorScore(plays);
 	var fix3 = addPointsGainPerPlay(fix2);
 	var fixedPlays = addWinPredictionDifference(fix3);
 	return fixedPlays;
@@ -68,14 +68,8 @@ function getPlaysForGame(gameId){
 
 // Use InOT value evaluate if seconds left is in overtime
 // if true, -900. assuming OT < 900secs (900 secs in a quarter)
-function fixSecondsForOvertime(plays) {
-	var	result = [ ];
-	for (var i = 0; i < plays.length; ++i) {
-		if (plays[i].inOvertime)
-			plays[i].time = plays[i].time - 900;
-		result.push(plays[i]);
-	}
-	return result;
+function fixSecondsForOvertime(overtime, time) {
+	return (overtime ? time = time - 900 : time);
 }
 
 // Adds home and visitor score from ptsOffense and ptsDefense
@@ -96,7 +90,7 @@ function addHomeAndVisitorScore(plays) {
 	return result;
 }
 
-// Adds points gain per play propety
+// Adds points gained per play propety
 function addPointsGainPerPlay(plays) {
 	var result = [ ];
 	for (var i = 0; i < plays.length; ++i) {
@@ -109,6 +103,8 @@ function addPointsGainPerPlay(plays) {
 	}
 	return result;
 }
+
+// Adds yards gained per play
 
 // Adds win prediction difference
 function addWinPredictionDifference(plays) {
