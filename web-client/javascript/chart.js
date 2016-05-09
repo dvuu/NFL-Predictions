@@ -75,10 +75,6 @@ function buildChartFromData(playsResult, topTenResult, game) {
         ]
     };
 
-    $playOne.html(playInfoString(playsResult[0]));
-    $playTwo.html(playInfoString(playsResult[1]));
-    $playSwing.html(swingString(playsResult[0]));
-
     Plotly.newPlot('chart', [playSeries], layout, {displayModeBar: false});
 
     $chart[0].on('plotly_hover', function(data) {
