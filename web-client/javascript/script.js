@@ -50,7 +50,7 @@ function renderGame(game) {
 		$('.topPlays').empty();
 		$.ajax({ url: topTenUrl, success: function(topTenResult) {
 			buildChartFromData(playsResult, topTenResult, game);
-			displayTopTen(topTenResult);
+			displayTopTen(topTenResult, playsResult);
 		}});
 	}});
 	$('.homeLogo, .awayLogo').removeClass(function(idx, css) {
@@ -127,18 +127,23 @@ function playDescription(play) {
 	}
 }
 
-function displayTopTen(topTenResult) {
+function displayTopTen(topTenResult, playsResult) {
 	$('.topPlaysTitle').text('TOP 10 PLAYS');
 	var $topTenDiv = $('.topPlays');
 	_.each(topTenResult, function(play) {
 		var $playElement = $('<div class="topPlay">' + playDescription(play) + '</div>');
 		$topTenDiv.append($playElement);
 		//event function that when you hover top ten it will dislay where it is located on the chart
-		$playElement.on('mouseover', function( ) {
+		$playElement.on('mouseenter', function( ) {
 			Plotly.Fx.hover('chart',[
   				{curveNumber:0, pointNumber: play.idx},
   				{curveNumber:0, pointNumber: (play.idx + 1)}
-  			]);;
+  			]);
+  			showPlayInfo(play, play.idx + 1 < playsResult.length ? playsResult[play.idx + 1] : null);
+		});
+		$playElement.on('mouseleave', function( ) {
+			Plotly.Fx.hover('chart', [ ]);
+  			clearPlayInfo();
 		});
 	});
 }
@@ -169,7 +174,17 @@ function buildGamesFilter(season, week) {
 	}});
 }
 
+function showPlayInfo(playOne, playTwo) {
+    $('.playOne').html(playInfoString(playOne));
+    $('.playTwo').html(playInfoString(playTwo));
+    $('.playSwing').html(swingString(playOne));
+}
 
+function clearPlayInfo() {
+    $('.playOne').html('');
+    $('.playTwo').html('');
+    $('.playSwing').html('');
+}
 
 
 

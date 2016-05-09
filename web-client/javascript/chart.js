@@ -9,7 +9,7 @@ function buildChartFromData(playsResult, topTenResult, game) {
     var playSeries = {
         x: [ ],
         y: [ ],
-        mode: 'lines',
+        mode: 'lines+markers',
         type: 'scatter',
         text: [ ],
         hoverinfo: 'text',
@@ -25,7 +25,7 @@ function buildChartFromData(playsResult, topTenResult, game) {
 
     _.each(playsResult, function(play) {
         var homeWp = (play.homeWp * 100);
-        var string = playInfoString(play).replace(/<p>|<\/p>/g, '');
+        var string = play.home + ': ' + (Math.floor(play.homeWp * 10000) / 100) + '%';
         playSeries.text.push(string);
         playSeries.x.push(play.time);
         playSeries.y.push(homeWp.toFixed(2));
@@ -77,7 +77,7 @@ function buildChartFromData(playsResult, topTenResult, game) {
 
     Plotly.newPlot('chart', [playSeries], layout, {displayModeBar: false});
 
-    $chart[0].on('plotly_click', function(data) {
+    $chart[0].on('plotly_hover', function(data) {
         if (data.points.length <= 0)
             return;
         if (data.points.length > 1) {
@@ -88,15 +88,13 @@ function buildChartFromData(playsResult, topTenResult, game) {
         var index = point.pointNumber;
         var playOne = playsResult[index];
         var playTwo = playsResult[index + 1];
-        $playOne.html(playInfoString(playOne));
-        $playTwo.html(playInfoString(playTwo));
-        $playSwing.html(swingString(playOne));
-     });
+        
+        showPlayInfo(playOne, playTwo);
+    });
 
-    // $chart[0].on('plotly_unhover', function(data) {
-    //     $playOne.html('');
-    //     $playTwo.html('');
-    // });
+    $chart[0].on('plotly_unhover', function(data) {
+        clearPlayInfo();
+    });
 }
 
 
