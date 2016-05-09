@@ -105,26 +105,38 @@ function playDescription(play) {
 		if (play.seconds < 10) {
 		 	return ('<span>' + play.type + ' by ' + play.offense + ' at ' + play.minute 
 		 	+ ':0' + play.seconds + ' in Q' + play.quarter 
-		 	+ ' <span class="posWp">(+' + homeWpDiff + '%)</span></span>');
+		 	+ ' (<span class="posWp">+' + homeWpDiff + '%</span>)</span>');
 		} 
 		else {
 			return ('<span>' + play.type + ' by ' + play.offense + ' at ' + play.minute 
 			+ ':' + play.seconds + ' in Q' + play.quarter 
-			+ ' <span class="posWp">(+' + homeWpDiff + '%)</span></span>');
+			+ ' (<span class="posWp">+' + homeWpDiff + '%</span>)</span>');
 		}
 	}
 	else {
 		if (play.seconds < 10) {
 	 		return ('<span>' + play.type + ' by ' + play.offense + ' at ' + play.minute 
 	 		+ ':0' + play.seconds + ' in Q' + play.quarter 
-	 		+ ' <span class="negWp">(' + homeWpDiff + '%)</span></span>');
+	 		+ ' (<span class="negWp">' + homeWpDiff + '%</span>)</span>');
 		}
 		else {
 			return ('<span>' + play.type + ' by ' + play.offense + ' at ' + play.minute + ':' 
 			+ play.seconds + ' in Q' + play.quarter 
-			+ ' <span class="negWp">(' + homeWpDiff + '%)</span></span>');
+			+ ' (<span class="negWp">' + homeWpDiff + '%</span>)</span>');
 		}
 	}
+}
+
+function showPlayInfo(playOne, playTwo) {
+    $('.playOne').html(playInfoString(playOne));
+    $('.playTwo').html(playInfoString(playTwo));
+    $('.playSwing').html(swingString(playOne));
+}
+
+function clearPlayInfo() {
+    $('.playOne').html('');
+    $('.playTwo').html('');
+    $('.playSwing').html('<p><em>Hover over the chart or Top 10 plays for more info<em><p>');
 }
 
 function displayTopTen(topTenResult, playsResult) {
@@ -174,17 +186,6 @@ function buildGamesFilter(season, week) {
 	}});
 }
 
-function showPlayInfo(playOne, playTwo) {
-    $('.playOne').html(playInfoString(playOne));
-    $('.playTwo').html(playInfoString(playTwo));
-    $('.playSwing').html(swingString(playOne));
-}
-
-function clearPlayInfo() {
-    $('.playOne').html('');
-    $('.playTwo').html('');
-    $('.playSwing').html('');
-}
 
 
 

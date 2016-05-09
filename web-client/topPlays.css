@@ -1,0 +1,21 @@
+.topPlays {
+	height: 450px;
+	color: #5f5f5f;
+	max-width: 300px;
+}
+
+.topPlay:hover{
+	background-color: #666;
+}
+
+.topPlaysTitle {
+	color: #6f6f6f;
+}
+
+.posWp{
+	color: green;
+}
+
+.negWp{
+	color: red;
+}

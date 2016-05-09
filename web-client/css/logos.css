@@ -1,7 +1,7 @@
 .teamLogo {
     width: 73px;
     height: 53px;
-    background-image: url(../img/logo_sprite_small_t.png);
+    background-image: url(../img/logo_sprite_small_t_fixed.png);
     position: absolute;
     background-position: -219px -318px; /* empty part of the sprite */
 }

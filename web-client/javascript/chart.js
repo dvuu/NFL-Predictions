@@ -16,26 +16,13 @@ function buildChartFromData(playsResult, topTenResult, game) {
         fill: 'tozeroy'
     };
 
-    // var topTenSeries = {
-    //     x: [ ],
-    //     y: [ ],
-    //     mode: 'markers',
-    //     type: 'scatter'
-    // }
-
     _.each(playsResult, function(play) {
-        var homeWp = (play.homeWp * 100);
-        var string = play.home + ': ' + (Math.floor(play.homeWp * 10000) / 100) + '%';
+        var homeWp = (play.homeWp * 100).toFixed(2);
+        var string = play.home + ': ' + homeWp + '%';
         playSeries.text.push(string);
         playSeries.x.push(play.time);
-        playSeries.y.push(homeWp.toFixed(2));
+        playSeries.y.push(homeWp);
     });
-
-    // _.each(topTenResult, function(topPlay) {
-    //     var homeWp = (topPlay.homeWp * 100);
-    //     topTenSeries.x.push(topPlay.time);
-    //     topTenSeries.y.push(homeWp.toFixed(2));
-    // });
 
     var layout = {
         title: chartTitle(game),
@@ -74,6 +61,8 @@ function buildChartFromData(playsResult, topTenResult, game) {
             }
         ]
     };
+
+    $('.playSwing').html('<p><em>Hover over the chart or Top 10 plays for more info<em><p>');
 
     Plotly.newPlot('chart', [playSeries], layout, {displayModeBar: false});
 
