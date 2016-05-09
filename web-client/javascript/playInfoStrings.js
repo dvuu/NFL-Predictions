@@ -60,42 +60,86 @@ function swingString(playsResult) {
     var visitorWpDiff = (playsResult.visitorWpDiff * 100).toFixed(2);
     if (playsResult.home == playsResult.offense) {
         if (homeWpDiff > 0) {
-            return ('<p><span class="arrow">→</span>' 
-                + '<br><span class="swing">' + playsResult.visitor 
-                + '<span class="negWp"> (' + visitorWpDiff + '%)</span>' 
-                + '<br>' + playsResult.home 
-                + '<span class="posWp"> (+' + homeWpDiff + '%)</span></span>' 
-                + '<br>Score: +' + playsResult.ptsHomeGain 
-                + '<br>Yard: +' + playsResult.homeYdsGained + '</p>');
+            if (playsResult.homeYdsGained < 0) {
+                return ('<p><span class="arrow">→</span>' 
+                    + '<br><span class="swing">' + playsResult.visitor 
+                    + '<span class="negWp"> (' + visitorWpDiff + '%)</span>' 
+                    + '<br>' + playsResult.home 
+                    + '<span class="posWp"> (+' + homeWpDiff + '%)</span></span>' 
+                    + '<br>Score: +' + playsResult.ptsHomeGain 
+                    + '<br>Yard: ' + playsResult.homeYdsGained + '</p>');
+            }
+            else {
+                return ('<p><span class="arrow">→</span>' 
+                    + '<br><span class="swing">' + playsResult.visitor 
+                    + '<span class="negWp"> (' + visitorWpDiff + '%)</span>' 
+                    + '<br>' + playsResult.home 
+                    + '<span class="posWp"> (+' + homeWpDiff + '%)</span></span>' 
+                    + '<br>Score: +' + playsResult.ptsHomeGain 
+                    + '<br>Yard: +' + playsResult.homeYdsGained + '</p>');
+            }
         }
         else {
-            return ('<p><span class="arrow">→</span>' 
-                + '<br><span class="swing">' + playsResult.visitor 
-                + '<span class="posWp"> (+' + visitorWpDiff + '%)</span>' 
-                + '<br>' + playsResult.home 
-                + '<span class="negWp"> (' + homeWpDiff + '%)</span></span>' 
-                + '<br>Score: +' + playsResult.ptsHomeGain 
-                + '<br>Yard: +' + playsResult.homeYdsGained + '</p>');
+            if (playsResult.homeYdsGained < 0) {
+                return ('<p><span class="arrow">→</span>' 
+                    + '<br><span class="swing">' + playsResult.visitor 
+                    + '<span class="posWp"> (+' + visitorWpDiff + '%)</span>' 
+                    + '<br>' + playsResult.home 
+                    + '<span class="negWp"> (' + homeWpDiff + '%)</span></span>' 
+                    + '<br>Score: +' + playsResult.ptsHomeGain 
+                    + '<br>Yard: ' + playsResult.homeYdsGained + '</p>');
+            }
+            else {
+                return ('<p><span class="arrow">→</span>' 
+                    + '<br><span class="swing">' + playsResult.visitor 
+                    + '<span class="posWp"> (+' + visitorWpDiff + '%)</span>' 
+                    + '<br>' + playsResult.home 
+                    + '<span class="negWp"> (' + homeWpDiff + '%)</span></span>' 
+                    + '<br>Score: +' + playsResult.ptsHomeGain 
+                    + '<br>Yard: +' + playsResult.homeYdsGained + '</p>');
+            }
         }
     }
     else {
         if (homeWpDiff > 0) {
-            return ('<p><span class="arrow">→</span>' 
-                + '<br><span class="swing">' + playsResult.visitor 
-                + '<span class="negWp"> (' + visitorWpDiff + '%)</span>' 
-                + '<br>' + playsResult.home 
-                + '<span class="posWp"> (+' + homeWpDiff + '%)</span></span>' 
-                + '<br>Score: +' + playsResult.ptsVisitorGain 
-                + '<br>Yard: +' + playsResult.visitorYdsGained + '</p>');
+            if (playsResult.visitorYdsGained < 0) {
+                return ('<p><span class="arrow">→</span>' 
+                    + '<br><span class="swing">' + playsResult.visitor 
+                    + '<span class="negWp"> (' + visitorWpDiff + '%)</span>' 
+                    + '<br>' + playsResult.home 
+                    + '<span class="posWp"> (+' + homeWpDiff + '%)</span></span>' 
+                    + '<br>Score: +' + playsResult.ptsVisitorGain 
+                    + '<br>Yard: ' + playsResult.visitorYdsGained + '</p>');
+            }
+            else {
+                return ('<p><span class="arrow">→</span>' 
+                    + '<br><span class="swing">' + playsResult.visitor 
+                    + '<span class="negWp"> (' + visitorWpDiff + '%)</span>' 
+                    + '<br>' + playsResult.home 
+                    + '<span class="posWp"> (+' + homeWpDiff + '%)</span></span>' 
+                    + '<br>Score: +' + playsResult.ptsVisitorGain 
+                    + '<br>Yard: +' + playsResult.visitorYdsGained + '</p>');
+            }
         }
         else {
-            return ('<p><span class="arrow">→</span>' 
-                + '<br><span class="swing">' + playsResult.visitor 
-                + '<span class="posWp"> (+' + visitorWpDiff + '%)</span>' 
-                + '<br>' + playsResult.home 
-                + '<span class="negWp"> (' + homeWpDiff + '%)</span></span>' 
-                + '<br>Score: +' + playsResult.ptsVisitorGain 
-                + '<br>Yard: +' + playsResult.visitorYdsGained + '</p>');
+            if (playsResult.visitorYdsGained < 0) {
+                return ('<p><span class="arrow">→</span>' 
+                    + '<br><span class="swing">' + playsResult.visitor 
+                    + '<span class="posWp"> (+' + visitorWpDiff + '%)</span>' 
+                    + '<br>' + playsResult.home 
+                    + '<span class="negWp"> (' + homeWpDiff + '%)</span></span>' 
+                    + '<br>Score: +' + playsResult.ptsVisitorGain 
+                    + '<br>Yard: ' + playsResult.visitorYdsGained + '</p>');
+            }
+            else {
+                return ('<p><span class="arrow">→</span>' 
+                    + '<br><span class="swing">' + playsResult.visitor 
+                    + '<span class="posWp"> (+' + visitorWpDiff + '%)</span>' 
+                    + '<br>' + playsResult.home 
+                    + '<span class="negWp"> (' + homeWpDiff + '%)</span></span>' 
+                    + '<br>Score: +' + playsResult.ptsVisitorGain 
+                    + '<br>Yard: +' + playsResult.visitorYdsGained + '</p>');
+            }
         }
     }
 }
