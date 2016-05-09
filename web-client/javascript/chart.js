@@ -91,7 +91,7 @@ function buildChartFromData(playsResult, topTenResult, game) {
         var playOne = playsResult[index];
         var playTwo = playsResult[index + 1];
         
-        showPlayInfo(playOne, playTwo);
+        showPlayInfo(playTwo == undefined ? undefined : playOne , playTwo);
     });
 
     $chart[0].on('plotly_unhover', function(data) {
