@@ -51,7 +51,6 @@ function renderGame(game) {
 		$.ajax({ url: topTenUrl, success: function(topTenResult) {
 			buildChartFromData(playsResult, topTenResult, game);
 			displayTopTen(topTenResult);
-			$('.topPlaysTitle').text('Top Ten Plays');
 		}});
 	}});
 	$('.homeLogo, .awayLogo').removeClass(function(idx, css) {
@@ -83,7 +82,8 @@ function buildSeasonsFilter() {
 
 function buildWeeksFilter(season) {
 	$('.weeksDropdown .dropdown-content').empty();
-	var results = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
+	var results = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 
+		11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
 	_.each(results, function(week) {
 		var $listItem = $('<a class="dropdownLink"></a>');
 		var $div = $('<div><span>' + week + '</span></div>');
@@ -103,23 +103,32 @@ function playDescription(play) {
 	var homeWpDiff = (play.homeWpDiff * 100).toFixed(2);
 	if (play.homeWpDiff > 0) {
 		if (play.seconds < 10) {
-		 	return '<span>' + play.type + ' at ' + play.minute + ':0' + play.seconds + ' minutes left in Q' + play.quarter + ' <span class="posWp">(+' + homeWpDiff + '%)</span></span>';
+		 	return ('<span>' + play.type + ' by ' + play.offense + ' at ' + play.minute 
+		 	+ ':0' + play.seconds + ' minutes left in Q' + play.quarter 
+		 	+ ' <span class="posWp">(+' + homeWpDiff + '%)</span></span>');
 		} 
 		else {
-			return '<span>' + play.type + ' at ' + play.minute + ':' + play.seconds + ' minutes left in Q' + play.quarter + ' <span class="posWp">(+' + homeWpDiff + '%)</span></span>';
+			return ('<span>' + play.type + ' by ' + play.offense + ' at ' + play.minute 
+			+ ':' + play.seconds + ' minutes left in Q' + play.quarter 
+			+ ' <span class="posWp">(+' + homeWpDiff + '%)</span></span>');
 		}
 	}
 	else {
 		if (play.seconds < 10) {
-	 		return '<span>' + play.type + ' at ' + play.minute + ':0' + play.seconds + ' minutes left in Q' + play.quarter + ' <span class="negWp">(' + homeWpDiff + '%)</span></span>';
+	 		return ('<span>' + play.type + ' by ' + play.offense + ' at ' + play.minute 
+	 		+ ':0' + play.seconds + ' minutes left in Q' + play.quarter 
+	 		+ ' <span class="negWp">(' + homeWpDiff + '%)</span></span>');
 		}
 		else {
-			return '<span>' + play.type + ' at ' + play.minute + ':' + play.seconds + ' minutes left in Q' + play.quarter + ' <span class="negWp">(' + homeWpDiff + '%)</span></span>';
+			return ('<span>' + play.type + ' by ' + play.offense + ' at ' + play.minute + ':' 
+			+ play.seconds + ' minutes left in Q' + play.quarter 
+			+ ' <span class="negWp">(' + homeWpDiff + '%)</span></span>');
 		}
 	}
 }
 
 function displayTopTen(topTenResult) {
+	$('.topPlaysTitle').text('TOP 10 PLAYS');
 	var $topTenDiv = $('.topPlays');
 	_.each(topTenResult, function(play) {
 		var $playElement = $('<div class="topPlay">' + playDescription(play) + '</div>');

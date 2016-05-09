@@ -5,47 +5,7 @@ data.initialize(function() {
 	console.log("Data has been parsed. App is now ready");
 });
 
-// Changes overtime seconds to negative
-// First solution: assumes that any play with game time greater than previous game is overtime
-	// Penalties that give time back are assumed to be overtime, making this solution not work.
-	// ----------------------------
-	// var hitOT = false;
-	// for (var i = 0; i < plays.length; ++i) {
-	// 	var isNotFirstPlay = (i !== 0);
-	// 	var isOutOfOrder = (isNotFirstPlay && (plays[i - 1].time < plays[i].time));
-	// 	if (isOutOfOrder)
-	// 		hitOT = true;
-	// 	if (hitOT) {
-	// ---------------------------
-function fixSecondsForOvertime(plays) {
-	var	result = [ ];
-	for (var i = 0; i < plays.length; ++i) {
-		var play = plays[i];
-		if(plays[i].inOvertime)
-			play.time = play.time - 900;
-		result.push(play);
-	}
-	return result;
-}
-
-function addWinPredictionDifference (plays) {
-	var result = [ ];
-	for (var i = 0; i < plays.length; ++i) {
-		var notLastPlay = (i < (plays.length - 1));
-		if (notLastPlay) {
-			var curentWP = (plays[i].homeWp);
-			var futureWP = (plays[i + 1].homeWp);
-			plays[i].homeWpDiff = (futureWP - curentWP);
-			result.push(plays[i]);
-		}
-	}
-	return result;
-}
-
-function findHomeTeam(visitor, off, def) {
-	return (visitor == off ? def : off);
-}
-
+// Creates array of plays
 function getPlaysForGame(gameId){
 	var plays = [ ];
 	var curIdx = 0;
@@ -71,7 +31,7 @@ function getPlaysForGame(gameId){
 				timeoutsDefense: data.PLAYS[i].TIMD,
 				down: data.PLAYS[i].Down,
 				yardsToGoForFirstDown: data.PLAYS[i].YTG,
-				yardLineFromOwnGoal: data.PLAYS[i].YardLine,
+				offYardline: data.PLAYS[i].Yardline,
 				fieldZone: data.PLAYS[i].zone,
 				firstDown: data.PLAYS[i].fd,
 				shotGun: data.PLAYS[i].sg,
@@ -89,19 +49,96 @@ function getPlaysForGame(gameId){
 				totalPtsScr: data.PLAYS[i].TOTp,
 				scoreDiff: data.PLAYS[i].Score,
 				inOvertime: data.PLAYS[i].InOT,
-				time: data.PLAYS[i].Seconds,
+				time: fixSecondsForOvertime(data.PLAYS[i].InOT, data.PLAYS[i].Seconds),
 				AdjustedScore: data.PLAYS[i].AdjustedScore,
 				vegasSpread: data.PLAYS[i].Spread,
 				actualGameOutcome: data.PLAYS[i].Result,
 				homeWp: (1 - data.PLAYS[i].VisitorWP),
-				visitorWp: data.PLAYS[i].VisitorWP
+				visitorWp: data.PLAYS[i].VisitorWP,
+				ptsHome: (findHomeScoreGained(data.PLAYS[i].v, data.PLAYS[i].off,
+					data.PLAYS[i].def, data.PLAYS[i].ptso, data.PLAYS[i].ptsd)),
+				ptsVisitor: (findVisitorScoreGained(data.PLAYS[i].v, data.PLAYS[i].off,
+					data.PLAYS[i].ptso, data.PLAYS[i].ptsd))
 			};
 			plays.push(obj);
 		}
 	}
-	var fixedPlays = fixSecondsForOvertime(plays);
-	var plays = addWinPredictionDifference(fixedPlays);
-	return plays;
+	var fix1 = addPointsGainPerPlay(plays);
+	var fix2 = findYardsGainedPerPlay(fix1);
+	var fixedPlays = addWinPredictionDifference(fix2);
+	return fixedPlays;
+}
+
+// Finds home team
+function findHomeTeam(visitor, off, def) {
+	return (visitor == off ? def : off);
+}
+
+// Use InOT value evaluate if seconds left is in overtime
+// if true, -900. assuming OT < 900secs (900 secs in a quarter)
+function fixSecondsForOvertime(overtime, time) {
+	return (overtime ? time = time - 900 : time);
+}
+
+// Finds home score gained per play from ptsOffense and ptsDefense
+function findHomeScoreGained(visitor, off, def, ptsOff, ptsDef) {
+	var home = findHomeTeam(visitor, off, def);
+	return (home == off ? ptsOff : ptsDef);
+}
+
+// Finds visitor score gained per play from ptsOffense and ptsDefense
+function findVisitorScoreGained(visitor, off, ptsOff, ptsDef) {
+	return (visitor == off ? ptsOff : ptsDef);
+}
+
+// Finds home and visitor yards gained per play
+function findYardsGainedPerPlay(plays) {
+	var result = [ ];
+	for (var i = 0; i < plays.length; ++i) {
+		var notLastPlay = (i < (plays.length - 1));
+		if (notLastPlay) {
+			if (plays[i].home == plays[i].offense) {
+				plays[i].homeYdsGained = (plays[i + 1].offYardline - plays[i].offYardline);
+			}
+			else {
+				plays[i].visitorYdsGained = (plays[i + 1].offYardline - plays[i].offYardline);
+			}
+			result.push(plays[i]);
+		}
+	}
+	return result;
+}
+
+// Calculates points gained per play propety
+function addPointsGainPerPlay(plays) {
+	var result = [ ];
+	for (var i = 0; i < plays.length; ++i) {
+		var notLastPlay = (i < (plays.length - 1));
+		if (notLastPlay) {
+			plays[i].ptsHomeGain = (plays[i + 1].ptsHome - plays[i].ptsHome);
+			plays[i].ptsVisitorGain = (plays[i + 1].ptsVisitor - plays[i].ptsVisitor);
+			result.push(plays[i]);
+		}
+	}
+	return result;
+}
+
+// Calculates win prediction difference
+function addWinPredictionDifference(plays) {
+	var result = [ ];
+	for (var i = 0; i < plays.length; ++i) {
+		var notLastPlay = (i < (plays.length - 1));
+		if (notLastPlay) {
+			var currentHomeWp = (plays[i].homeWp);
+			var futureHomeWp = (plays[i + 1].homeWp);
+			var currentVisitorWp = (plays[i].visitorWp);
+			var futureVisitorWp = (plays[i + 1].visitorWp);
+			plays[i].homeWpDiff = (futureHomeWp - currentHomeWp);
+			plays[i].visitorWpDiff = (futureVisitorWp - currentVisitorWp);
+			result.push(plays[i]);
+		}
+	}
+	return result;
 }
 
 module.exports = function(app) {
@@ -157,7 +194,7 @@ module.exports = function(app) {
         res.end(JSON.stringify(result));
     });
 
-	//
+	// returns all plays
 	app.get('/api/plays/:gameId', function(req, res) {
 		var gameId = req.params.gameId;
 		console.log("Client requested plays from game " + gameId + "...");

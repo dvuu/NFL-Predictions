@@ -1,9 +1,3 @@
-
-function chartTitle(gameObj) {
-    return (gameObj.season + ' - Week ' + gameObj.week + ': ' + gameObj.visitor + ': ' + gameObj.ptsVisitor 
-            + ' @ ' + gameObj.home + ': ' + gameObj.ptsHome);
-}
-
 function buildChartFromData(playsResult, topTenResult, game) {
     var $chart = $('#chart');
     var $playOne = $('.playOne');
@@ -31,9 +25,7 @@ function buildChartFromData(playsResult, topTenResult, game) {
 
     _.each(playsResult, function(play) {
         var homeWp = (play.homeWp * 100);
-        var string = play.home + ' Win Probability: ' + homeWp.toFixed(2) + '%' + '<br>Play: '+ play.type 
-                    + '<br>OFF/Score: ' + play.offense + ': ' + play.ptsOffense + '<br>DEF/Score: ' + play.defense 
-                    + ': ' + play.ptsDefense + '<br>Down: ' + play.down + '<br>Time left: ' + play.time + ' secs';
+        var string = playInfoString(play).replace(/<p>|<\/p>/g, '');
         playSeries.text.push(string);
         playSeries.x.push(play.time);
         playSeries.y.push(homeWp.toFixed(2));
@@ -49,7 +41,8 @@ function buildChartFromData(playsResult, topTenResult, game) {
         title: chartTitle(game),
         xaxis: {
             title: 'Game time remaining (seconds)',
-            range: [3700, (lastPlay + -100)], // add padding so the labels aren't slammed against the axes
+            // add padding so the labels aren't slammed against the axes
+            range: [3700, (lastPlay + -100)],
             dtick: 900,
             zeroline: false
         },
@@ -58,7 +51,8 @@ function buildChartFromData(playsResult, topTenResult, game) {
             range: [0, 100]
         },
         showLegend: true,
-        range: [-0.1, 1], // add padding so the labels aren't slammed against the axes
+        // add padding so the labels aren't slammed against the axes
+        range: [-0.1, 1],
 
         font: {
             family: 'Helvetica',
@@ -82,22 +76,6 @@ function buildChartFromData(playsResult, topTenResult, game) {
     };
 
     Plotly.newPlot('chart', [playSeries], layout, {displayModeBar: false});
-
-    function playInfoString(playsResult) {
-        return ('<p>' + playsResult.home + ' Win Probability: ' + (playsResult.homeWp * 100).toFixed(2) + '%' + '<br>Play: '+ playsResult.type 
-            + '<br>OFF/Score: ' + playsResult.offense + ': ' + playsResult.ptsOffense + '<br>DEF/Score: ' + playsResult.defense 
-            + ': ' + playsResult.ptsDefense + '<br>Down: ' + playsResult.down + '<br>Time left: ' + playsResult.time + ' secs' + '</p>');
-    }
-
-    function swingString(playsResult) {
-        var homeWpDiff = (playsResult.homeWpDiff * 100).toFixed(2);
-        if (homeWpDiff > 0) {
-            return ('<p>' + '<span class="posWp swing">+' + homeWpDiff + '%</span><br><span class="arrow">></span></p>');
-        }
-        else {
-            return ('<p>' + '<span class="negWp swing">' + homeWpDiff + '%</span><br><span class="arrow">></span></p>');
-        }
-    }
 
     $chart[0].on('plotly_click', function(data) {
         if (data.points.length <= 0)
