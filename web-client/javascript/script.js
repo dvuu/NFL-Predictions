@@ -151,7 +151,7 @@ function displayTopTen(topTenResult, playsResult) {
   				{curveNumber:0, pointNumber: play.idx},
   				{curveNumber:0, pointNumber: (play.idx + 1)}
   			]);
-  			showPlayInfo(play.idx + 1 == undefined ? undefined : playsResult[play.idx],
+  			showPlayInfo(play.idx + 1 == null ? null : playsResult[play.idx],
   						 play.idx + 1 < playsResult.length ? playsResult[play.idx + 1] : null);
 		});
 		$playElement.on('mouseleave', function( ) {
