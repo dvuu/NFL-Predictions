@@ -127,6 +127,18 @@ function playDescription(play) {
 	}
 }
 
+function showPlayInfo(playOne, playTwo) {
+    $('.playOne').html(playInfoString(playOne));
+    $('.playTwo').html(playInfoString(playTwo));
+    $('.playSwing').html(swingString(playOne));
+}
+
+function clearPlayInfo() {
+    $('.playOne').html('');
+    $('.playTwo').html('');
+    $('.playSwing').html('');
+}
+
 function displayTopTen(topTenResult, playsResult) {
 	$('.topPlaysTitle').text('TOP 10 PLAYS');
 	var $topTenDiv = $('.topPlays');
@@ -174,17 +186,6 @@ function buildGamesFilter(season, week) {
 	}});
 }
 
-function showPlayInfo(playOne, playTwo) {
-    $('.playOne').html(playInfoString(playOne));
-    $('.playTwo').html(playInfoString(playTwo));
-    $('.playSwing').html(swingString(playOne));
-}
-
-function clearPlayInfo() {
-    $('.playOne').html('');
-    $('.playTwo').html('');
-    $('.playSwing').html('');
-}
 
 
 
