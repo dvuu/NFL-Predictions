@@ -8,10 +8,10 @@ function buildChartFromData(playsResult, topTenResult, game) {
 
     function createHomeAndVisitorMarker(play) {
         if (play.home == play.offense) {
-            return 'orange'
+            return '#ff7400';
         }
         else{
-            return 'blue'
+            return '#0021c5';
         }
     }
 
@@ -20,7 +20,7 @@ function buildChartFromData(playsResult, topTenResult, game) {
         y: [ ],
         mode: 'lines+markers',
         line: {
-            color: 'gray'
+            color: '#7f7f7f'
         },
         marker: {
             color: [ ]
@@ -93,7 +93,7 @@ function buildChartFromData(playsResult, topTenResult, game) {
         var playOne = playsResult[index];
         var playTwo = playsResult[index + 1];
         
-        showPlayInfo(playTwo == null ? null : playOne , playTwo);
+        showPlayInfo(playTwo == null ? null : playOne, playTwo);
     });
 
     $chart[0].on('plotly_unhover', function(data) {
