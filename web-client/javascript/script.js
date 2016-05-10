@@ -140,6 +140,8 @@ function clearPlayInfo() {
 }
 
 function displayTopTen(topTenResult, playsResult) {
+	$('.legend').empty();
+	$('.legend').html('<p><span class="offColor"></span> Offense</p><p><span class="defColor"></span> Defense</p>');
 	var $topTenDiv = $('.topPlays');
 	_.each(topTenResult, function(play) {
 		$('.topPlaysTitle').html('TOP 10 PLAYS (<em>' + play.home + ' % swing</em>)');
