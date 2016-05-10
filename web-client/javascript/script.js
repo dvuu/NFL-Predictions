@@ -144,7 +144,7 @@ function displayTopTen(topTenResult, playsResult) {
 	$('.legend').html('<p><span class="offColor"></span> Offense</p><p><span class="defColor"></span> Defense</p>');
 	var $topTenDiv = $('.topPlays');
 	_.each(topTenResult, function(play) {
-		$('.topPlaysTitle').html('TOP 10 PLAYS (<em>' + play.home + ' % swing</em>)');
+		$('.topPlaysTitle').html('TOP 10 PLAYS <em>(' + play.home + ' % SWING)</em>');
 		var $playElement = $('<div class="topPlay">' + playDescription(play) + '</div>');
 		$topTenDiv.append($playElement);
 		//event function that when you hover top ten it will dislay where it is located on the chart
