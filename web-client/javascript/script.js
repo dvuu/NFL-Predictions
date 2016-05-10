@@ -140,7 +140,7 @@ function clearPlayInfo() {
 }
 
 function displayTopTen(topTenResult, playsResult) {
-	$('.topPlaysTitle').text('TOP 10 PLAYS');
+	$('.topPlaysTitle').text('TOP 10 PLAYS (% home swing)');
 	var $topTenDiv = $('.topPlays');
 	_.each(topTenResult, function(play) {
 		var $playElement = $('<div class="topPlay">' + playDescription(play) + '</div>');

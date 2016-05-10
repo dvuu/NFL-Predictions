@@ -6,12 +6,12 @@
     background-position: -219px -318px; /* empty part of the sprite */
 }
 
-.awayLogo {
+.homeLogo {
     top: 80px;
     left: 120px;
 }
 
-.homeLogo {
+.awayLogo {
     top: 300px;
     left: 120px;
 }
