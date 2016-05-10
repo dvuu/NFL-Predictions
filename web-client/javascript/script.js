@@ -130,7 +130,7 @@ function playDescription(play) {
 function showPlayInfo(playOne, playTwo) {
     $('.playOne').html(playInfoString(playOne));
     $('.playTwo').html(playInfoString(playTwo));
-    $('.playSwing').html(swingString(playOne));
+    $('.playSwing').html(swingString(playOne, playTwo));
 }
 
 function clearPlayInfo() {
