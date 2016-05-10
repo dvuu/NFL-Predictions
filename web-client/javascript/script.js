@@ -140,9 +140,9 @@ function clearPlayInfo() {
 }
 
 function displayTopTen(topTenResult, playsResult) {
-	$('.topPlaysTitle').text('TOP 10 PLAYS (% home swing)');
 	var $topTenDiv = $('.topPlays');
 	_.each(topTenResult, function(play) {
+		$('.topPlaysTitle').html('TOP 10 PLAYS (<em>' + play.home + ' % swing</em>)');
 		var $playElement = $('<div class="topPlay">' + playDescription(play) + '</div>');
 		$topTenDiv.append($playElement);
 		//event function that when you hover top ten it will dislay where it is located on the chart

@@ -135,7 +135,7 @@ function addWinPredictionDifference(plays) {
 function wpDiffComparison(a, b) {
 	return Math.abs(b.homeWpDiff)- Math.abs(a.homeWpDiff);
 }
-function findBigestPlays(plays, n) {
+function findBiggestPlays(plays, n) {
 	var sortedPlays = plays.sort(wpDiffComparison);
 	return sortedPlays.slice(0, n);
 }
@@ -208,7 +208,7 @@ module.exports = function(app) {
     	console.log("Client requested top ten plays for game " + gameId + "...");
     	var plays = getPlaysForGame(gameId);
 		res.writeHead(200,{'Content-Type': 'application/json'});
-        res.end(JSON.stringify(findBigestPlays(plays, 10)));
+        res.end(JSON.stringify(findBiggestPlays(plays, 10)));
     });
 
     //returns top 10 plays from all games combined 
@@ -219,18 +219,18 @@ module.exports = function(app) {
     		if (data.PLAYS[i].gid !== data.PLAYS[i + 1].gid) {
     			continue;
     		}
-    		var curentWP = (data.PLAYS[i].homeWp);
-			var futureWP = (data.PLAYS[i + 1].homeWp);
+    		var curentWP = (1 - data.PLAYS[i].VisitorWP);
+			var futureWP = (1 - data.PLAYS[i + 1].VisitorWP);
 			var obj = {
     			gameId: data.PLAYS[i].gid,
 				playId: data.PLAYS[i].pid,
 				type: data.PLAYS[i].type,
 				time: fixSecondsForOvertime(data.PLAYS[i].InOT, data.PLAYS[i].Seconds),
-				homeWpDiff: (futureWP - curentWP)
+				homeWpDiff: futureWP - curentWP
     		};
 	    	results.push(obj);	
     	}
-    	var allTopTen = findBigestPlays(results, 10)
+    	var allTopTen = findBiggestPlays(results, 10)
     	res.writeHead(200,{'Content-Type': 'application/json'});
         res.end(JSON.stringify(allTopTen));
     });

@@ -20,14 +20,14 @@ function buildChartFromData(playsResult, topTenResult, game) {
         y: [ ],
         mode: 'lines+markers',
         line: {
-            color: 'black'
+            color: 'gray'
         },
         marker: {
             color: [ ]
         },
         type: 'scatter',
         text: [ ],
-        hoverinfo: 'text',
+        hoverinfo: 'text'
     };
 
     _.each(playsResult, function(play) {

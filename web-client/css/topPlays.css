@@ -1,11 +1,12 @@
 .topPlays {
 	height: 450px;
 	color: #5f5f5f;
-	max-width: 250px;
+	max-width: 270px;
 }
 
 .topPlay:hover{
 	background-color: #ddd;
+	cursor: default;
 }
 
 .topPlaysTitle {
