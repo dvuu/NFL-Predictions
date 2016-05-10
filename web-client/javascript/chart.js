@@ -77,7 +77,7 @@ function buildChartFromData(playsResult, topTenResult, game) {
         ]
     };
 
-    $('.playSwing').html('<p><em>Hover over the chart or Top 10 plays for more info<em><p>');
+    $('.playSwing').html('<p><br><em>Hover over the chart or Top 10 plays for more info<em><p>');
 
     Plotly.newPlot('chart', [playSeries], layout, {displayModeBar: false});
 

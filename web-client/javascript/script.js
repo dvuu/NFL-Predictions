@@ -136,7 +136,7 @@ function showPlayInfo(playOne, playTwo) {
 function clearPlayInfo() {
     $('.playOne').html('');
     $('.playTwo').html('');
-    $('.playSwing').html('<p><em>Hover over the chart or Top 10 plays for more info<em><p>');
+    $('.playSwing').html('<p><br><em>Hover over the chart or Top 10 plays for more info<em><p>');
 }
 
 function displayTopTen(topTenResult, playsResult) {
