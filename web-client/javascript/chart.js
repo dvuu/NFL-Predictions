@@ -90,9 +90,16 @@ function buildChartFromData(playsResult, topTenResult, game) {
         }
         var point = data.points[0];
         var index = point.pointNumber;
-        var playOne = playsResult[index];
-        var playTwo = playsResult[index + 1];
+        var playOne = (index > 0) ? playsResult[index - 1] : null;
+        var playTwo = playsResult[index];
         
+        if (index > 0) {
+            Plotly.Fx.hover('chart',[
+                {curveNumber:0, pointNumber: index},
+                {curveNumber:0, pointNumber: index - 1}
+            ]);
+        }
+
         showPlayInfo(playTwo == null ? null : playOne, playTwo);
     });
 

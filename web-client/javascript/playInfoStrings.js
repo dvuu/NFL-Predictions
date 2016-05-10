@@ -4,7 +4,7 @@ function chartTitle(gameObj) {
 }
 
 function ballOn(yardLine) {
-    return (yardLine < 50 ? 'OWN ' : (yardLine > 50 ? 'OPP ' : '')) + yardLine;
+    return yardLine < 50 ? ('OWN ' + yardLine) : (yardLine > 50 ? ('OPP ' + (100 - yardLine)) : '50');
 }
 
 function playInfoString(playsResult) {
