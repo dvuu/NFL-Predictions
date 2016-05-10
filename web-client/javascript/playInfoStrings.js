@@ -3,6 +3,10 @@ function chartTitle(gameObj) {
         + ': ' + gameObj.ptsVisitor + ' @ ' + gameObj.home + ': ' + gameObj.ptsHome);
 }
 
+function ballOn(yardLine) {
+    return (yardLine < 50 ? 'OWN ' : (yardLine > 50 ? 'OPP ' : '')) + yardLine;
+}
+
 function playInfoString(playsResult) {
     var homeWp = (playsResult.homeWp * 100).toFixed(2);
     var visitorWp = (playsResult.visitorWp * 100).toFixed(2);
@@ -16,7 +20,7 @@ function playInfoString(playsResult) {
                 + ' (<span class="negWp">' + homeWp + '%</span>)'
                 + '<br>Offense: ' + playsResult.offense
                 + '<br>Down: ' + playsResult.down 
-                + '<br>Yard: ' + playsResult.offYardline + '</p>');
+                + '<br>Ball On: ' + ballOn(playsResult.offYardline) + '</p>');
         }
         else {
             return ('<p>Q' + playsResult.quarter + ': ' + playsResult.minute + ':' 
@@ -27,7 +31,7 @@ function playInfoString(playsResult) {
                 + ' (<span class="negWp">' + homeWp + '%</span>)'
                 + '<br>Offense: ' + playsResult.offense
                 + '<br>Down: ' + playsResult.down 
-                + '<br>Yard: ' + playsResult.offYardline + '</p>');
+                + '<br>Ball On: ' + ballOn(playsResult.offYardline) + '</p>');
         }
     }
     else {
@@ -40,7 +44,7 @@ function playInfoString(playsResult) {
                 + ' (<span class="posWp">' + homeWp + '%</span>)' 
                 + '<br>Offense: ' + playsResult.offense
                 + '<br>Down: ' + playsResult.down 
-                + '<br>Yard: ' + playsResult.offYardline + '</p>');
+                + '<br>Ball On: ' + ballOn(playsResult.offYardline) + '</p>');
         }
         else {
             return ('<p>Q' + playsResult.quarter + ': ' + playsResult.minute + ':' 
@@ -51,7 +55,7 @@ function playInfoString(playsResult) {
                 + ' (<span class="posWp">' + homeWp + '%</span>)' 
                 + '<br>Offense: ' + playsResult.offense
                 + '<br>Down: ' + playsResult.down 
-                + '<br>Yard: ' + playsResult.offYardline + '</p>');
+                + '<br>Ball On: ' + ballOn(playsResult.offYardline) + '</p>');
         }
     }
 }
@@ -66,16 +70,16 @@ function swingString(playsResult) {
                     + '<br><span class="swing">' + playsResult.home 
                     + ' <span class="posWp">+' + homeWpDiff + '%</span></span>'
                     + '<br>Play: ' + playsResult.type 
-                    + '<br>Score: +' + playsResult.ptsHomeGain 
-                    + '<br>Yards gained: ' + playsResult.homeYdsGained + '</p>');
+                    + (playsResult.ptsHomeGain ? '<br>Points Scored: ' + playsResult.ptsHomeGain : '')
+                    + (!playsResult.ptsHomeGain ? '<br>Gained: ' + playsResult.homeYdsGained + ' yds' : '') + '</p>');
             }
             else {
                 return ('<p><span class="arrow">→</span>' 
                     + '<br><span class="swing">' + playsResult.home 
                     + ' <span class="posWp">+' + homeWpDiff + '%</span></span>'
                     + '<br>Play: ' + playsResult.type 
-                    + '<br>Score: +' + playsResult.ptsHomeGain 
-                    + '<br>Yards gained: +' + playsResult.homeYdsGained + '</p>');
+                    + (playsResult.ptsHomeGain ? '<br>Points Scored: ' + playsResult.ptsHomeGain : '')
+                    + (!playsResult.ptsHomeGain ? '<br>Gained: ' + playsResult.homeYdsGained + ' yds': '') + '</p>');
             }
         }
         else {
@@ -84,16 +88,16 @@ function swingString(playsResult) {
                     + '<br><span class="swing">' + playsResult.home 
                     + ' <span class="negWp">' + homeWpDiff + '%</span></span>'
                     + '<br>Play: ' + playsResult.type 
-                    + '<br>Score: +' + playsResult.ptsHomeGain 
-                    + '<br>Yards gained: ' + playsResult.homeYdsGained + '</p>');
+                    + (playsResult.ptsHomeGain ? '<br>Points Scored: ' + playsResult.ptsHomeGain : '')
+                    + (!playsResult.ptsHomeGain ? '<br>Gained: ' + playsResult.homeYdsGained + ' yds': '') + '</p>');
             }
             else {
                 return ('<p><span class="arrow">→</span>' 
                     + '<br><span class="swing">' + playsResult.home 
                     + ' <span class="negWp">' + homeWpDiff + '%</span></span>'
                     + '<br>Play: ' + playsResult.type 
-                    + '<br>Score: +' + playsResult.ptsHomeGain 
-                    + '<br>Yards gained: +' + playsResult.homeYdsGained + '</p>');
+                    + (playsResult.ptsHomeGain ? '<br>Points Scored: ' + playsResult.ptsHomeGain : '')
+                    + (!playsResult.ptsHomeGain ? '<br>Gained: ' + playsResult.homeYdsGained + ' yds': '') + '</p>');
             }
         }
     }
@@ -104,16 +108,16 @@ function swingString(playsResult) {
                     + '<br><span class="swing">' + playsResult.home 
                     + ' <span class="posWp">+' + homeWpDiff + '%</span></span>'
                     + '<br>Play: ' + playsResult.type 
-                    + '<br>Score: +' + playsResult.ptsVisitorGain 
-                    + '<br>Yards gained: ' + playsResult.visitorYdsGained + '</p>');
+                    + (playsResult.ptsVisitorGain ? '<br>Points Scored: ' + playsResult.ptsVisitorGain : '')
+                    + (!playsResult.ptsVisitorGain ? '<br>Gained: ' + playsResult.visitorYdsGained + ' yds': '') + '</p>');
             }
             else {
                 return ('<p><span class="arrow">→</span>' 
                     + '<br><span class="swing">' + playsResult.home 
                     + ' <span class="posWp">+' + homeWpDiff + '%</span></span>'
                     + '<br>Play: ' + playsResult.type 
-                    + '<br>Score: +' + playsResult.ptsVisitorGain 
-                    + '<br>Yards gained: +' + playsResult.visitorYdsGained + '</p>');
+                    + (playsResult.ptsVisitorGain ? '<br>Points Scored: ' + playsResult.ptsVisitorGain : '')
+                    + (!playsResult.ptsVisitorGain ? '<br>Gained: ' + playsResult.visitorYdsGained + ' yds': '') + '</p>');
             }
         }
         else {
@@ -122,16 +126,16 @@ function swingString(playsResult) {
                     + '<br><span class="swing">' + playsResult.home 
                     + ' <span class="negWp">' + homeWpDiff + '%</span></span>'
                     + '<br>Play: ' + playsResult.type 
-                    + '<br>Score: +' + playsResult.ptsVisitorGain 
-                    + '<br>Yards gained: ' + playsResult.visitorYdsGained + '</p>');
+                    + (playsResult.ptsVisitorGain ? '<br>Points Scored: ' + playsResult.ptsVisitorGain : '')
+                    + (!playsResult.ptsVisitorGain ? '<br>Gained: ' + playsResult.visitorYdsGained + ' yds': '') + '</p>');
             }
             else {
                 return ('<p><span class="arrow">→</span>' 
                     + '<br><span class="swing">' + playsResult.home 
                     + ' <span class="negWp">' + homeWpDiff + '%</span></span>'
                     + '<br>Play: ' + playsResult.type 
-                    + '<br>Score: +' + playsResult.ptsVisitorGain 
-                    + '<br>Yards gained: +' + playsResult.visitorYdsGained + '</p>');
+                    + (playsResult.ptsVisitorGain ? '<br>Points Scored: ' + playsResult.ptsVisitorGain : '')
+                    + (!playsResult.ptsVisitorGain ? '<br>Gained: ' + playsResult.visitorYdsGained + ' yds': '') + '</p>');
             }
         }
     }
