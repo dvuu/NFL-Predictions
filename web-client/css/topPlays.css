@@ -1,3 +1,11 @@
+.topPlaysContainer {
+	height: 450px;
+}
+
+.topPlaysContainer {
+	padding-top: 50px;
+}
+
 .topPlays {
 	height: 450px;
 	color: #5f5f5f;
