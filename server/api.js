@@ -230,7 +230,7 @@ module.exports = function(app) {
     		};
 	    	results.push(obj);	
     	}
-	var allTopTen = findBigestPlays(results, 100)
+	var allTopTen = findBiggestPlays(results, 10)
 	res.writeHead(200, {'Content-Type': 'application/json'});
         res.end(JSON.stringify(allTopTen));
     });
