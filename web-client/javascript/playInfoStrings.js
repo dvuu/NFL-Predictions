@@ -63,45 +63,37 @@ function swingString(playsResult) {
         if (homeWpDiff > 0) {
             if (playsResult.homeYdsGained < 0) {
                 return ('<p><span class="arrow">→</span>' 
-                    + '<br><span class="swing">' + playsResult.visitor 
-                    + ' <span class="negWp">' + visitorWpDiff + '%</span>' 
-                    + '<br>' + playsResult.home 
+                    + '<br><span class="swing">' + playsResult.home 
                     + ' <span class="posWp">+' + homeWpDiff + '%</span></span>'
                     + '<br>Play: ' + playsResult.type 
                     + '<br>Score: +' + playsResult.ptsHomeGain 
-                    + '<br>Yard: ' + playsResult.homeYdsGained + '</p>');
+                    + '<br>Yards gained: ' + playsResult.homeYdsGained + '</p>');
             }
             else {
                 return ('<p><span class="arrow">→</span>' 
-                    + '<br><span class="swing">' + playsResult.visitor 
-                    + ' <span class="negWp">' + visitorWpDiff + '%</span>' 
-                    + '<br>' + playsResult.home 
+                    + '<br><span class="swing">' + playsResult.home 
                     + ' <span class="posWp">+' + homeWpDiff + '%</span></span>'
                     + '<br>Play: ' + playsResult.type 
                     + '<br>Score: +' + playsResult.ptsHomeGain 
-                    + '<br>Yard: +' + playsResult.homeYdsGained + '</p>');
+                    + '<br>Yards gained: +' + playsResult.homeYdsGained + '</p>');
             }
         }
         else {
             if (playsResult.homeYdsGained < 0) {
                 return ('<p><span class="arrow">→</span>' 
-                    + '<br><span class="swing">' + playsResult.visitor 
-                    + ' <span class="posWp">+' + visitorWpDiff + '%</span>' 
-                    + '<br>' + playsResult.home 
+                    + '<br><span class="swing">' + playsResult.home 
                     + ' <span class="negWp">' + homeWpDiff + '%</span></span>'
                     + '<br>Play: ' + playsResult.type 
                     + '<br>Score: +' + playsResult.ptsHomeGain 
-                    + '<br>Yard: ' + playsResult.homeYdsGained + '</p>');
+                    + '<br>Yards gained: ' + playsResult.homeYdsGained + '</p>');
             }
             else {
                 return ('<p><span class="arrow">→</span>' 
-                    + '<br><span class="swing">' + playsResult.visitor 
-                    + ' <span class="posWp">+' + visitorWpDiff + '%</span>' 
-                    + '<br>' + playsResult.home 
+                    + '<br><span class="swing">' + playsResult.home 
                     + ' <span class="negWp">' + homeWpDiff + '%</span></span>'
                     + '<br>Play: ' + playsResult.type 
                     + '<br>Score: +' + playsResult.ptsHomeGain 
-                    + '<br>Yard: +' + playsResult.homeYdsGained + '</p>');
+                    + '<br>Yards gained: +' + playsResult.homeYdsGained + '</p>');
             }
         }
     }
@@ -109,45 +101,37 @@ function swingString(playsResult) {
         if (homeWpDiff > 0) {
             if (playsResult.visitorYdsGained < 0) {
                 return ('<p><span class="arrow">→</span>' 
-                    + '<br><span class="swing">' + playsResult.visitor 
-                    + ' <span class="negWp">' + visitorWpDiff + '%</span>' 
-                    + '<br>' + playsResult.home 
+                    + '<br><span class="swing">' + playsResult.home 
                     + ' <span class="posWp">+' + homeWpDiff + '%</span></span>'
                     + '<br>Play: ' + playsResult.type 
                     + '<br>Score: +' + playsResult.ptsVisitorGain 
-                    + '<br>Yard: ' + playsResult.visitorYdsGained + '</p>');
+                    + '<br>Yards gained: ' + playsResult.visitorYdsGained + '</p>');
             }
             else {
                 return ('<p><span class="arrow">→</span>' 
-                    + '<br><span class="swing">' + playsResult.visitor 
-                    + ' <span class="negWp">' + visitorWpDiff + '%</span>' 
-                    + '<br>' + playsResult.home 
+                    + '<br><span class="swing">' + playsResult.home 
                     + ' <span class="posWp">+' + homeWpDiff + '%</span></span>'
                     + '<br>Play: ' + playsResult.type 
                     + '<br>Score: +' + playsResult.ptsVisitorGain 
-                    + '<br>Yard: +' + playsResult.visitorYdsGained + '</p>');
+                    + '<br>Yards gained: +' + playsResult.visitorYdsGained + '</p>');
             }
         }
         else {
             if (playsResult.visitorYdsGained < 0) {
                 return ('<p><span class="arrow">→</span>' 
-                    + '<br><span class="swing">' + playsResult.visitor 
-                    + ' <span class="posWp">+' + visitorWpDiff + '%</span>' 
-                    + '<br>' + playsResult.home 
+                    + '<br><span class="swing">' + playsResult.home 
                     + ' <span class="negWp">' + homeWpDiff + '%</span></span>'
                     + '<br>Play: ' + playsResult.type 
                     + '<br>Score: +' + playsResult.ptsVisitorGain 
-                    + '<br>Yard: ' + playsResult.visitorYdsGained + '</p>');
+                    + '<br>Yards gained: ' + playsResult.visitorYdsGained + '</p>');
             }
             else {
                 return ('<p><span class="arrow">→</span>' 
-                    + '<br><span class="swing">' + playsResult.visitor 
-                    + ' <span class="posWp">+' + visitorWpDiff + '%</span>' 
-                    + '<br>' + playsResult.home 
+                    + '<br><span class="swing">' + playsResult.home 
                     + ' <span class="negWp">' + homeWpDiff + '%</span></span>'
                     + '<br>Play: ' + playsResult.type 
                     + '<br>Score: +' + playsResult.ptsVisitorGain 
-                    + '<br>Yard: +' + playsResult.visitorYdsGained + '</p>');
+                    + '<br>Yards gained: +' + playsResult.visitorYdsGained + '</p>');
             }
         }
     }
