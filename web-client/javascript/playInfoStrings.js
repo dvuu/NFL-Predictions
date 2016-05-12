@@ -71,8 +71,7 @@ function swingString(playOne, playTwo) {
                     + ' <span class="posWp">+' + homeWpDiff + '%</span></span>'
                     + '<br>Play: ' + playOne.type 
                     + (playOne.ptsHomeGain ? '<br>Points Scored: ' + playOne.ptsHomeGain : '')
-                    + (playOne.ptsHomeGain && (playOne.offense == playTwo.offense) ? '' : '<br>TURNOVER')
-                    + (!playOne.ptsHomeGain && (playOne.offense == playTwo.offense) ? '<br>Gained: ' + playOne.homeYdsGained + ' yds' : '') + '</p>');
+                    + (!playOne.ptsHomeGain  ? '<br>Gained: ' + playOne.homeYdsGained + ' yds' : '') + '</p>');
             }
             else {
                 return ('<p><span class="arrow">→</span>' 
@@ -90,8 +89,7 @@ function swingString(playOne, playTwo) {
                     + ' <span class="negWp">' + homeWpDiff + '%</span></span>'
                     + '<br>Play: ' + playOne.type 
                     + (playOne.ptsHomeGain ? '<br>Points Scored: ' + playOne.ptsHomeGain : '')
-                    + (playOne.ptsHomeGain && (playOne.offense == playTwo.offense) ? '' : '<br>TURNOVER')
-                    + (!playOne.ptsHomeGain && (playOne.offense == playTwo.offense) ? '<br>Gained: ' + playOne.homeYdsGained + ' yds' : '') + '</p>');
+                    + (!playOne.ptsHomeGain  ? '<br>Gained: ' + playOne.homeYdsGained + ' yds' : '') + '</p>');
             }
             else {
                 return ('<p><span class="arrow">→</span>' 
@@ -111,8 +109,7 @@ function swingString(playOne, playTwo) {
                     + ' <span class="posWp">+' + homeWpDiff + '%</span></span>'
                     + '<br>Play: ' + playOne.type 
                     + (playOne.ptsVisitorGain ? '<br>Points Scored: ' + playOne.ptsVisitorGain : '')
-                    + (playOne.ptsVisitorGain && (playOne.offense == playTwo.offense) ? '' : '<br>TURNOVER')
-                    + (!playOne.ptsVisitorGain && (playOne.offense == playTwo.offense) ? '<br>Gained: ' + playOne.visitorYdsGained + ' yds' : '') + '</p>');
+                    + (!playOne.ptsVisitorGain  ? '<br>Gained: ' + playOne.visitorYdsGained + ' yds' : '') + '</p>');
             }
             else {
                 return ('<p><span class="arrow">→</span>' 
@@ -130,8 +127,7 @@ function swingString(playOne, playTwo) {
                     + ' <span class="negWp">' + homeWpDiff + '%</span></span>'
                     + '<br>Play: ' + playOne.type 
                     + (playOne.ptsVisitorGain ? '<br>Points Scored: ' + playOne.ptsVisitorGain : '')
-                    + (playOne.ptsVisitorGain && (playOne.offense == playTwo.offense) ? '' : '<br>TURNOVER')
-                    + (!playOne.ptsVisitorGain && (playOne.offense == playTwo.offense) ? '<br>Gained: ' + playOne.visitorYdsGained + ' yds' : '') + '</p>');
+                    + (!playOne.ptsVisitorGain  ? '<br>Gained: ' + playOne.visitorYdsGained + ' yds' : '') + '</p>');
             }
             else {
                 return ('<p><span class="arrow">→</span>' 
