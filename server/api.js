@@ -122,12 +122,8 @@ function addWinPredictionDifference(plays) {
 	for (var i = 0; i < plays.length; ++i) {
 		var notLastPlay = (i < (plays.length - 1));
 		if (notLastPlay) {
-			var currentHomeWp = plays[i].homeWp;
-			var futureHomeWp = plays[i + 1].homeWp;
-			var currentVisitorWp = plays[i].visitorWp;
-			var futureVisitorWp = plays[i + 1].visitorWp;
-			plays[i].homeWpDiff = (futureHomeWp - currentHomeWp);
-			plays[i].visitorWpDiff = (futureVisitorWp - currentVisitorWp);
+			plays[i].homeWpDiff = (plays[i + 1].homeWp - plays[i].homeWp);
+			plays[i].visitorWpDiff = (plays[i + 1].visitorWp - plays[i].visitorWp);
 		}
 	}
 }
