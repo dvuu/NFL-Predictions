@@ -145,6 +145,10 @@ function clearPlayInfo() {
     $('.playSwing').html('<p><br><em>Hover over the chart or Top 10 plays for more info<em><p>');
 }
 
+// function displayTopTenPlaysOfAll() {
+	//
+// }
+
 function displayTopTen(topTenResult, playsResult) {
 	$('.legend').empty();
 	$('.legend').html('<p><span class="offColor"></span> Offense</p><p><span class="defColor"></span> Defense</p>');
