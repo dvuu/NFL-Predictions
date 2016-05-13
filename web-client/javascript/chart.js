@@ -100,7 +100,7 @@ function buildChartFromData(playsResult, topTenResult, game) {
             ]);
         }
 
-        showPlayInfo(playTwo == null ? null : playOne, playTwo);
+        showPlayInfo(playOne, playTwo);
     });
 
     $chart[0].on('plotly_unhover', function(data) {

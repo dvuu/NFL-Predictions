@@ -7,136 +7,51 @@ function ballOn(yardLine) {
     return yardLine < 50 ? ('OWN ' + yardLine) : (yardLine > 50 ? ('OPP ' + (100 - yardLine)) : '50');
 }
 
-function playInfoString(play) {
+function playInfoStringHelper(play, class1, class2) {
     var homeWp = (play.homeWp * 100).toFixed(2);
     var visitorWp = (play.visitorWp * 100).toFixed(2);
-    if (homeWp < 50) {
-        if (play.seconds < 10) {
-            return ('<p>Q' + play.quarter + ': ' + play.minute + ':0' 
-                + play.seconds 
-                + '<br>' + play.visitor + ': ' + play.ptsVisitor 
-                + ' (<span class="posWp">' + visitorWp + '%</span>)' 
-                + '<br>' + play.home + ': ' + play.ptsHome 
-                + ' (<span class="negWp">' + homeWp + '%</span>)'
-                + '<br>Offense: ' + play.offense
-                + '<br>Down: ' + play.down 
-                + '<br>Ball On: ' + ballOn(play.offYardline) + '</p>');
-        }
-        else {
-            return ('<p>Q' + play.quarter + ': ' + play.minute + ':' 
-                + play.seconds 
-                + '<br>' + play.visitor + ': ' + play.ptsVisitor 
-                + ' (<span class="posWp">' + visitorWp + '%</span>)' 
-                + '<br>' + play.home + ': ' + play.ptsHome 
-                + ' (<span class="negWp">' + homeWp + '%</span>)'
-                + '<br>Offense: ' + play.offense
-                + '<br>Down: ' + play.down 
-                + '<br>Ball On: ' + ballOn(play.offYardline) + '</p>');
-        }
-    }
-    else {
-        if (play.seconds < 10) {
-            return ('<p>Q' + play.quarter + ': ' + play.minute + ':0' 
-                + play.seconds 
-                + '<br>' + play.visitor + ': ' + play.ptsVisitor 
-                + ' (<span class="negWp">' + visitorWp + '%</span>)' 
-                + '<br>' + play.home + ': ' + play.ptsHome 
-                + ' (<span class="posWp">' + homeWp + '%</span>)' 
-                + '<br>Offense: ' + play.offense
-                + '<br>Down: ' + play.down 
-                + '<br>Ball On: ' + ballOn(play.offYardline) + '</p>');
-        }
-        else {
-            return ('<p>Q' + play.quarter + ': ' + play.minute + ':' 
-                + play.seconds 
-                + '<br>' + play.visitor + ': ' + play.ptsVisitor 
-                + ' (<span class="negWp">' + visitorWp + '%</span>)' 
-                + '<br>' + play.home + ': ' + play.ptsHome 
-                + ' (<span class="posWp">' + homeWp + '%</span>)' 
-                + '<br>Offense: ' + play.offense
-                + '<br>Down: ' + play.down 
-                + '<br>Ball On: ' + ballOn(play.offYardline) + '</p>');
-        }
-    }
+    return ('<p>Q' + play.quarter + ': ' + play.minute + (((play.seconds < 10) ? (':0') : (':')) + play.seconds) 
+        + '<br>' + play.visitor + ': ' + play.ptsVisitor 
+        + ' (<span class="' + class1 + '">' + visitorWp + '%</span>)' 
+        + '<br>' + play.home + ': ' + play.ptsHome 
+        + ' (<span class="' + class2 + '">' + homeWp + '%</span>)'
+        + '<br>Offense: ' + play.offense
+        + '<br>Down: ' + play.down 
+        + '<br>Ball On: ' + ballOn(play.offYardline) + '</p>');
 }
 
-function swingString(playOne, playTwo) {
-    var homeWpDiff = (playOne.homeWpDiff * 100).toFixed(2);
-    var visitorWpDiff = (playOne.visitorWpDiff * 100).toFixed(2);
+function playInfoString(play) {
+    if (play.homeWp < .5)
+        return (playInfoStringHelper(play, 'posWp', 'negWp'));
+    else
+        return (playInfoStringHelper(play, 'negWp', 'posWp'));
+}
+
+function swingStringHelper(play, class1, ptsGain, ydsGain) {
+    var homeWpDiff = (play.homeWpDiff * 100).toFixed(2);
+    return ('<p><span class="arrow">→</span>' 
+        + '<br><span class="swing">' + play.home 
+        + ' <span class="' + class1 + '">+' + homeWpDiff + '%</span></span>'
+        + '<br>Play: ' + play.type 
+        + (ptsGain ? '<br>Points Scored: ' + ptsGain : '')
+        + (!ptsGain ? '<br>Gained: ' + ydsGain + ' yds' : '') + '</p>');
+}
+
+function swingString(playOne) {
     if (playOne.home == playOne.offense) {
-        if (homeWpDiff > 0) {
-            if (playOne.homeYdsGained < 0) {
-                return ('<p><span class="arrow">→</span>' 
-                    + '<br><span class="swing">' + playOne.home 
-                    + ' <span class="posWp">+' + homeWpDiff + '%</span></span>'
-                    + '<br>Play: ' + playOne.type 
-                    + (playOne.ptsHomeGain ? '<br>Points Scored: ' + playOne.ptsHomeGain : '')
-                    + (!playOne.ptsHomeGain  ? '<br>Gained: ' + playOne.homeYdsGained + ' yds' : '') + '</p>');
-            }
-            else {
-                return ('<p><span class="arrow">→</span>' 
-                    + '<br><span class="swing">' + playOne.home 
-                    + ' <span class="posWp">+' + homeWpDiff + '%</span></span>'
-                    + '<br>Play: ' + playOne.type 
-                    + (playOne.ptsHomeGain ? '<br>Points Scored: ' + playOne.ptsHomeGain : '')
-                    + (!playOne.ptsHomeGain ? '<br>Gained: ' + playOne.homeYdsGained + ' yds' : '') + '</p>');
-            }
+        if (playOne.homeWpDiff > 0) {
+            return (swingStringHelper(playOne, 'posWp', playOne.ptsHomeGain, playOne.homeYdsGained));
         }
         else {
-            if (playOne.homeYdsGained < 0) {
-                return ('<p><span class="arrow">→</span>' 
-                    + '<br><span class="swing">' + playOne.home 
-                    + ' <span class="negWp">' + homeWpDiff + '%</span></span>'
-                    + '<br>Play: ' + playOne.type 
-                    + (playOne.ptsHomeGain ? '<br>Points Scored: ' + playOne.ptsHomeGain : '')
-                    + (!playOne.ptsHomeGain  ? '<br>Gained: ' + playOne.homeYdsGained + ' yds' : '') + '</p>');
-            }
-            else {
-                return ('<p><span class="arrow">→</span>' 
-                    + '<br><span class="swing">' + playOne.home 
-                    + ' <span class="negWp">' + homeWpDiff + '%</span></span>'
-                    + '<br>Play: ' + playOne.type 
-                    + (playOne.ptsHomeGain ? '<br>Points Scored: ' + playOne.ptsHomeGain : '')
-                    + (!playOne.ptsHomeGain ? '<br>Gained: ' + playOne.homeYdsGained + ' yds' : '') + '</p>');
-            }
+            return (swingStringHelper(playOne, 'negWp', playOne.ptsHomeGain, playOne.homeYdsGained));
         }
     }
     else {
-        if (homeWpDiff > 0) {
-            if (playOne.visitorYdsGained < 0) {
-                return ('<p><span class="arrow">→</span>' 
-                    + '<br><span class="swing">' + playOne.home 
-                    + ' <span class="posWp">+' + homeWpDiff + '%</span></span>'
-                    + '<br>Play: ' + playOne.type 
-                    + (playOne.ptsVisitorGain ? '<br>Points Scored: ' + playOne.ptsVisitorGain : '')
-                    + (!playOne.ptsVisitorGain  ? '<br>Gained: ' + playOne.visitorYdsGained + ' yds' : '') + '</p>');
-            }
-            else {
-                return ('<p><span class="arrow">→</span>' 
-                    + '<br><span class="swing">' + playOne.home 
-                    + ' <span class="posWp">+' + homeWpDiff + '%</span></span>'
-                    + '<br>Play: ' + playOne.type 
-                    + (playOne.ptsVisitorGain ? '<br>Points Scored: ' + playOne.ptsVisitorGain : '')
-                    + (!playOne.ptsVisitorGain ? '<br>Gained: ' + playOne.visitorYdsGained + ' yds' : '') + '</p>');
-            }
+        if (playOne.homeWpDiff > 0) {
+            return (swingStringHelper(playOne, 'posWp', playOne.ptsVisitorGain, playOne.visitorYdsGained));
         }
         else {
-            if (playOne.visitorYdsGained < 0) {
-                return ('<p><span class="arrow">→</span>' 
-                    + '<br><span class="swing">' + playOne.home 
-                    + ' <span class="negWp">' + homeWpDiff + '%</span></span>'
-                    + '<br>Play: ' + playOne.type 
-                    + (playOne.ptsVisitorGain ? '<br>Points Scored: ' + playOne.ptsVisitorGain : '')
-                    + (!playOne.ptsVisitorGain  ? '<br>Gained: ' + playOne.visitorYdsGained + ' yds' : '') + '</p>');
-            }
-            else {
-                return ('<p><span class="arrow">→</span>' 
-                    + '<br><span class="swing">' + playOne.home 
-                    + ' <span class="negWp">' + homeWpDiff + '%</span></span>'
-                    + '<br>Play: ' + playOne.type 
-                    + (playOne.ptsVisitorGain ? '<br>Points Scored: ' + playOne.ptsVisitorGain : '')
-                    + (!playOne.ptsVisitorGain ? '<br>Gained: ' + playOne.visitorYdsGained + ' yds' : '') + '</p>');
-            }
+            return (swingStringHelper(playOne, 'posWp', playOne.ptsVisitorGain, playOne.visitorYdsGained));
         }
     }
 }

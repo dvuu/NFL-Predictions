@@ -128,9 +128,15 @@ function playDescription(play) {
 }
 
 function showPlayInfo(playOne, playTwo) {
-    $('.playOne').html(playInfoString(playOne));
-    $('.playTwo').html(playInfoString(playTwo));
-    $('.playSwing').html(swingString(playOne, playTwo));
+	if (playOne) {
+    	$('.playOne').html(playInfoString(playOne));
+    }
+    if (playTwo) {
+    	$('.playTwo').html(playInfoString(playTwo));
+    }
+    if (playOne && playTwo) {
+    	$('.playSwing').html(swingString(playOne));
+    }
 }
 
 function clearPlayInfo() {
