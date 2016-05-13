@@ -207,9 +207,11 @@ module.exports = function(app) {
     	var gameId = req.params.gameId;
     	console.log("Client requested top ten plays for game " + gameId + "...");
     	var plays = getPlaysForGame(gameId);
+    	plays.pop();
 		res.writeHead(200,{'Content-Type': 'application/json'});
         res.end(JSON.stringify(findBiggestPlays(plays, 10)));
     });
+
 
     //returns top 10 plays from all games combined 
     app.get('/api/topTen', function(req, res) {
@@ -230,8 +232,8 @@ module.exports = function(app) {
     		};
 	    	results.push(obj);	
     	}
-	var allTopTen = findBiggestPlays(results, 10)
-	res.writeHead(200, {'Content-Type': 'application/json'});
+    	var allTopTen = findBiggestPlays(results, 10)
+    	res.writeHead(200,{'Content-Type': 'application/json'});
         res.end(JSON.stringify(allTopTen));
     });
 }
