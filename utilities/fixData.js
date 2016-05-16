@@ -11,3 +11,4 @@ var outputFile = args[3];
 // 1) Read in data from input.csv into memory (JS object, probably)
 // 2) Apply fix to in-memory data
 // 3) Write data out as a CSV to file named according to second arg
+//		-- need to fill in writeCsv in csv.js
