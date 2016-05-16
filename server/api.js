@@ -62,7 +62,9 @@ function getPlaysForGame(gameId){
 			};
 			plays.push(obj);
 		}
+		
 	}
+	//fixTurnoverOnKickOffBug(plays);
 	addPointsGainPerPlay(plays);
 	findYardsGainedPerPlay(plays);
 	addWinPredictionDifference(plays);
@@ -113,6 +115,29 @@ function addPointsGainPerPlay(plays) {
 		if (notLastPlay) {
 			plays[i].ptsHomeGain = (plays[i + 1].ptsHome - plays[i].ptsHome);
 			plays[i].ptsVisitorGain = (plays[i + 1].ptsVisitor - plays[i].ptsVisitor);
+		}
+	}
+}
+//to fix the turnover bug where pts flip on a kickoff and there is a score
+function fixTurnoverOnKickOffBug(plays) {
+	for (var i = 0; i < plays.length; i++) {
+		if (i > 1) {
+			if (plays[i].ptsHome <= plays[i - 1].ptsHome || plays[i].ptsVisitor <= plays[i - 1].ptsVisitor) {
+				var placeholder = plays[i].ptsVisitor;
+				console.log(placeholder);
+				plays[i].ptsVisitor = plays[i].ptsHome;
+				console.log(plays[i].ptsVisitor);
+				plays[i].ptsHome = placeholder;
+				console.log(plays[i].ptsHome);
+				if (plays[i].home == plays[i].offense) {
+					plays[i].ptsOffense = plays[i].ptsHome;
+					plays[i].ptsDefense = plays[i].ptsVisitor;
+				}
+				else{
+					plays[i].ptsVisitor = plays[i].ptsHome;
+					plays[i].ptsHome = plays[i].ptsVisitor;
+				}
+			}
 		}
 	}
 }
