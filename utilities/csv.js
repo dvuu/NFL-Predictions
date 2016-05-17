@@ -41,8 +41,38 @@ module.exports.readCsv = function(filename, callback) {
     });
 }
 
-module.exports.writeCsv = function(data, callback) {
-    // TBD
+module.exports.writeCsv = function(data, filename, callback) {
+    var keyToIndex = { };
+    var lines = [ ];
+
+    // Grabs keys in first object and push to columnsArray
+    var columnsArray = [ ];
+    var c = 0;
+    for (var key in data[0]) {
+        columnsArray.push(key);
+        keyToIndex[key] = c;
+        c++;
+    }
+    // Join values in columns array
+    var columns = columnsArray.join(',');
+    lines.push(columns);
+
+    // Grabs values of each object to join
+    for (var i = 0; i < data.length; ++i) {
+        var lineArray = [ ];
+        var obj = data[i];
+        for (var key in obj) {
+            var idx = keyToIndex[key];
+            lineArray[idx] = obj[key];
+        }
+        var line = lineArray.join(',');
+        lines.push(line);
+    }
+    console.log('about to call fs.writeFile...');
+    fs.writeFile(filename, lines.join('\n'), 'utf8', function(err) {
+        console.log('fs.writeFile is done.');
+        callback(err);
+    });
 }
 
 // Basic algorithm to determine the correct type of a value from a CSV file since they

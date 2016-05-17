@@ -1,6 +1,9 @@
 var _ = require('underscore');
 var csv = require('../utilities/csv.js');
 
+// This file allows us to fix the PLAY.csv file by reading it into an object,
+// fixing the flawed data, then writing to a new .csv
+
 // Print out args to the application
 // Try running your program like "node fixData.js input.csv output.csv"
 var args = process.argv;
@@ -13,7 +16,15 @@ var outputFile = args[3];
 csv.readCsv(inputFile, function(err, playData) {
 	console.log(playData.length + ' rows read');
 	fixTurnoverOnKickOffBug(playData);
-	csv.writeCsv(playData);
+	console.log('about to call writeCsv...')
+	csv.writeCsv(playData, outputFile, function(err) {
+		if (err) {
+			console.log('error writing file.');
+		}
+		else {
+			console.log('writeCsv is done.');
+		}
+	});
 });
 
 // 2) Apply fix to in-memory data
@@ -50,5 +61,3 @@ function fixTurnoverOnKickOffBug(plays) {
 	}
 };
 
-// 3) Write data out as a CSV to file named according to second arg
-//		-- need to fill in writeCsv in csv.js
