@@ -46,8 +46,8 @@ function renderFromQueryString() {
 function renderGame(game) {
 	var playUrl = '/api/plays/' + game.gameId;
 	var topTenUrl = '/api/topTen/' + game.gameId;
+	$('.topPlays').empty();
 	$.ajax({ url: playUrl, success: function(playsResult) {
-		$('.topPlays').empty();
 		$.ajax({ url: topTenUrl, success: function(topTenResult) {
 			buildChartFromData(playsResult, topTenResult, game);
 			displayTopTen(topTenResult, playsResult);

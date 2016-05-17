@@ -17,8 +17,6 @@ module.exports = {
     GAMES: null,
 }
 
-
-
 // grabs basic information from all games
 function gameDataSubset(gameData) {
     var result = [ ];
