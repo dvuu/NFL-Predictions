@@ -29,7 +29,7 @@ csv.readCsv(inputFile, function(err, playData) {
 
 // 2) Apply fix to in-memory data
 
-//flip psto & ptsd
+//flip ptso & ptsd
 function flipPointTotals(play) {
 	var placeholder = play.ptsd;
 	play.ptsd = play.ptso;
@@ -47,7 +47,7 @@ function fixTurnoverOnKickOffBug(plays) {
 	 	}
 	 	//team stays the same
 	 	if (curPlay.off == prevPlay.off) {
-	 		if (curPlay.ptso < prevPlay.ptso || curPlay.pstd < prevPlay.ptsd) {
+	 		if (curPlay.ptso < prevPlay.ptso || curPlay.ptsd < prevPlay.ptsd) {
 	 			flipPointTotals(curPlay);
 	 			
 	 		}
