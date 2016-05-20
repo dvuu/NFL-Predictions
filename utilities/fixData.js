@@ -3,16 +3,11 @@ var csv = require('../utilities/csv.js');
 
 // This file allows us to fix the PLAY.csv file by reading it into an object,
 // fixing the flawed data, then writing to a new .csv
-
-// Print out args to the application
-// Try running your program like "node fixData.js input.csv output.csv"
 var args = process.argv;
 
 var inputFile = args[2];
 var outputFile = args[3];
 
-// Steps:
-// 1) Read in data from input.csv into memory (JS object, probably)
 csv.readCsv(inputFile, function(err, playData) {
 	console.log(playData.length + ' rows read');
 
@@ -32,16 +27,6 @@ csv.readCsv(inputFile, function(err, playData) {
 		}
 	});
 });
-
-// 2) Apply fix to in-memory data
-
-//flip ptso & ptsd
-function flipPointTotals(play) {
-	var placeholder = play.ptsd;
-	play.ptsd = play.ptso;
-	play.ptso = placeholder;
-	console.log('fix turnover on kickoff bug for ' + play.pid);
-}
 
 function printBadPlays(badPlays) {
 	_.each(badPlays, function(val, key) {
