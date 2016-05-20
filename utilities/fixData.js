@@ -16,13 +16,11 @@ var outputFile = args[3];
 csv.readCsv(inputFile, function(err, playData) {
 	console.log(playData.length + ' rows read');
 
-	var badPlays = findBadPlays(playData, true);
+	var badPlays = findAndFixBadPlays(playData, true);
 	printBadPlays(badPlays);
 	console.log('\n\n FIXING BAD PLAYS \n');
-	// fixBadPlays(playData, badPlays);
-	var newBadPlays = findBadPlays(playData, false);
+	var newBadPlays = findAndFixBadPlays(playData, false);
 	printBadPlays(newBadPlays);
-	//console.log('there are ' + _.keys(badPlays).length + ' bad plays in total');
 
 	console.log('about to call writeCsv...')
 	csv.writeCsv(playData, outputFile, function(err) {
@@ -51,7 +49,7 @@ function printBadPlays(badPlays) {
 	});
 }
 
-function findBadPlays(plays, applyFix) {
+function findAndFixBadPlays(plays, applyFix) {
 	var badPlays = { };
 
 	for (var i = 1; i < plays.length - 1; i++) {
@@ -104,83 +102,3 @@ function findBadPlays(plays, applyFix) {
 
 	return badPlays;
 }
-
-function fixBadPlays(plays, badPlays) {
-
-	for (var i = 1; i < plays.length - 1; i++) {
-		var curPlay = plays[i];
-		var prevPlay = plays[i - 1];
-		var nextPlay = plays[i + 1];
-		if (!badPlays[curPlay.pid] || badPlays[curPlay.pid].unfixable)
-			continue;
-
-		if (curPlay.off == nextPlay.off)
-			curPlay.ptso = nextPlay.ptso;
-		else if (curPlay.off == nextPlay.def)
-			curPlay.ptso = nextPlay.ptsd;
-
-		if (curPlay.def == nextPlay.off)
-			curPlay.ptsd = nextPlay.ptso;
-		else if (curPlay.def == nextPlay.def)
-			curPlay.ptsd = nextPlay.ptsd;
-
-	}
-}
-
-
-
-// //to fix the turnover bug where pts suddenly are equal on a kickoff
-// function fixSameScoreOnKickOffBug(plays) {
-// 	for (var i = 1; i < plays.length; i++) {
-// 	 	var curPlay = plays[i];
-// 	 	var prevPlay = plays[i - 1];
-// 	 	if (curPlay.gid !== prevPlay.gid) {
-// 	 		continue;
-// 	 	}
-
-// 	 	if (curPlay.type == 'KOFF' && curPlay.pts == 0 && curPlay.ptso == curPlay.ptsd) {
-// 	 		if (curPlay.off == prevPlay.off) {
-// 	 			if (curPlay.ptso != prevPlay.ptso + prevPlay.pts || (curPlay.ptsd != prevPlay.ptsd)) {
-// 	 				//curPlay.ptso = prevPlay.ptso + prevPlay.pts;
-// 	 				//curPlay.ptsd = prevPlay.ptsd;
-// 	 				if (!badPlays[curPlay.pid])
-// 	 					badPlays[curPlay.pid] = 'Type 2 Case 1';
-// 	 			}
-// 	 		}
-// 	 		else {
-// 	 			if (curPlay.ptso != prevPlay.ptsd || curPlay.ptsd != (prevPlay.ptso + prevPlay.pts)) {
-// 	 				//curPlay.ptso = prevPlay.ptsd;
-// 	 				//curPlay.ptsd = prevPlay.ptso + prevPlay.pts;
-// 	 				if (!badPlays[curPlay.pid])
-// 	 					badPlays[curPlay.pid] = 'Type 2 Case 2';
-// 	 			}
-// 	 		}
-// 	 	}
-// 	}
-// };
-
-// //to fix the turnover bug where pts flip on a kickoff and there is a score
-// function fixTurnoverOnKickOffBug(plays) {
-// 	for (var i = 1; i < plays.length; i++) {
-// 	 	var curPlay = plays[i];
-// 	 	var prevPlay = plays[i - 1];
-// 	 	if (curPlay.gid !== prevPlay.gid) {
-// 	 		continue;
-// 	 	}
-// 	 	//team stays the same
-// 	 	if (curPlay.off == prevPlay.off) {
-// 	 		if (curPlay.ptso < prevPlay.ptso || curPlay.ptsd < prevPlay.ptsd) {
-// 	 			if (!badPlays[curPlay.pid])
-// 	 				badPlays[curPlay.pid] = 'Type 3 Case 1';
-// 	 		}
-// 	 	}
-// 	 	//team change off & def
-// 	 	if (curPlay.off == prevPlay.def) {
-// 	 		if (curPlay.ptso < prevPlay.ptsd || curPlay.ptsd < prevPlay.ptso) {
-// 	 			if (!badPlays[curPlay.pid])
-// 	 				badPlays[curPlay.pid] = 'Type 3 Case 2';
-// 	 		}
-// 	 	}
-// 	}
-// };
-
