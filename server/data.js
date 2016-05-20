@@ -4,7 +4,7 @@ var csv = require('../utilities/csv.js');
 module.exports = {
     initialize: function(callback) {
         var self = this;
-        csv.readCsv('../data/RESULTS_NEW.csv', function(err, resultData) {
+	csv.readCsv('../data/RESULTS_FINAL.csv', function(err, resultData) {
             self.PLAYS = resultData;
             csv.readCsv('../data/GAME.csv', function(err, gameData) {
                 self.GAMES = gameDataSubset(gameData);
