@@ -5,6 +5,30 @@ data.initialize(function() {
 	console.log("Data has been parsed. App is now ready");
 });
 
+// Game object contains information about the game
+//    e.g. home, visitor, id
+// ALSO contains a collection (array probably) of plays (Play objects)
+var GameObj = require('./gameObj.js');
+var Game = GameObj.Game;
+// Play object contains information about the play -
+//    e.g. id, time, ptso, etc...
+var PlayObj = require('./playObj.js');
+var Play = PlayObj.Play;
+// Could optionally create a Season object33
+
+
+// Play.prototype = new Game();
+// Play.prototype.constructor = Play;
+// creates a game and all plays in the game in OO programming
+// function createGameAndPlays(gameId) {
+// 	for (var i = 0; i < data.PLAYS.length; i++) {
+// 		if (gameId == data.PLAYS[i].gid) {
+// 			data.PLAYS[i].pid = new Play(data.PLAYS[i]);
+// 		}
+// 	}
+// 	gameId = new Game(data);
+// }
+
 // Creates array of plays
 function getPlaysForGame(gameId){
 	var plays = [ ];
