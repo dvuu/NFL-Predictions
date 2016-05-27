@@ -6,6 +6,7 @@ data.initialize(function() {
 		createGameAndPlays(data.GAMES[i]);
 	}
 	console.log("Data has been parsed. App is now ready");
+	debugger;
 });
 
 // Game object contains information about the game
@@ -23,6 +24,7 @@ var Play = PlayObj.Play;
 // Play.prototype = new Game();
 // Play.prototype.constructor = Play;
 //creates a game and all plays in the game in OO programming
+var arr = [ ];
 function createGameAndPlays(gameDataRaw) {
 //	var game = game.gid;
 //	game = new Game(data.GAMES);
@@ -35,7 +37,8 @@ function createGameAndPlays(gameDataRaw) {
 			if(!nextPlay || currentPlay.gid !== nextPlay.gid) {
 				isLastPlay = true;
 			}
-			var play = new Play(currentPlay, idx, gameDataRaw, isLastPlay);
+			var play = new Play(currentPlay, nextPlay, idx, gameDataRaw, isLastPlay);
+			arr.push(play);
 			idx++;
 		}
 	}
