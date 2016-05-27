@@ -1,6 +1,6 @@
 var Game = require('./gameObj.js')
-module.exports.Play = function (playDataRaw, playNumber, gameDataRaw, isLastPlay) {
-	this.playNumber = playNumber;
+var Play = module.exports.Play = function (playDataRaw, nextPlayDataRaw, idx, gameDataRaw, isLastPlay) {
+	this.idx = idx;
 
 	this.visitor = gameDataRaw.visitor;
 	this.home = gameDataRaw.home;
@@ -48,28 +48,28 @@ module.exports.Play = function (playDataRaw, playNumber, gameDataRaw, isLastPlay
 	this.ptsHome = this.findHomeScore();
 	this.ptsVisitor = this.findVisitorScore();
 
-	this.yardsGained(isLastPlay);
+	this.yardsGained(isLastPlay, nextPlayDataRaw);
 }
 
-module.exports.Play.prototype.fixSecondsForOvertime = function(seconds) {
+Play.prototype.fixSecondsForOvertime = function(seconds) {
 	return (this.inOvertime ? seconds = seconds - 900 : seconds);
 }
 
-module.exports.Play.prototype.findHomeScore = function() {
+Play.prototype.findHomeScore = function() {
 	return (this.home == this.offense ? this.ptsOffense : this.ptsDefense);
 }
 
-module.exports.Play.prototype.findVisitorScore = function() {
+Play.prototype.findVisitorScore = function() {
 	return (this.visitor == this.offense ? this.ptsOffense : this.ptsDefense);
 }
 
-module.exports.Play.prototype.yardsGained = function(isLastPlay) {
+Play.prototype.yardsGained = function(isLastPlay, nextPlayDataRaw) {
 	if (!isLastPlay) {
 		if (this.home == this.offense) {
-			this.homeYdsGained = (plays[i + 1].offYardline - this.offYardline);
+			this.homeYdsGained = (nextPlayDataRaw.Yardline - this.offYardline);
 		}
 		else {
-			this.visitorYdsGained = (plays[i + 1].offYardline - this.offYardline);
+			this.visitorYdsGained = (nextPlayDataRaw.Yardline - this.offYardline);
 		}
 	}
 }
