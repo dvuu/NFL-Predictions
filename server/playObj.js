@@ -1,6 +1,6 @@
 var Game = require('./gameObj.js')
-module.exports.Play = function (playDataRaw, prevPlayDataRaw, playNumber, gameDataRaw) {
-	this.idx = playNumber;
+module.exports.Play = function (playDataRaw, playNumber, gameDataRaw, isLastPlay) {
+	this.playNumber = playNumber;
 
 	this.visitor = gameDataRaw.visitor;
 	this.home = gameDataRaw.home;
@@ -13,7 +13,7 @@ module.exports.Play = function (playDataRaw, prevPlayDataRaw, playNumber, gameDa
 	this.length = playDataRaw.len;
 	this.quarter = playDataRaw.qtr;
 	this.minute = playDataRaw.MIN;
-	this.seconds = playDataRaw.sec;
+	this.second = playDataRaw.sec;
 	this.ptsOffense = playDataRaw.ptso;
 	this.ptsDefense = playDataRaw.ptsd;
 	this.timeoutsOffense = playDataRaw.TIMO;
@@ -41,9 +41,35 @@ module.exports.Play = function (playDataRaw, prevPlayDataRaw, playNumber, gameDa
 	this.vegasSpread = playDataRaw.Spread;
 	this.actualGameOutcome = playDataRaw.Result;
 	this.inOvertime = playDataRaw.InOT;
-	this.time = fixSecondsForOvertime(this.inOvertime, this.seconds);
 	this.visitorWp = playDataRaw.VisitorWP;
 	this.homeWp = (1 - this.visitorWp);
-	this.ptsHome = (findHomeScoreGained(v, this.offense, this.defense, this.ptsOffense, this.ptsDefense));
-	this.ptsVisitor = (findVisitorScoreGained(v, this.offense, this.ptsOffense, this.ptsDefense));
+
+	this.time = this.fixSecondsForOvertime(playDataRaw.Seconds);
+	this.ptsHome = this.findHomeScore();
+	this.ptsVisitor = this.findVisitorScore();
+
+	this.yardsGained(isLastPlay);
+}
+
+module.exports.Play.prototype.fixSecondsForOvertime = function(seconds) {
+	return (this.inOvertime ? seconds = seconds - 900 : seconds);
+}
+
+module.exports.Play.prototype.findHomeScore = function() {
+	return (this.home == this.offense ? this.ptsOffense : this.ptsDefense);
+}
+
+module.exports.Play.prototype.findVisitorScore = function() {
+	return (this.visitor == this.offense ? this.ptsOffense : this.ptsDefense);
+}
+
+module.exports.Play.prototype.yardsGained = function(isLastPlay) {
+	if (!isLastPlay) {
+		if (this.home == this.offense) {
+			this.homeYdsGained = (plays[i + 1].offYardline - this.offYardline);
+		}
+		else {
+			this.visitorYdsGained = (plays[i + 1].offYardline - this.offYardline);
+		}
+	}
 }
