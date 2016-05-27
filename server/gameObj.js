@@ -1,4 +1,4 @@
-module.exports.Game = function (game) {
+module.exports.Game = function (gameDataRaw) {
 	this.season = game.season;
 	this.week = game.week;
 	this.gameId = game.gameId;

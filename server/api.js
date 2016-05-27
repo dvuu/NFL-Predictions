@@ -3,6 +3,9 @@ var url = require('url');
 var data = require('./data.js');
 data.initialize(function() {
 	console.log("Data has been parsed. App is now ready");
+	for (var i = 0; i < data.GAMES.length; i++) {
+		createGameAndPlays(data.GAMES[i]);
+	}	
 });
 
 // Game object contains information about the game
@@ -17,17 +20,18 @@ var Play = PlayObj.Play;
 // Could optionally create a Season object33
 
 
-// Play.prototype = new Game();
-// Play.prototype.constructor = Play;
-// creates a game and all plays in the game in OO programming
-// function createGameAndPlays(gameId) {
-// 	for (var i = 0; i < data.PLAYS.length; i++) {
-// 		if (gameId == data.PLAYS[i].gid) {
-// 			data.PLAYS[i].pid = new Play(data.PLAYS[i]);
-// 		}
-// 	}
-// 	gameId = new Game(data);
-// }
+Play.prototype = new Game();
+Play.prototype.constructor = Play;
+//creates a game and all plays in the game in OO programming
+function createGameAndPlays(gameDataRaw) {
+//	var game = game.gid;
+//	game = new Game(data.GAMES);
+	for (var i = 0; i < data.PLAYS.length; i++) {
+		if (gameDataRaw.gameId == data.PLAYS[i].gid) {
+			var play = new Play(data.PLAYS[i], data.PLAYS[i - 1], i);
+		}
+	}
+}
 
 // Creates array of plays
 function getPlaysForGame(gameId){
