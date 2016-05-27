@@ -2,10 +2,10 @@ var _ = require('underscore');
 var url = require('url');
 var data = require('./data.js');
 data.initialize(function() {
-	console.log("Data has been parsed. App is now ready");
 	for (var i = 0; i < data.GAMES.length; i++) {
 		createGameAndPlays(data.GAMES[i]);
-	}	
+	}
+	console.log("Data has been parsed. App is now ready");
 });
 
 // Game object contains information about the game
@@ -20,15 +20,23 @@ var Play = PlayObj.Play;
 // Could optionally create a Season object33
 
 
-Play.prototype = new Game();
-Play.prototype.constructor = Play;
+// Play.prototype = new Game();
+// Play.prototype.constructor = Play;
 //creates a game and all plays in the game in OO programming
 function createGameAndPlays(gameDataRaw) {
 //	var game = game.gid;
 //	game = new Game(data.GAMES);
+	var idx = 0;
+	var isLastPlay = false;
 	for (var i = 0; i < data.PLAYS.length; i++) {
-		if (gameDataRaw.gameId == data.PLAYS[i].gid) {
-			var play = new Play(data.PLAYS[i], data.PLAYS[i - 1], i);
+		var currentPlay = data.PLAYS[i];
+		var nextPlay = (i < data.PLAYS.length - 1) ? (data.PLAYS[i + 1]) : (null);
+		if (gameDataRaw.gameId == currentPlay.gid) {
+			if(!nextPlay || currentPlay.gid !== nextPlay.gid) {
+				isLastPlay = true;
+			}
+			var play = new Play(currentPlay, idx, gameDataRaw, isLastPlay);
+			idx++;
 		}
 	}
 }
