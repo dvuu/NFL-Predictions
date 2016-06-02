@@ -4,9 +4,9 @@ var data = require('./data.js');
 data.initialize(function() {
 	createPlays();
 	//makeNodeRunOutOfMemory();
-	for (var i = 0; i < arr.length; ++i) {
-		console.log(arr[i].playId);
-	}
+	// for (var i = 0; i < arr.length; ++i) {
+	// 	console.log(arr[i].playId);
+	// }
 	console.log("Data has been parsed. App is now ready");
 });
 
@@ -22,28 +22,28 @@ var Play = PlayObj.Play;
 // Could optionally create a Season object33
 
 
-Play.prototype = new Game();
+// Play.prototype = new Game();
 Play.prototype.constructor = Play;
-creates a game and all plays in the game in OO programming
+// creates a game and all plays in the game in OO programming
 var arr = [ ];
-function createGameAndPlays(gameDataRaw) {
-//	var game = game.gid;
-//	game = new Game(data.GAMES);
-	var idx = 0;
-	var isLastPlay = false;
-	for (var i = 0; i < data.PLAYS.length; i++) {
-		var currentPlay = data.PLAYS[i];
-		var nextPlay = (i < data.PLAYS.length - 1) ? (data.PLAYS[i + 1]) : (null);
-		if (gameDataRaw.gameId == currentPlay.gid) {
-			if(!nextPlay || currentPlay.gid !== nextPlay.gid) {
-				isLastPlay = true;
-			}
-			var play = new Play(currentPlay, nextPlay, idx, gameDataRaw, isLastPlay);
-			arr.push(play);
-			idx++;
-		}
-	}
-}
+// function createGameAndPlays(gameDataRaw) {
+// //	var game = game.gid;
+// //	game = new Game(data.GAMES);
+// 	var idx = 0;
+// 	var isLastPlay = false;
+// 	for (var i = 0; i < data.PLAYS.length; i++) {
+// 		var currentPlay = data.PLAYS[i];
+// 		var nextPlay = (i < data.PLAYS.length - 1) ? (data.PLAYS[i + 1]) : (null);
+// 		if (gameDataRaw.gameId == currentPlay.gid) {
+// 			if(!nextPlay || currentPlay.gid !== nextPlay.gid) {
+// 				isLastPlay = true;
+// 			}
+// 			var play = new Play(currentPlay, nextPlay, idx, gameDataRaw, isLastPlay);
+// 			arr.push(play);
+// 			idx++;
+// 		}
+// 	}
+// }
 
 function createPlays() {
 	var idx = 0;
