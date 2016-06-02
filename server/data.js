@@ -4,7 +4,7 @@ var csv = require('../utilities/csv.js');
 module.exports = {
     initialize: function(callback) {
         var self = this;
-	csv.readCsv('../data/RESULTS_NEW.csv', function(err, resultData) {
+	    csv.readCsv('../data/PLAY_WITH_RESULTS.csv', function(err, resultData) {
             self.PLAYS = resultData;
             csv.readCsv('../data/GAME.csv', function(err, gameData) {
                 self.GAMES = gameDataSubset(gameData);
@@ -20,7 +20,7 @@ module.exports = {
 // grabs basic information from all games
 function gameDataSubset(gameData) {
     var result = [ ];
-    for (var i = 3188; i < gameData.length; ++i) {
+    for (var i = 0; i < gameData.length; ++i) {
         var obj = {
             gameId: gameData[i].gid,
             season: gameData[i].seas,

@@ -2,11 +2,12 @@ var _ = require('underscore');
 var url = require('url');
 var data = require('./data.js');
 data.initialize(function() {
-	for (var i = 0; i < data.GAMES.length; i++) {
-		createGameAndPlays(data.GAMES[i]);
+	createPlays();
+	//makeNodeRunOutOfMemory();
+	for (var i = 0; i < arr.length; ++i) {
+		console.log(arr[i].playId);
 	}
 	console.log("Data has been parsed. App is now ready");
-	debugger;
 });
 
 // Game object contains information about the game
@@ -21,9 +22,9 @@ var Play = PlayObj.Play;
 // Could optionally create a Season object33
 
 
-// Play.prototype = new Game();
-// Play.prototype.constructor = Play;
-//creates a game and all plays in the game in OO programming
+Play.prototype = new Game();
+Play.prototype.constructor = Play;
+creates a game and all plays in the game in OO programming
 var arr = [ ];
 function createGameAndPlays(gameDataRaw) {
 //	var game = game.gid;
@@ -42,6 +43,36 @@ function createGameAndPlays(gameDataRaw) {
 			idx++;
 		}
 	}
+}
+
+function createPlays() {
+	var idx = 0;
+	for (var i = 0; i < data.PLAYS.length; i++) {
+		var isLastPlay = false;
+		var currentPlay = data.PLAYS[i];
+		var gameDataRaw = data.GAMES[currentPlay.gid - 1];
+		var nextPlay = (i < data.PLAYS.length - 1) ? (data.PLAYS[i + 1]) : (null);
+		if(!nextPlay || currentPlay.gid !== nextPlay.gid) {
+			isLastPlay = true;
+		}
+		var play = new Play(currentPlay, nextPlay, idx, gameDataRaw, isLastPlay);
+		arr.push(play);
+		idx++;
+	}
+}
+
+function makeNodeRunOutOfMemory() {
+	var x = [ ];
+	var totalNumsAllocated = 0;
+	setInterval(function() {
+		var f = [ ];
+		for (var i = 0; i < 1000000; ++i) {
+			f.push(i);
+		}
+		x.push(f);
+		totalNumsAllocated += 1000000;
+		console.log("Have now allocated " + totalNumsAllocated + " numbers");
+	}, 200);
 }
 
 // Creates array of plays
