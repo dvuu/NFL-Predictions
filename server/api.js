@@ -2,210 +2,8 @@ var _ = require('underscore');
 var url = require('url');
 var data = require('./data.js');
 data.initialize(function() {
-	createPlays();
-	//makeNodeRunOutOfMemory();
-	// for (var i = 0; i < arr.length; ++i) {
-	// 	console.log(arr[i].playId);
-	// }
 	console.log("Data has been parsed. App is now ready");
 });
-
-// Game object contains information about the game
-//    e.g. home, visitor, id
-// ALSO contains a collection (array probably) of plays (Play objects)
-var GameObj = require('./gameObj.js');
-var Game = GameObj.Game;
-// Play object contains information about the play -
-//    e.g. id, time, ptso, etc...
-var PlayObj = require('./playObj.js');
-var Play = PlayObj.Play;
-// Could optionally create a Season object33
-
-
-// Play.prototype = new Game();
-Play.prototype.constructor = Play;
-// creates a game and all plays in the game in OO programming
-var arr = [ ];
-// function createGameAndPlays(gameDataRaw) {
-// //	var game = game.gid;
-// //	game = new Game(data.GAMES);
-// 	var idx = 0;
-// 	var isLastPlay = false;
-// 	for (var i = 0; i < data.PLAYS.length; i++) {
-// 		var currentPlay = data.PLAYS[i];
-// 		var nextPlay = (i < data.PLAYS.length - 1) ? (data.PLAYS[i + 1]) : (null);
-// 		if (gameDataRaw.gameId == currentPlay.gid) {
-// 			if(!nextPlay || currentPlay.gid !== nextPlay.gid) {
-// 				isLastPlay = true;
-// 			}
-// 			var play = new Play(currentPlay, nextPlay, idx, gameDataRaw, isLastPlay);
-// 			arr.push(play);
-// 			idx++;
-// 		}
-// 	}
-// }
-
-function createPlays() {
-	var idx = 0;
-	for (var i = 0; i < data.PLAYS.length; i++) {
-		var isLastPlay = false;
-		var currentPlay = data.PLAYS[i];
-		var gameDataRaw = data.GAMES[currentPlay.gid - 1];
-		var nextPlay = (i < data.PLAYS.length - 1) ? (data.PLAYS[i + 1]) : (null);
-		if(!nextPlay || currentPlay.gid !== nextPlay.gid) {
-			isLastPlay = true;
-		}
-		var play = new Play(currentPlay, nextPlay, idx, gameDataRaw, isLastPlay);
-		arr.push(play);
-		idx++;
-	}
-}
-
-function makeNodeRunOutOfMemory() {
-	var x = [ ];
-	var totalNumsAllocated = 0;
-	setInterval(function() {
-		var f = [ ];
-		for (var i = 0; i < 1000000; ++i) {
-			f.push(i);
-		}
-		x.push(f);
-		totalNumsAllocated += 1000000;
-		console.log("Have now allocated " + totalNumsAllocated + " numbers");
-	}, 200);
-}
-
-// Creates array of plays
-function getPlaysForGame(gameId){
-	var plays = [ ];
-	var curIdx = 0;
-	for (var i = 0; i < data.PLAYS.length; ++i) {
-		if (gameId == data.PLAYS[i].gid) {
-			var obj = {
-				idx: curIdx++,
-				gameId: data.PLAYS[i].gid,
-				home: findHomeTeam(data.PLAYS[i].v, data.PLAYS[i].off, data.PLAYS[i].def),
-				visitor: data.PLAYS[i].v,
-				playId: data.PLAYS[i].pid,
-				offense: data.PLAYS[i].off,
-				defense: data.PLAYS[i].def,
-				type: data.PLAYS[i].type,
-				driveSequence: data.PLAYS[i].dseq,
-				length: data.PLAYS[i].len,
-				quarter: data.PLAYS[i].qtr,
-				minute: data.PLAYS[i].MIN,
-				seconds: data.PLAYS[i].sec,
-				ptsOffense: data.PLAYS[i].ptso,
-				ptsDefense: data.PLAYS[i].ptsd,
-				timeoutsOffense: data.PLAYS[i].TIMO,
-				timeoutsDefense: data.PLAYS[i].TIMD,
-				down: data.PLAYS[i].Down,
-				yardsToGoForFirstDown: data.PLAYS[i].YTG,
-				offYardline: data.PLAYS[i].Yardline,
-				fieldZone: data.PLAYS[i].zone,
-				firstDown: data.PLAYS[i].fd,
-				shotGun: data.PLAYS[i].sg,
-				noHuddle: data.PLAYS[i].nh,
-				pointsScored: data.PLAYS[i].pts,
-				tackle: data.PLAYS[i].tck,
-				sack: data.PLAYS[i].sk,
-				penalty: data.PLAYS[i].pen,
-				interception: data.PLAYS[i].ints,
-				fumble: data.PLAYS[i].fum,
-				safety: data.PLAYS[i].saf,
-				block: data.PLAYS[i].blk,
-				offensiveLineI: data.PLAYS[i].olid,
-				winner: data.PLAYS[i].Winner,
-				totalPtsScr: data.PLAYS[i].TOTp,
-				scoreDiff: data.PLAYS[i].Score,
-				inOvertime: data.PLAYS[i].InOT,
-				time: fixSecondsForOvertime(data.PLAYS[i].InOT, data.PLAYS[i].Seconds),
-				AdjustedScore: data.PLAYS[i].AdjustedScore,
-				vegasSpread: data.PLAYS[i].Spread,
-				actualGameOutcome: data.PLAYS[i].Result,
-				homeWp: (1 - data.PLAYS[i].VisitorWP),
-				visitorWp: data.PLAYS[i].VisitorWP,
-				ptsHome: (findHomeScoreGained(data.PLAYS[i].v, data.PLAYS[i].off,
-					data.PLAYS[i].def, data.PLAYS[i].ptso, data.PLAYS[i].ptsd)),
-				ptsVisitor: (findVisitorScoreGained(data.PLAYS[i].v, data.PLAYS[i].off,
-					data.PLAYS[i].ptso, data.PLAYS[i].ptsd))
-			};
-			plays.push(obj);
-		}
-		
-	}
-	addPointsGainPerPlay(plays);
-	findYardsGainedPerPlay(plays);
-	addWinPredictionDifference(plays);
-	return plays;
-}
-
-// Finds home team
-function findHomeTeam(visitor, off, def) {
-	return (visitor == off ? def : off);
-}
-
-// Use InOT value evaluate if seconds left is in overtime
-// if true, -900. assuming OT < 900secs (900 secs in a quarter)
-function fixSecondsForOvertime(overtime, time) {
-	return (overtime ? time = time - 900 : time);
-}
-
-// Finds home score gained per play from ptsOffense and ptsDefense
-function findHomeScoreGained(visitor, off, def, ptsOff, ptsDef) {
-	var home = findHomeTeam(visitor, off, def);
-	return (home == off ? ptsOff : ptsDef);
-}
-
-// Finds visitor score gained per play from ptsOffense and ptsDefense
-function findVisitorScoreGained(visitor, off, ptsOff, ptsDef) {
-	return (visitor == off ? ptsOff : ptsDef);
-}
-
-// Finds home and visitor yards gained per play
-function findYardsGainedPerPlay(plays) {
-	for (var i = 0; i < plays.length; ++i) {
-		var notLastPlay = (i < (plays.length - 1));
-		if (notLastPlay) {
-			if (plays[i].home == plays[i].offense) {
-				plays[i].homeYdsGained = (plays[i + 1].offYardline - plays[i].offYardline);
-			}
-			else {
-				plays[i].visitorYdsGained = (plays[i + 1].offYardline - plays[i].offYardline);
-			}
-		}
-	}
-}
-
-// Calculates points gained per play propety
-function addPointsGainPerPlay(plays) {
-	for (var i = 0; i < plays.length; ++i) {
-		var notLastPlay = (i < (plays.length - 1));
-		if (notLastPlay) {
-			plays[i].ptsHomeGain = (plays[i + 1].ptsHome - plays[i].ptsHome);
-			plays[i].ptsVisitorGain = (plays[i + 1].ptsVisitor - plays[i].ptsVisitor);
-		}
-	}
-}
-
-// Calculates win prediction difference
-function addWinPredictionDifference(plays) {
-	for (var i = 0; i < plays.length; ++i) {
-		var notLastPlay = (i < (plays.length - 1));
-		if (notLastPlay) {
-			plays[i].homeWpDiff = (plays[i + 1].homeWp - plays[i].homeWp);
-			plays[i].visitorWpDiff = (plays[i + 1].visitorWp - plays[i].visitorWp);
-		}
-	}
-}
-
-function wpDiffComparison(a, b) {
-	return Math.abs(b.homeWpDiff)- Math.abs(a.homeWpDiff);
-}
-function findBiggestPlays(plays, n) {
-	var sortedPlays = plays.sort(wpDiffComparison);
-	return sortedPlays.slice(0, n);
-}
 
 module.exports = function(app) {
 
@@ -245,21 +43,6 @@ module.exports = function(app) {
         res.end(JSON.stringify(result));
     });
 
-/**/
-
-	app.get('/api/gamesByTeam/:teamAbbreviation', function(req, res) {
-		var team = req.params.teamAbbreviation;
-		console.log("Client requested list of all games from the selected team: " + team + "...");
-		var result = [ ];
-		for (var i = 0; i < data.GAMES.length; ++i) {
-		 	if(data.GAMES[i].visitor == team || data.GAMES[i].home == team){
-		 		result.push(data.GAMES[i]);
-		 	}
-	 	}
-		res.writeHead(200,{'Content-Type': 'application/json'});
-        res.end(JSON.stringify(result));
-    });
-
 	// returns all plays
 	app.get('/api/plays/:gameId', function(req, res) {
 		var gameId = req.params.gameId;
@@ -278,7 +61,6 @@ module.exports = function(app) {
 		res.writeHead(200,{'Content-Type': 'application/json'});
         res.end(JSON.stringify(findBiggestPlays(plays, 10)));
     });
-
 
     //returns top 10 plays from all games combined 
     app.get('/api/topTen', function(req, res) {
@@ -302,5 +84,18 @@ module.exports = function(app) {
 	var allTopTen = findBiggestPlays(results, 100)
     	res.writeHead(200,{'Content-Type': 'application/json'});
         res.end(JSON.stringify(allTopTen));
-    });
+    });	
+
+  //   app.get('/api/gamesByTeam/:teamAbbreviation', function(req, res) {
+		// var team = req.params.teamAbbreviation;
+		// console.log("Client requested list of all games from the selected team: " + team + "...");
+		// var result = [ ];
+		// for (var i = 0; i < data.GAMES.length; ++i) {
+		//  	if(data.GAMES[i].visitor == team || data.GAMES[i].home == team){
+		//  		result.push(data.GAMES[i]);
+		//  	}
+	 // 	}
+		// res.writeHead(200,{'Content-Type': 'application/json'});
+  //       res.end(JSON.stringify(result));
+  //   });
 }
