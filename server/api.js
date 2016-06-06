@@ -18,16 +18,14 @@ module.exports = function(app) {
 	app.get('/api/games/:season', function(req, res) {
 		var season = req.params.season;
 		console.log("Client requested list of all games from season: " + season + "...");
-		var result = [ ];
-		for (var i = 0; i < data.GAMES.length; ++i) {
-		 	if(data.GAMES[i].season == season){
-		 		result.push(data.GAMES[i]);
-		 	}
-	 	}
-		res.writeHead(200,{'Content-Type': 'application/json'});
-    	res.end(JSON.stringify(result));
-    });
-
+		var results = [ ];
+		_.each(data.GAMES, function (Game) {
+			season == Game.season ? results.push(Game): null;
+			
+    	});
+    	res.writeHead(200,{'Content-Type': 'application/json'});
+	    res.end(JSON.stringify(results));
+	});
 	// Return list of all games from a week of a season.
 	app.get('/api/games/:season/:week', function(req, res) {
 		var season = req.params.season;
@@ -98,4 +96,4 @@ module.exports = function(app) {
 		// res.writeHead(200,{'Content-Type': 'application/json'});
   //       res.end(JSON.stringify(result));
   //   });
-}
+};

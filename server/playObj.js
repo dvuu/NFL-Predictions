@@ -66,8 +66,7 @@ Play.prototype.findVisitorScore = function() {
 
 Play.prototype.yardsGained = function(isLastPlay, nextPlayDataRaw) {
 	if (!isLastPlay) {
-			this.ydsGained = (nextPlayDataRaw.Yardline - this.offYardline);
-		}
+		this.ydsGained = (nextPlayDataRaw.Yardline - this.offYardline);
 	}
 }
 
