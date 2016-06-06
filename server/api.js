@@ -5,6 +5,7 @@ data.initialize(function() {
 	console.log("Data has been parsed. App is now ready");
 });
 
+
 module.exports = function(app) {
 
 	// Returns list of all games.
@@ -18,25 +19,23 @@ module.exports = function(app) {
 	app.get('/api/games/:season', function(req, res) {
 		var season = req.params.season;
 		console.log("Client requested list of all games from season: " + season + "...");
-		var results = [ ];
+		var result = [ ];
 		_.each(data.GAMES, function (Game) {
 			season == Game.season ? results.push(Game): null;
-			
     	});
     	res.writeHead(200,{'Content-Type': 'application/json'});
-	    res.end(JSON.stringify(results));
+	    res.end(JSON.stringify(result));
 	});
+
 	// Return list of all games from a week of a season.
 	app.get('/api/games/:season/:week', function(req, res) {
 		var season = req.params.season;
 		var week = req.params.week;
 		console.log("Client requested list of all games from season: " + season + ": Week " + week + "...");
 		var result = [ ];
-		for (var i = 0; i < data.GAMES.length; ++i) {
-		 	if(data.GAMES[i].season == season && data.GAMES[i].week == week){
-		 		result.push(data.GAMES[i]);
-		 	}
-	 	}
+		_.each(data.GAMES, function (Game) {
+			season == Game.season && week == Game.week ? results.push(Game) : null; 
+		});
 		res.writeHead(200,{'Content-Type': 'application/json'});
         res.end(JSON.stringify(result));
     });
@@ -44,8 +43,11 @@ module.exports = function(app) {
 	// returns all plays
 	app.get('/api/plays/:gameId', function(req, res) {
 		var gameId = req.params.gameId;
+		var plays = undefined;
 		console.log("Client requested plays from game " + gameId + "...");
-		var plays = getPlaysForGame(gameId);
+		_.each(data.GAMES, function (Game) {
+			gameId == Game.gameId ? plays = Game.plays : null;
+		});
 		res.writeHead(200,{'Content-Type': 'application/json'});
         res.end(JSON.stringify(plays));
     });
@@ -53,9 +55,11 @@ module.exports = function(app) {
     // returns top 10 plays from a game
     app.get('/api/topTen/:gameId', function(req, res) {
     	var gameId = req.params.gameId;
+    	var plays = undefined;
     	console.log("Client requested top ten plays for game " + gameId + "...");
-    	var plays = getPlaysForGame(gameId);
-    	plays.pop();
+    	_.each(data.GAMES, function (Game) {
+			gameId == Game.gameId ? plays = Game.plays : null;
+		});
 		res.writeHead(200,{'Content-Type': 'application/json'});
         res.end(JSON.stringify(findBiggestPlays(plays, 10)));
     });
