@@ -5,7 +5,6 @@ data.initialize(function() {
 	console.log("Data has been parsed. App is now ready");
 });
 
-
 module.exports = function(app) {
 
 	// Returns list of all games.
@@ -21,7 +20,7 @@ module.exports = function(app) {
 		console.log("Client requested list of all games from season: " + season + "...");
 		var result = [ ];
 		_.each(data.GAMES, function (Game) {
-			season == Game.season ? results.push(Game): null;
+			season == Game.season ? result.push(Game): null;
     	});
     	res.writeHead(200,{'Content-Type': 'application/json'});
 	    res.end(JSON.stringify(result));
@@ -34,7 +33,7 @@ module.exports = function(app) {
 		console.log("Client requested list of all games from season: " + season + ": Week " + week + "...");
 		var result = [ ];
 		_.each(data.GAMES, function (Game) {
-			season == Game.season && week == Game.week ? results.push(Game) : null; 
+			season == Game.season && week == Game.week ? result.push(Game) : null; 
 		});
 		res.writeHead(200,{'Content-Type': 'application/json'});
         res.end(JSON.stringify(result));
@@ -67,7 +66,7 @@ module.exports = function(app) {
     //returns top 10 plays from all games combined 
     app.get('/api/topTen', function(req, res) {
     	console.log("Client is requested Top Ten plays from all all games combined...")
-    	var results = [ ];
+    	var result = [ ];
     	for (var i = 0; i < data.PLAYS.length - 1; ++i) {
     		if (data.PLAYS[i].gid !== data.PLAYS[i + 1].gid) {
     			continue;
@@ -81,9 +80,9 @@ module.exports = function(app) {
 				time: fixSecondsForOvertime(data.PLAYS[i].InOT, data.PLAYS[i].Seconds),
 				homeWpDiff: futureWP - curentWP
     		};
-	    	results.push(obj);	
+	    	result.push(obj);	
     	}
-	var allTopTen = findBiggestPlays(results, 100)
+	var allTopTen = findBiggestPlays(result, 100)
     	res.writeHead(200,{'Content-Type': 'application/json'});
         res.end(JSON.stringify(allTopTen));
     });	
