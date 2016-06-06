@@ -1,2 +1,2 @@
 # NFLDemo
-Visualization of NFL predictions!
+Visualization of NFL predictions
