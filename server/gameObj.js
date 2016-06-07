@@ -16,11 +16,12 @@ Game.prototype.addPlay = function (play) {
 }
 
 function compareWpDifference (a, b) {
-	return Math.abs(b.homeWpDiff) - Math.abs(a.homeWpDiff);
+	return Math.abs(b.homeWpDiff || 0) - Math.abs(a.homeWpDiff || 0);
 }
 
-Game.prototype.findBiggestPlays = function (plays, n) {
-	var sortedPlays = this.plays.sort(compareWpDifference);
+Game.prototype.findBiggestPlays = function (n) {
+	var sortedPlays = _.clone(this.plays);
+	sortedPlays.sort(compareWpDifference);
 	return sortedPlays.slice(0, n);
 }
 

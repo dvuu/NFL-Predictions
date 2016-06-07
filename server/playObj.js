@@ -44,14 +44,14 @@ var Play = module.exports.Play = function (playDataRaw, nextPlayDataRaw, idx, ga
 	this.vegasSpread = playDataRaw.Spread;
 	this.actualGameOutcome = playDataRaw.Result;
 	this.inOvertime = playDataRaw.InOT;
+	this.homeWp = (1 - playDataRaw.VisitorWP);
 	this.visitorWp = playDataRaw.VisitorWP;
-	this.homeWp = (1 - this.visitorWp);
 
 	// Added properties and values
+	this.wpDifference(isLastPlay, nextPlayDataRaw);
 	this.fixSecondsForOvertime(playDataRaw.Seconds);
 	this.findCurrentScore();
 	this.yardsGained(isLastPlay, nextPlayDataRaw);
-	this.wpDifference(isLastPlay, nextPlayDataRaw);
 }
 
 Play.prototype.fixSecondsForOvertime = function(seconds) {
