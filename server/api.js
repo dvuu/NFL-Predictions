@@ -65,31 +65,27 @@ module.exports = function(app) {
 
     //returns top 10 plays from all games combined 
     app.get('/api/topTen', function(req, res) {
-    	console.log("Client is requested Top Ten plays from all all games combined...")
-	// TODO:
-	// 1. get top n plays from each game, store in an array
-	// 2. sort that array
-	// 3. return first n plays from that array
-	    	
-  //   	var result = [ ];
-  //   	for (var i = 0; i < data.PLAYS.length - 1; ++i) {
-  //   		if (data.PLAYS[i].gid !== data.PLAYS[i + 1].gid) {
-  //   			continue;
-  //   		}
-  //   		var curentWP = (1 - data.PLAYS[i].VisitorWP);
-		// 	var futureWP = (1 - data.PLAYS[i + 1].VisitorWP);
-		// 	var obj = {
-  //   			gameId: data.PLAYS[i].gid,
-		// 		playId: data.PLAYS[i].pid,
-		// 		type: data.PLAYS[i].type,
-		// 		time: fixSecondsForOvertime(data.PLAYS[i].InOT, data.PLAYS[i].Seconds),
-		// 		homeWpDiff: futureWP - curentWP
-  //   		};
-	 //    	result.push(obj);	
-  //   	}
-		// var allTopTen = findBiggestPlays(result, 100)
+    	var topTenArr = [ ];
+    	var topTenPlaysPerGameArr = undefined;
+    	// 1) Get top n plays from each game, store in an array
+    	_.each(data.GAMES, function (game) {
+    			topTenPlaysPerGamesArr = game.findBiggestPlays(10);
+    			for (var i = topTenPlaysPerGamesArr.length - 1; i >= 0; i--) {
+    				topTenArr.push(topTenPlaysPerGamesArr[i]);
+    			}
+    		});
+    	// 2) Sort that array
+    	function compareWpDifference (a, b) {
+			return Math.abs(b.homeWpDiff || 0) - Math.abs(a.homeWpDiff || 0);
+		}
+		findBiggestPlays = function (plays, n) {
+			plays.sort(compareWpDifference);
+			return plays.slice(0, n);
+		}
+    	// 3) Return first n plays from that array
+		var results = findBiggestPlays(topTenArr, 10);
     	res.writeHead(200,{'Content-Type': 'application/json'});
-        res.end(JSON.stringify(allTopTen));
+        res.end(JSON.stringify(results));
     });	
 
   //   app.get('/api/gamesByTeam/:teamAbbreviation', function(req, res) {
