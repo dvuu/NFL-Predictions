@@ -19,12 +19,47 @@ module.exports = {
             self.GAMES = createGames(gamesDataRaw);
     	    csv.readCsv('../data/PLAY_WITH_RESULTS.csv', function(err, playsDataRaw) {
                 self.PLAYS = createPlays(playsDataRaw, gamesDataRaw, self.GAMES);
+                self.gamesBySeasonsAndWeeks = createGamesBySeasonAndWeek(self.GAMES);
                 callback && callback();
             });
         });
     },
     GAMES: null,
     PLAYS: null,
+    gamesBySeasonsAndWeeks: null,
+    getGamesBySeasonAndOrWeek: function(season, week) {
+        var arr = [ ];
+        if (week == undefined) {
+            for (var curWeek in this.gamesBySeasonsAndWeeks[season]) {
+                var gameIdsForCurWeek = this.getGamesBySeasonAndOrWeek(season, curWeek);
+                arr = arr.concat(gameIdsForCurWeek);
+            };
+        }
+        else {
+            for (var i = 0; i < this.gamesBySeasonsAndWeeks[season][week].length; i++) {
+                var gameId = this.gamesBySeasonsAndWeeks[season][week][i];
+                arr.push(this.GAMES[gameId]);
+            }
+        }
+        return arr;
+    }
+}
+
+function createGamesBySeasonAndWeek(games) {
+    var gamesBySeasonAndWeek = { };
+    _.each(games, function(game) {
+        // Create season object if it is not there
+        if (!gamesBySeasonAndWeek[game.season]) {
+            gamesBySeasonAndWeek[game.season] = { };
+        }
+        // Create week array if it is not there
+        if (!gamesBySeasonAndWeek[game.season][game.week]) {
+            gamesBySeasonAndWeek[game.season][game.week] = [ ];
+        }
+        // Add game to week
+        gamesBySeasonAndWeek[game.season][game.week].push(game.gameId);
+    });
+    return gamesBySeasonAndWeek;
 }
 
 function createGames(gamesDataRaw) {
