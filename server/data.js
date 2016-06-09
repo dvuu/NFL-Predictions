@@ -64,7 +64,7 @@ function createGamesBySeasonAndWeek(games) {
 
 function createGames(gamesDataRaw) {
     var games = { };
-    for (var i = 2980; i < gamesDataRaw.length; i++) {
+    for (var i = 3188; i < gamesDataRaw.length; i++) {
         var gameObj = new Game(gamesDataRaw[i]);
         games[gameObj.gameId] = gameObj;
     }
