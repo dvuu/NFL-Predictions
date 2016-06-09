@@ -64,7 +64,7 @@ function createGamesBySeasonAndWeek(games) {
 
 function createGames(gamesDataRaw) {
     var games = { };
-    for (var i = 3188; i < gamesDataRaw.length; i++) {
+    for (var i = 0; i < gamesDataRaw.length; i++) {
         var gameObj = new Game(gamesDataRaw[i]);
         games[gameObj.gameId] = gameObj;
     }
@@ -74,11 +74,12 @@ function createGames(gamesDataRaw) {
 function createPlays(playsDataRaw, gamesDataRaw, games) {
     var plays = [ ];
     var idx = 0;
+    var gameIdx = 0;
     for (var i = 0; i < playsDataRaw.length; i++) {
         var isLastPlay = false;
         var currentPlay = playsDataRaw[i];
         var nextPlay = (i < playsDataRaw.length - 1) ? (playsDataRaw[i + 1]) : (null);
-        var gameData = gamesDataRaw[currentPlay.gid - 1];
+        var gameData = gamesDataRaw[gameIdx];
         if(!nextPlay || currentPlay.gid !== nextPlay.gid) {
             isLastPlay = true;
         }
@@ -87,7 +88,7 @@ function createPlays(playsDataRaw, gamesDataRaw, games) {
         game.addPlay(playObj);
         plays.push(playObj);
 
-        idx = isLastPlay ? 0 : idx + 1;
+        isLastPlay ? (idx = 0, gameIdx++) : idx++;
     }
     return plays;
 }
