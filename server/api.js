@@ -18,7 +18,12 @@ module.exports = function(app) {
 	app.get('/api/games/:season', function(req, res) {
 		var season = req.params.season;
 		console.log("Client requested list of all games from season: " + season + "...");
- 		var result = data.getGamesBySeasonAndOrWeek(season);
+		var result = [ ];
+		_.each(data.GAMES, function (game) {
+			if (season == game.season) {
+				results.push(game);
+			}
+    	});
     	res.writeHead(200,{'Content-Type': 'application/json'});
 	    res.end(JSON.stringify(result));
 	});
@@ -28,17 +33,24 @@ module.exports = function(app) {
 		var season = req.params.season;
 		var week = req.params.week;
 		console.log("Client requested list of all games from season: " + season + ": Week " + week + "...");
-		var result = data.getGamesBySeasonAndOrWeek(season, week);
+		var result = [ ];
+		_.each(data.GAMES, function (game) {
+			if (season == game.season && week == game.week) {	
+				result.push(game);
+			}
+		});
 		res.writeHead(200,{'Content-Type': 'application/json'});
         res.end(JSON.stringify(result));
     });
 
-	// returns all plays for specified game
+	// returns all plays
 	app.get('/api/plays/:gameId', function(req, res) {
 		var gameId = req.params.gameId;
+		var plays = undefined;
 		console.log("Client requested plays from game " + gameId + "...");
-		var game = data.GAMES[gameId];
-		var plays = game.plays;
+		_.each(data.GAMES, function (Game) {
+			gameId == Game.gameId ? plays = Game.plays : null;
+		});
 		res.writeHead(200,{'Content-Type': 'application/json'});
         res.end(JSON.stringify(plays));
     });
@@ -48,9 +60,9 @@ module.exports = function(app) {
     	var gameId = req.params.gameId;
     	console.log("Client requested top ten plays for game " + gameId + "...");
     	var game = data.GAMES[gameId];
-    	var topPlays = game.findBiggestPlays(10);
+    	var topTenPlays = game.findBiggestPlays(10);
 		res.writeHead(200,{'Content-Type': 'application/json'});
-        res.end(JSON.stringify(topPlays));
+        res.end(JSON.stringify(topTenPlays));
     });
 
     //returns top 10 plays from all games combined 

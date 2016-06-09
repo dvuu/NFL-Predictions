@@ -29,17 +29,13 @@ function renderFromQueryString() {
 	var queryParam = queryString.substr(5, 4);
 	var url = '/api/plays/' + queryParam;
 	$.ajax({ url: '/api/games', success: function(result) {
-		for (var i = 0; i < result.length; ++i) {
-			if (queryParam == result[i].gameId) {
-				setSelectedSeasonText(result[i].season);
-				setSelectedWeekText(result[i].week);
-				setSelectedGameText(gameTitle(result[i]));
-				buildGamesFilter(result[i].season, result[i].week);
-				renderGame(result[i]);
-				console.log('Requested gameId: ' + result[i].gameId);
-				break;
-			}
-		}
+		console.log(result[queryParam]);
+		setSelectedSeasonText(result[queryParam].season);
+		setSelectedWeekText(result[queryParam].week);
+		setSelectedGameText(gameTitle(result[queryParam]));
+		buildGamesFilter(result[queryParam].season, result[queryParam].week);
+		renderGame(result[queryParam]);
+		console.log('Requested gameId: ' + result[queryParam].gameId);
 	}});
 }	
 
