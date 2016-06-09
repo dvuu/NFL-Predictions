@@ -88,7 +88,13 @@ function createPlays(playsDataRaw, gamesDataRaw, games) {
         game.addPlay(playObj);
         plays.push(playObj);
 
-        isLastPlay ? (idx = 0, gameIdx++) : idx++;
+        if (isLastPlay) {
+            idx = 0;
+            gameIdx++;
+        }
+        else {
+            idx++;
+        }
     }
     return plays;
 }

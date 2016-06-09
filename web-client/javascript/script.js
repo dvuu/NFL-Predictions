@@ -29,7 +29,6 @@ function renderFromQueryString() {
 	var queryParam = queryString.substr(5, 4);
 	var url = '/api/plays/' + queryParam;
 	$.ajax({ url: '/api/games', success: function(result) {
-		console.log(result[queryParam]);
 		setSelectedSeasonText(result[queryParam].season);
 		setSelectedWeekText(result[queryParam].week);
 		setSelectedGameText(gameTitle(result[queryParam]));
