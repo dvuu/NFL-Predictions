@@ -16,7 +16,7 @@ var Play = module.exports.Play = function (playDataRaw, nextPlayDataRaw, idx, ga
 	this.length = playDataRaw.len;
 	this.quarter = playDataRaw.qtr;
 	this.minute = playDataRaw.MIN;
-	this.second = playDataRaw.sec;
+	this.seconds = playDataRaw.sec;
 	this.ptsOffense = playDataRaw.ptso;
 	this.ptsDefense = playDataRaw.ptsd;
 	this.timeoutsOffense = playDataRaw.TIMO;
