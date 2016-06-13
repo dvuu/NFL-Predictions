@@ -1,5 +1,5 @@
 var _ = require('underscore');
-var csv = require('../utilities/csv.js');
+var csv = require('./csv.js');
 
 // Game object contains information about the game
 //    e.g. home, visitor, id
@@ -15,9 +15,9 @@ var Play = PlayObj.Play;
 module.exports = {
     initialize: function(callback) {
         var self = this;
-        csv.readCsv('../data/trained-data/GAME_ADJUSTED.csv', function(err, gamesDataRaw) {
+        csv.readCsv('./data/trained-data/GAME_ADJUSTED.csv', function(err, gamesDataRaw) {
             self.GAMES = createGames(gamesDataRaw);
-    	    csv.readCsv('../data/trained-data/PLAY_ADJUSTED.csv', function(err, playsDataRaw) {
+    	    csv.readCsv('./data/trained-data/PLAY_ADJUSTED.csv', function(err, playsDataRaw) {
                 self.PLAYS = createPlays(playsDataRaw, gamesDataRaw, self.GAMES);
                 self.gamesBySeasonsAndWeeks = createGamesBySeasonAndWeek(self.GAMES);
                 callback && callback();

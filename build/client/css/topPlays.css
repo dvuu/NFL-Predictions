@@ -1,0 +1,48 @@
+.topPlaysContainer {
+  height: 450px;
+}
+.topPlaysContainer {
+  padding-top: 50px;
+}
+.topPlays {
+  height: 215px;
+  color: #5f5f5f;
+  max-width: 270px;
+}
+.topPlay:hover {
+  background-color: #ddd;
+  cursor: default;
+}
+.topPlaysTitle {
+  color: #6f6f6f;
+}
+.posWp {
+  color: green !important;
+}
+.negWp {
+  color: red !important;
+}
+.legend span {
+  float: left;
+  width: 12px;
+  height: 12px;
+  margin: 2px;
+}
+.offColor {
+  background-color: #ff7400;
+  -webkit-border-radius: 50px;
+  /* Safari, Chrome */
+  -moz-border-radius: 50px;
+  /* Firefox */
+  border-radius: 50px;
+  /* CSS3 */
+}
+.defColor {
+  background-color: #0021c5;
+  -webkit-border-radius: 50px;
+  /* Safari, Chrome */
+  -moz-border-radius: 50px;
+  /* Firefox */
+  border-radius: 50px;
+  /* CSS3 */
+}

@@ -6,21 +6,19 @@ module.exports = function(grunt) {
     // Clean
     /*************************************************************************/
     grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.config('clean', [ 'public' ]);
+    grunt.config('clean', [ 'build' ]);
 
     /*************************************************************************/
     // Less
     /*************************************************************************/
     grunt.loadNpmTasks('grunt-contrib-less');
-    var lessRoot = 'web-client/less/';
-    var lessPattern = '**/*.less';
     grunt.config('less', {
         all: {
            files: [{
                expand: true,
-               cwd: lessRoot,
-               src: [lessPattern],
-               dest: 'public/css',
+               cwd: 'src-client/less',
+               src: '*.less',
+               dest: 'build/client/css/',
                ext: '.css'
             }],
         },
@@ -28,7 +26,51 @@ module.exports = function(grunt) {
             cleancss: true
         }
     });
+ 
+    /*************************************************************************/
+    // Copy
+    /*************************************************************************/
 
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.config('copy', {
+        html: {
+            expand: true,
+            cwd: 'src-client',
+            src: 'index.html',
+            dest: 'build/client'
+        },
+        js: {
+            expand: true,
+            cwd: 'src-client/javascript',
+            src: '*.js',
+            dest: 'build/client/js'
+        },
+        img: {
+            expand: true,
+            cwd: 'src-client/img',
+            src: '*',
+            dest: 'build/client/img'
+        },
+        server: {
+            expand:true,
+            cwd: 'src-server',
+            src: '*',
+            dest: 'build/server'
+        },
+        util: {
+            expand: true,
+            cwd: 'utilities',
+            src: 'csv.js',
+            dest: 'build/server',
+        },
+        data: {
+            expand: true,
+            cwd: '.',
+            src: 'data/**',
+            dest: 'build/server'
+        }
+    });
+    
     /*************************************************************************/
     // Watch
     /*************************************************************************/
@@ -51,32 +93,6 @@ module.exports = function(grunt) {
                 atBegin: true,
                 nospawn: true
             }
-        }
-    });
-
-    /*************************************************************************/
-    // Copy
-    /*************************************************************************/
-
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.config('copy', {
-        html: {
-            expand: true,
-            cwd: 'src',
-            src: 'web-client/index.html',
-            dest: 'public'
-        },
-        ext: {
-            expand: true,
-            cwd: 'ext',
-            src: '**',
-            dest: 'public/ext'
-        },
-        assets: {
-            expand: true,
-            cwd: 'assets',
-            src: '**',
-            dest: 'public/assets'
         }
     });
 
