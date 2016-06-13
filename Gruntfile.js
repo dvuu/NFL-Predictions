@@ -14,12 +14,12 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.config('less', {
         all: {
-           files: [{
-               expand: true,
-               cwd: 'src-client/less',
-               src: '*.less',
-               dest: 'build/client/css/',
-               ext: '.css'
+            files: [{
+                expand: true,
+                cwd: 'src/client/less',
+                src: '*.less',
+                dest: 'src/client/css/',
+                ext: '.css'
             }],
         },
         options: {
@@ -35,25 +35,37 @@ module.exports = function(grunt) {
     grunt.config('copy', {
         html: {
             expand: true,
-            cwd: 'src-client',
+            cwd: 'src/client',
             src: 'index.html',
             dest: 'build/client'
         },
         js: {
             expand: true,
-            cwd: 'src-client/javascript',
-            src: '*.js',
+            cwd: 'src/client/javascript',
+            src: '*',
             dest: 'build/client/js'
+        },
+        css: {
+            expand: true,
+            cwd: 'src/client/css',
+            src: '*',
+            dest: 'build/client/css/',
         },
         img: {
             expand: true,
-            cwd: 'src-client/img',
+            cwd: 'src/client/img',
             src: '*',
             dest: 'build/client/img'
         },
+        ext: {
+            expand: true,
+            cwd: 'src/client/ext',
+            src: '*',
+            dest: 'build/client/ext'
+        },
         server: {
-            expand:true,
-            cwd: 'src-server',
+            expand: true,
+            cwd: 'src/server',
             src: '*',
             dest: 'build/server'
         },
@@ -65,8 +77,8 @@ module.exports = function(grunt) {
         },
         data: {
             expand: true,
-            cwd: '.',
-            src: 'data/**',
+            cwd: 'data',
+            src: 'data/trained-data/*',
             dest: 'build/server'
         }
     });
