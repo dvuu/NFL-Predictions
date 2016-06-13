@@ -1,3 +1,5 @@
+var NFL = window.NFL = (window.NFL || { });
+
 $(document).ready(function() {
 	buildSeasonsFilter();
 	buildWeeksFilter();
@@ -44,7 +46,7 @@ function renderGame(game) {
 	$('.topPlays').empty();
 	$.ajax({ url: playUrl, success: function(playsResult) {
 		$.ajax({ url: topTenUrl, success: function(topTenResult) {
-			buildChartFromData(playsResult, topTenResult, game);
+			NFL.buildChartFromData(playsResult, topTenResult, game);
 			displayTopTen(topTenResult, playsResult);
 		}});
 	}});
