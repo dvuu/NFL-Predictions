@@ -54,5 +54,31 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('default', [ 'clean', 'less' ]);
+    /*************************************************************************/
+    // Copy
+    /*************************************************************************/
+
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.config('copy', {
+        html: {
+            expand: true,
+            cwd: 'src',
+            src: 'web-client/index.html',
+            dest: 'public'
+        },
+        ext: {
+            expand: true,
+            cwd: 'ext',
+            src: '**',
+            dest: 'public/ext'
+        },
+        assets: {
+            expand: true,
+            cwd: 'assets',
+            src: '**',
+            dest: 'public/assets'
+        }
+    });
+
+    grunt.registerTask('default', [ 'clean', 'less', 'copy' ]);
 };
