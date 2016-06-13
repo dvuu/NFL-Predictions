@@ -51,7 +51,7 @@ function swingString(playOne) {
             return (swingStringHelper(playOne, 'posWp', playOne.ptsVisitorGain, playOne.visitorYdsGained));
         }
         else {
-            return (swingStringHelper(playOne, 'negWp', playOne.ptsVisitorGain, playOne.visitorYdsGained));
+            return (swingStringHelper(playOne, 'posWp', playOne.ptsVisitorGain, playOne.visitorYdsGained));
         }
     }
 }
