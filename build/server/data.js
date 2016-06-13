@@ -1,5 +1,5 @@
 var _ = require('underscore');
-var csv = require('../utilities/csv.js');
+var csv = require('../../utilities/csv.js');
 
 // Game object contains information about the game
 //    e.g. home, visitor, id
