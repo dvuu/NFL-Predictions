@@ -4,6 +4,8 @@ var data = require('./data.js');
 data.initialize(function() {
 	console.log("Data has been parsed. App is now ready");
 });
+var helpers = require('../utilities/helpers.js');
+var Game = require('./gameObj.js').Game;
 
 module.exports = function(app) {
 
@@ -71,21 +73,13 @@ module.exports = function(app) {
     	var topTenPlaysPerGameArr = undefined;
     	// 1) Get top n plays from each game, store in an array
     	_.each(data.GAMES, function (game) {
-    			topTenPlaysPerGamesArr = game.findBiggestPlays(10);
-    			for (var i = topTenPlaysPerGamesArr.length - 1; i >= 0; i--) {
-    				topTenArr.push(topTenPlaysPerGamesArr[i]);
-    			}
-    		});
-    	// 2) Sort that array
-    	function compareWpDifference (a, b) {
-			return Math.abs(b.homeWpDiff || 0) - Math.abs(a.homeWpDiff || 0);
-		}
-		findBiggestPlays = function (plays, n) {
-			plays.sort(compareWpDifference);
-			return plays.slice(0, n);
-		}
-    	// 3) Return first n plays from that array
-		var results = findBiggestPlays(topTenArr, 10);
+			topTenPlaysPerGamesArr = game.findBiggestPlays(10);
+			for (var i = topTenPlaysPerGamesArr.length - 1; i >= 0; i--) {
+				topTenArr.push(topTenPlaysPerGamesArr[i]);
+			}
+		});
+        // 2) Return top n plays from that array
+        var results = helpers.topN(topTenArr, 10, Game.compareWpDifference);
     	res.writeHead(200,{'Content-Type': 'application/json'});
         res.end(JSON.stringify(results));
     });	

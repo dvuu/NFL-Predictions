@@ -66,7 +66,7 @@ module.exports = function(grunt) {
         utilities: {
             expand: true,
             cwd: 'src/utilities',
-            src: 'csv.js',
+            src: '*.js',
             dest: 'build/utilities',
         },
         data: {
