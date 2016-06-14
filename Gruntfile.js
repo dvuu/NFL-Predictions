@@ -18,7 +18,7 @@ module.exports = function(grunt) {
                 expand: true,
                 cwd: 'src/client/less',
                 src: '*.less',
-                dest: 'src/client/css/',
+                dest: 'build/client/css/',
                 ext: '.css'
             }],
         },
@@ -41,15 +41,9 @@ module.exports = function(grunt) {
         },
         js: {
             expand: true,
-            cwd: 'src/client/javascript',
+            cwd: 'src/client/js',
             src: '*',
             dest: 'build/client/js'
-        },
-        css: {
-            expand: true,
-            cwd: 'src/client/css',
-            src: '*',
-            dest: 'build/client/css/',
         },
         img: {
             expand: true,
@@ -66,20 +60,20 @@ module.exports = function(grunt) {
         server: {
             expand: true,
             cwd: 'src/server',
-            src: '*',
+            src: '*.js',
             dest: 'build/server'
         },
-        util: {
+        utilities: {
             expand: true,
-            cwd: 'utilities',
+            cwd: 'src/utilities',
             src: 'csv.js',
-            dest: 'build/server',
+            dest: 'build/utilities',
         },
         data: {
             expand: true,
-            cwd: 'data',
-            src: 'data/trained-data/*',
-            dest: 'build/server'
+            cwd: 'src/data',
+            src: 'trained-data/*',
+            dest: 'build/data'
         }
     });
     
