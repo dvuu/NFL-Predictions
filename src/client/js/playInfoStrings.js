@@ -40,18 +40,18 @@ function swingStringHelper(play, class1, ptsGain, ydsGain) {
 function swingString(playOne) {
     if (playOne.home == playOne.offense) {
         if (playOne.homeWpDiff > 0) {
-            return (swingStringHelper(playOne, 'posWp', playOne.ptsHomeGain, playOne.homeYdsGained));
+            return (swingStringHelper(playOne, 'posWp', playOne.pointsScored, playOne.ydsGained));
         }
         else {
-            return (swingStringHelper(playOne, 'negWp', playOne.ptsHomeGain, playOne.homeYdsGained));
+            return (swingStringHelper(playOne, 'negWp', playOne.pointsScored, playOne.ydsGained));
         }
     }
     else {
         if (playOne.homeWpDiff > 0) {
-            return (swingStringHelper(playOne, 'posWp', playOne.ptsVisitorGain, playOne.visitorYdsGained));
+            return (swingStringHelper(playOne, 'posWp', playOne.pointsScored, playOne.ydsGained));
         }
         else {
-            return (swingStringHelper(playOne, 'posWp', playOne.ptsVisitorGain, playOne.visitorYdsGained));
+            return (swingStringHelper(playOne, 'posWp', playOne.pointsScored, playOne.ydsGained));
         }
     }
 }

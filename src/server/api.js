@@ -50,8 +50,10 @@ module.exports = function(app) {
 		var gameId = req.params.gameId;
 		var plays = undefined;
 		console.log("Client requested plays from game " + gameId + "...");
-		_.each(data.GAMES, function (Game) {
-			gameId == Game.gameId ? plays = Game.plays : null;
+		_.each(data.GAMES, function (game) {
+			 if (gameId == game.gameId) {	
+				plays = game.plays
+			}
 		});
 		res.writeHead(200,{'Content-Type': 'application/json'});
         res.end(JSON.stringify(plays));
