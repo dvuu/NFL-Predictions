@@ -46,7 +46,11 @@ function renderGame(game) {
 	$('.topPlays').empty();
 	$.ajax({ url: playUrl, success: function(playsResult) {
 		$.ajax({ url: topTenUrl, success: function(topTenResult) {
-			NFL.buildChartFromData(playsResult, topTenResult, game);
+			// Build chart
+			var chart = new window.NFL.Chart(playsResult, topTenResult, game);
+        	chart.setPlays(playsResult);
+        	chart.render();
+        	// Display top ten plays
 			displayTopTen(topTenResult, playsResult);
 		}});
 	}});
@@ -124,27 +128,19 @@ function playDescription(play) {
 	}
 }
 
-function showPlayInfo(playOne, playTwo) {
-	if (playOne) {
-    	$('.playOne').html(playInfoString(playOne));
-    }
-    if (playTwo) {
-    	$('.playTwo').html(playInfoString(playTwo));
-    }
-    if (playOne && playTwo) {
-    	$('.playSwing').html(swingString(playOne));
-    }
-}
-
-function clearPlayInfo() {
-    $('.playOne').html('');
-    $('.playTwo').html('');
-    $('.playSwing').html('<p><br><em>Hover over the chart or Top 10 plays for more info<em><p>');
-}
+// function showPlayInfo(playOne, playTwo) {
+// 	if (playOne) {
+//     	$('.playOne').html(playInfoString(playOne));
+//     }
+//     if (playTwo) {
+//     	$('.playTwo').html(playInfoString(playTwo));
+//     }
+//     if (playOne && playTwo) {
+//     	$('.playSwing').html(swingString(playOne));
+//     }
+// }
 
 function displayTopTen(topTenResult, playsResult) {
-	$('.legend').empty();
-	$('.legend').html('<p><span class="offColor"></span> Offense</p><p><span class="defColor"></span> Defense</p>');
 	var $topTenDiv = $('.topPlays');
 	_.each(topTenResult, function(play) {
 		$('.topPlaysTitle').html('TOP 10 PLAYS <em>(' + play.home + ' % SWING)</em>');
@@ -156,12 +152,12 @@ function displayTopTen(topTenResult, playsResult) {
   				{curveNumber:0, pointNumber: play.idx},
   				{curveNumber:0, pointNumber: (play.idx + 1)}
   			]);
-  			showPlayInfo(play.idx + 1 == null ? null : playsResult[play.idx],
+  			NFL.PlayInfo.showPlayInfo(play.idx + 1 == null ? null : playsResult[play.idx],
   						 play.idx + 1 < playsResult.length ? playsResult[play.idx + 1] : null);
 		});
 		$playElement.on('mouseleave', function( ) {
 			Plotly.Fx.hover('chart', [ ]);
-  			clearPlayInfo();
+  			NFL.PlayInfo.clearPlayInfo();
 		});
 	});
 }
