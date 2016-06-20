@@ -29,9 +29,12 @@ function playInfoString(play) {
 
 function swingStringHelper(play, class1, ptsGain, ydsGain) {
     var homeWpDiff = (play.homeWpDiff * 100).toFixed(2);
+    if (class1 == 'posWp'){
+        homeWpDiff = '+' + homeWpDiff;
+    }
     return ('<p><span class="arrow">→</span>' 
         + '<br><span class="swing">' + play.home 
-        + ' <span class="' + class1 + '">+' + homeWpDiff + '%</span></span>'
+        + ' <span class="' + class1 + '">' + homeWpDiff + '%</span></span>'
         + '<br>Play: ' + play.type 
         + (ptsGain ? '<br>Points Scored: ' + ptsGain : '')
         + (!ptsGain ? '<br>Gained: ' + ydsGain + ' yds' : '') + '</p>');
@@ -51,7 +54,7 @@ function swingString(playOne) {
             return (swingStringHelper(playOne, 'posWp', playOne.pointsScored, playOne.ydsGained));
         }
         else {
-            return (swingStringHelper(playOne, 'posWp', playOne.pointsScored, playOne.ydsGained));
+            return (swingStringHelper(playOne, 'negWp', playOne.pointsScored, playOne.ydsGained));
         }
     }
 }

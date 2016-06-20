@@ -1,4 +1,5 @@
 var path = require('path');
+var shell = require('shelljs');
 
 module.exports = function(grunt) {
 
@@ -78,13 +79,35 @@ module.exports = function(grunt) {
     });
     
     /*************************************************************************/
+    // Restart node app
+    /*************************************************************************/
+
+    // TODO: can't store pid in zePid because it seems to get erased in between invocations
+    // of grunt. Find a different way.
+
+    var nodePid = null;
+    grunt.registerTask('app', 'restart node app', function() {
+        console.log("********** RESTARTING THE SERVER **********");
+        if (nodePid) {
+            console.log('killing old node process (nodePid ' + nodePid + ')');
+            shell.exec('kill ' + nodePid);
+        }
+        shell.cd('build/server');
+        var f = shell.exec('node --max-old-space-size=8192 app.js', { async: true });
+        shell.cd('../..');
+        nodePid = f._handle.pid;
+        console.log('new node process has pid ' + f._handle.pid);
+        console.log("********** RESTARTED THE SERVER **********");
+    });
+
+    /*************************************************************************/
     // Watch
     /*************************************************************************/
 
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.config('watch', {
-        code: {
-            files: ['src/**/*', 'ext/**/*', 'Gruntfile.js'],
+        client: {
+            files: ['src/**/*', 'Gruntfile.js'],
             tasks: ['default'],
             options: { atBegin: true }
         },
@@ -92,8 +115,8 @@ module.exports = function(grunt) {
             files: [path.join('src/client/ext/**/*.*')],
             tasks: ['default'],
         },
-        app: {
-            files: 'app.js',
+        server: {
+            files: ['src/server/**/*'],
             tasks: ['app'],
             options: {
                 atBegin: true,
@@ -101,6 +124,7 @@ module.exports = function(grunt) {
             }
         }
     });
+
 
     grunt.registerTask('default', [ 'clean', 'less', 'copy' ]);
 };

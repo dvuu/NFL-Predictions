@@ -103,7 +103,7 @@ function playDescription(play) {
 		 	return ('<span>' + play.type + ' by ' + play.offense + ' at ' + play.minute 
 		 	+ ':0' + play.seconds + ' in Q' + play.quarter 
 		 	+ ' (<span class="posWp">+' + homeWpDiff + '%</span>)</span>');
-		} 
+		}
 		else {
 			return ('<span>' + play.type + ' by ' + play.offense + ' at ' + play.minute 
 			+ ':' + play.seconds + ' in Q' + play.quarter 
