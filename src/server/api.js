@@ -21,11 +21,7 @@ module.exports = function(app) {
 		var season = req.params.season;
 		console.log("Client requested list of all games from season: " + season + "...");
 		var result = [ ];
-		_.each(data.GAMES, function (game) {
-			if (season == game.season) {
-				results.push(game);
-			}
-    	});
+		var result = data.getGamesBySeasonAndOrWeek(season);
     	res.writeHead(200,{'Content-Type': 'application/json'});
 	    res.end(JSON.stringify(result));
 	});
@@ -36,11 +32,7 @@ module.exports = function(app) {
 		var week = req.params.week;
 		console.log("Client requested list of all games from season: " + season + ": Week " + week + "...");
 		var result = [ ];
-		_.each(data.GAMES, function (game) {
-			if (season == game.season && week == game.week) {	
-				result.push(game);
-			}
-		});
+		var result = data.getGamesBySeasonAndOrWeek(season);
 		res.writeHead(200,{'Content-Type': 'application/json'});
         res.end(JSON.stringify(result));
     });
@@ -50,11 +42,10 @@ module.exports = function(app) {
 		var gameId = req.params.gameId;
 		var plays = undefined;
 		console.log("Client requested plays from game " + gameId + "...");
-		_.each(data.GAMES, function (game) {
-			 if (gameId == game.gameId) {	
-				plays = game.plays
-			}
-		});
+		var game = data.GAMES[gameId];
+		if (gameId == game.gameId) {
+ 			var plays = game.plays;
+ 		}
 		res.writeHead(200,{'Content-Type': 'application/json'});
         res.end(JSON.stringify(plays));
     });
