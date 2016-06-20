@@ -18,7 +18,7 @@ module.exports = function(grunt) {
             files: [{
                 expand: true,
                 cwd: 'src/client/less',
-                src: '*.less',
+                src: '*',
                 dest: 'build/client/css/',
                 ext: '.css'
             }],
@@ -124,7 +124,6 @@ module.exports = function(grunt) {
             }
         }
     });
-
 
     grunt.registerTask('default', [ 'clean', 'less', 'copy' ]);
 };

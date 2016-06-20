@@ -3,6 +3,7 @@
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta charset="UTF-8">
+		<link rel="stylesheet" href="./css/normalize.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 		<link rel="stylesheet" href="./css/reset.css">
 		<link rel="stylesheet" href="./css/style.css">
@@ -20,45 +21,47 @@
 		<title>NFL Predictions</title>
 	</head>
 	<body>
-		<div class="header">
-			<h1><a href="/">NFL PREDICTIONS 2012-2015</a></h1>
-		</div>
-		<nav>
-			<span class="category">SEASON:</span>
-			<div class="seasonsDropdown dropdown">
-				<span class="selection">--</span>
-				<span class="caret"></span> 
-				<div class="dropdown-content season-content">
-					<!-- list of seasons -->
-				</div>
-			</div>
-			<span class="category">WEEK:</span>
-			<div class="weeksDropdown dropdown">
-				<span class="selection">--</span>
-				<span class="caret"></span> 
-				<div class="dropdown-content week-content">
-					<!-- list of weeks -->
-				</div>
-			</div>
-			<span class="category">GAME:</span>
-			<div class="gamesDropdown dropdown">
-				<span class="selection">--</span>
-				<span class="caret"></span> 
-				<div class="dropdown-content game-content">
-					<!-- list of games -->
-				</div>
-			</div>
-		</nav>
-		<div class="main">
+		<div class="container">
 			<div class="row">
-				<div class="chartContainer col-md-9">
+				<div class="header">
+					<h1><a href="/">NFL PREDICTIONS 2012-2015</a></h1>
+				</div>
+				<nav>
+					<span class="category">SEASON:</span>
+					<div class="seasonsDropdown dropdown">
+						<span class="selection">--</span>
+						<span class="caret"></span> 
+						<div class="dropdown-content season-content">
+							<!-- list of seasons -->
+						</div>
+					</div>
+					<span class="category">WEEK:</span>
+					<div class="weeksDropdown dropdown">
+						<span class="selection">--</span>
+						<span class="caret"></span> 
+						<div class="dropdown-content week-content">
+							<!-- list of weeks -->
+						</div>
+					</div>
+					<span class="category">GAME:</span>
+					<div class="gamesDropdown dropdown">
+						<span class="selection">--</span>
+						<span class="caret"></span> 
+						<div class="dropdown-content game-content">
+							<!-- list of games -->
+						</div>
+					</div>
+				</nav>
+			</div>
+			<div class="row">
+				<div class="chartContainer col-md-9 col-xs-12">
 					<div id="chart">
 						<div class="teamLogo homeLogo"></div>
 						<div class="teamLogo awayLogo"></div>
 						<!-- chart -->
 					</div>
 				</div>
-				<div class="topPlaysContainer col-md-3">
+				<div class="topPlaysContainer col-md-3 col-xs-12">
 					<h4 class="topPlaysTitle">
 						<!-- title -->
 					</h4>
@@ -71,15 +74,15 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="playsInfoContainer col-md-12">
+				<div class="playsInfoContainer col-md-12 col-xs-12">
 					<div class="playsInfo">
-						<div class="playOne col-md-3">
+						<div class="playOne col-md-3 col-xs-4">
 							<!-- play 1 -->
 						</div>
-						<div class="playSwing col-md-3">
+						<div class="playSwing col-md-3 col-xs-4">
 							<!-- contains swing% change and yard line info -->
 						</div>
-						<div class="playTwo col-md-3">
+						<div class="playTwo col-md-3 col-xs-4">
 							<!-- play 2 -->
 						</div>
 					</div>
