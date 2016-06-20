@@ -17,7 +17,7 @@
             hoverinfo: 'text'
         };
         this.layout = {
-            title : chartTitle(game),
+            title : this.chartTitle(game),
             xaxis: {
                 title: 'Game time remaining (seconds)',
                 // add padding so the labels aren't slammed against the axes
@@ -63,6 +63,11 @@
         $('#chart')[0].on('plotly_unhover', function(data) {
             NFL.PlayInfo.clearPlayInfo();
         });
+    };
+
+    NFL.Chart.prototype.chartTitle = function(game) {
+        return (game.season + ' - WEEK ' + game.week + ': ' + game.visitor + ': ' + game.ptsVisitor 
+        + ' @ ' + game.home + ': ' + game.ptsHome);
     };
 
     // Sets plays for instance of chart
@@ -125,25 +130,3 @@
         NFL.PlayInfo.showPlayInfo(playOne, playTwo);
     };
 })();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
