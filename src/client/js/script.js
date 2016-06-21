@@ -3,7 +3,6 @@ var NFL = window.NFL = (window.NFL || { });
 $(document).ready(function() {
 	buildSeasonsFilter();
 	buildWeeksFilter();
-	buildGamesFilter();
 	renderFromQueryString();
 	window.addEventListener('popstate', function(e) {
 		renderFromQueryString();
@@ -47,11 +46,11 @@ function renderGame(game) {
 	$.ajax({ url: playUrl, success: function(playsResult) {
 		$.ajax({ url: topTenUrl, success: function(topTenResult) {
 			// Build chart
-			var chart = new window.NFL.Chart(playsResult, topTenResult, game);
+			var chart = new NFL.Chart(playsResult, topTenResult, game);
         	chart.setPlays(playsResult);
         	chart.render();
         	// Display top ten plays
-			displayTopTen(topTenResult, playsResult);
+			NFL.displayTopTen(topTenResult, playsResult);
 		}});
 	}});
 	$('.homeLogo, .awayLogo').removeClass(function(idx, css) {
@@ -100,57 +99,6 @@ function buildWeeksFilter(season) {
 	});
 }
 
-function playDescription(play) {
-	var homeWpDiff = (play.homeWpDiff * 100).toFixed(2);
-	if (play.homeWpDiff > 0) {
-		if (play.seconds < 10) {
-		 	return ('<span>' + play.type + ' by ' + play.offense + ' at ' + play.minute 
-		 	+ ':0' + play.seconds + ' in Q' + play.quarter 
-		 	+ ' (<span class="posWp">+' + homeWpDiff + '%</span>)</span>');
-		}
-		else {
-			return ('<span>' + play.type + ' by ' + play.offense + ' at ' + play.minute 
-			+ ':' + play.seconds + ' in Q' + play.quarter 
-			+ ' (<span class="posWp">+' + homeWpDiff + '%</span>)</span>');
-		}
-	}
-	else {
-		if (play.seconds < 10) {
-	 		return ('<span>' + play.type + ' by ' + play.offense + ' at ' + play.minute 
-	 		+ ':0' + play.seconds + ' in Q' + play.quarter 
-	 		+ ' (<span class="negWp">' + homeWpDiff + '%</span>)</span>');
-		}
-		else {
-			return ('<span>' + play.type + ' by ' + play.offense + ' at ' + play.minute + ':' 
-			+ play.seconds + ' in Q' + play.quarter 
-			+ ' (<span class="negWp">' + homeWpDiff + '%</span>)</span>');
-		}
-	}
-}
-
-
-function displayTopTen(topTenResult, playsResult) {
-	var $topTenDiv = $('.topPlays');
-	_.each(topTenResult, function(play) {
-		$('.topPlaysTitle').html('TOP 10 PLAYS <em>(' + play.home + ' % SWING)</em>');
-		var $playElement = $('<div class="topPlay">' + playDescription(play) + '</div>');
-		$topTenDiv.append($playElement);
-		//event function that when you hover top ten it will dislay where it is located on the chart
-		$playElement.on('mouseenter', function( ) {
-			Plotly.Fx.hover('chart',[
-  				{curveNumber:0, pointNumber: play.idx},
-  				{curveNumber:0, pointNumber: (play.idx + 1)}
-  			]);
-  			NFL.PlayInfo.showPlayInfo(play.idx + 1 == null ? null : playsResult[play.idx],
-  						 play.idx + 1 < playsResult.length ? playsResult[play.idx + 1] : null);
-		});
-		$playElement.on('mouseleave', function( ) {
-			Plotly.Fx.hover('chart', [ ]);
-  			NFL.PlayInfo.clearPlayInfo();
-		});
-	});
-}
-
 function onGameClick(e, game) {
 	$('.gamesDropdown .dropdownLink div').removeClass('activeFilterItem');
     $(e.currentTarget).children('div').addClass('activeFilterItem');
@@ -177,6 +125,24 @@ function buildGamesFilter(season, week) {
 	}});
 }
 
+// var rtime;
+// var timeout = false;
+// var delta = 200;
+// $(window).resize(function() {
+//     rtime = new Date();
+//     if (timeout === false) {
+//         timeout = true;
+//         setTimeout(resizeend, delta);
+//     }
+// });
 
+// function resizeend() {
+//     if (new Date() - rtime < delta) {
+//         setTimeout(resizeend, delta);
+//     } else {
+//         timeout = false;
+//         alert('Done resizing');
+//     }               
+// }
 
 
