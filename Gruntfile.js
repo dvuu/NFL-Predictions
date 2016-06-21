@@ -43,20 +43,26 @@ module.exports = function(grunt) {
         js: {
             expand: true,
             cwd: 'src/client/js',
-            src: '*',
+            src: '*.js',
             dest: 'build/client/js'
+        },
+        extJs: {
+            expand: true,
+            cwd: 'src/client/ext/js',
+            src: '*.js',
+            dest: 'build/client/ext/js'
+        },
+        extCss: {
+            expand: true,
+            cwd: 'src/client/ext/css',
+            src: '*.css',
+            dest: 'build/client/ext/css'
         },
         img: {
             expand: true,
             cwd: 'src/client/img',
             src: '*',
             dest: 'build/client/img'
-        },
-        ext: {
-            expand: true,
-            cwd: 'src/client/ext',
-            src: '*',
-            dest: 'build/client/ext'
         },
         server: {
             expand: true,
