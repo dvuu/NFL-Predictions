@@ -45,22 +45,12 @@
 	};
 
 	function swingString (playOne) {
-	    if (playOne.home == playOne.offense) {
-	        if (playOne.homeWpDiff > 0) {
-	            return (swingStringHelper(playOne, 'posWp', playOne.pointsScored, playOne.ydsGained));
-	        }
-	        else {
-	            return (swingStringHelper(playOne, 'negWp', playOne.pointsScored, playOne.ydsGained));
-	        }
-	    }
-	    else {
-	        if (playOne.homeWpDiff > 0) {
-	            return (swingStringHelper(playOne, 'posWp', playOne.pointsScored, playOne.ydsGained));
-	        }
-	        else {
-	            return (swingStringHelper(playOne, 'negWp', playOne.pointsScored, playOne.ydsGained));
-	        }
-	    }
+        if (playOne.homeWpDiff > 0) {
+            return (swingStringHelper(playOne, 'posWp', playOne.pointsScored, playOne.ydsGained));
+        }
+        else {
+            return (swingStringHelper(playOne, 'negWp', playOne.pointsScored, playOne.ydsGained));
+        }
 	};
 
 	function swingStringHelper(play, class1, ptsGain, ydsGain) {

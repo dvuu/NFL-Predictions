@@ -128,17 +128,6 @@ function playDescription(play) {
 	}
 }
 
-// function showPlayInfo(playOne, playTwo) {
-// 	if (playOne) {
-//     	$('.playOne').html(playInfoString(playOne));
-//     }
-//     if (playTwo) {
-//     	$('.playTwo').html(playInfoString(playTwo));
-//     }
-//     if (playOne && playTwo) {
-//     	$('.playSwing').html(swingString(playOne));
-//     }
-// }
 
 function displayTopTen(topTenResult, playsResult) {
 	var $topTenDiv = $('.topPlays');
