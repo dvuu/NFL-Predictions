@@ -32,7 +32,7 @@ module.exports = function(app) {
 		var week = req.params.week;
 		console.log("Client requested list of all games from season: " + season + ": Week " + week + "...");
 		var result = [ ];
-		var result = data.getGamesBySeasonAndOrWeek(season);
+		var result = data.getGamesBySeasonAndOrWeek(season, week);
 		res.writeHead(200,{'Content-Type': 'application/json'});
         res.end(JSON.stringify(result));
     });
