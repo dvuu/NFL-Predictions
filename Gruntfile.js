@@ -130,6 +130,37 @@ module.exports = function(grunt) {
             }
         }
     });
+    /*************************************************************************/
+    // Concat
+    /*************************************************************************/
+
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.config('concat', {
+        concat: {
+            options: {
+                seperator: ";",
+                stripBanner: true,
+                banner: "/*! NFL Predictions by: Dylan Vu & Anthony Van Pelt */"
+            },
+            css: {
+               src: [ ],
+               dest: '',
+
+            },
+            extCss: {
+                src: [ ],
+                dest: '',
+            },
+            js: {
+                src: '',
+                dest: 'build/client/js',
+            },
+            extJs: {
+                src: [ ],
+                dest: '',
+            }
+        }
+    });
 
     grunt.registerTask('default', [ 'clean', 'less', 'copy' ]);
 };
