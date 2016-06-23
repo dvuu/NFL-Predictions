@@ -21,7 +21,7 @@
 	};
 
 	function playInfoString(play) {
-	    if (play.homeWp < .5)
+	    if (play.homeWp < 0.5)
 	        return (playInfoStringHelper(play, 'posWp', 'negWp'));
 	    else
 	        return (playInfoStringHelper(play, 'negWp', 'posWp'));

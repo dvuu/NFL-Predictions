@@ -4,7 +4,7 @@
 	NFL.TopTen = function (topTenResult, playsResult) {
 		this.topTenResult = topTenResult;
 		this.playsResult = playsResult;
-	}
+	};
 
 	NFL.TopTen.prototype.render = function () {
 		var self = this;
@@ -18,7 +18,7 @@
 	  				{curveNumber:0, pointNumber: play.idx},
 	  				{curveNumber:0, pointNumber: (play.idx + 1)}
 	  			]);
-	  			NFL.PlayInfo.showPlayInfo(play.idx + 1 == null ? null : self.playsResult[play.idx],
+	  			NFL.PlayInfo.showPlayInfo(play.idx + 1 === null ? null : self.playsResult[play.idx],
 	  						 play.idx + 1 < self.playsResult.length ? self.playsResult[play.idx + 1] : null);
 			});
 			$playElement.on('mouseleave', function( ) {
@@ -26,7 +26,7 @@
 	  			NFL.PlayInfo.clearPlayInfo();
 			});
 		});
-	}
+	};
 
 	function playDescription(play) {
 		var homeWpDiff = (play.homeWpDiff * 100).toFixed(2);

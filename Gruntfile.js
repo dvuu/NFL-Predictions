@@ -10,6 +10,17 @@ module.exports = function(grunt) {
     grunt.config('clean', [ 'build' ]);
 
     /*************************************************************************/
+    // JS lint
+    /*************************************************************************/
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.config('jshint', {
+        options: {
+            force: true
+        },
+        beforeconcat: 'src/client/js/*.js'
+    });
+
+    /*************************************************************************/
     // Less
     /*************************************************************************/
     grunt.loadNpmTasks('grunt-contrib-less');
