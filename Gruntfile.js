@@ -19,7 +19,7 @@ module.exports = function(grunt) {
                 expand: true,
                 cwd: 'src/client/less',
                 src: '*',
-                dest: 'build/client/css/',
+                dest: 'pre-build/client/css/',
                 ext: '.css'
             }],
         },
@@ -44,19 +44,19 @@ module.exports = function(grunt) {
             expand: true,
             cwd: 'src/client/js',
             src: '*.js',
-            dest: 'build/client/js'
+            dest: 'pre-build/client/js'
         },
         extJs: {
             expand: true,
             cwd: 'src/client/ext/js',
             src: '*.js',
-            dest: 'build/client/ext/js'
+            dest: 'pre-build/client/ext/js'
         },
         extCss: {
             expand: true,
             cwd: 'src/client/ext/css',
             src: '*.css',
-            dest: 'build/client/ext/css'
+            dest: 'pre-build/client/ext/css'
         },
         img: {
             expand: true,
@@ -136,31 +136,23 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.config('concat', {
-        concat: {
-            options: {
-                seperator: ";",
-                stripBanner: true,
-                banner: "/*! NFL Predictions by: Dylan Vu & Anthony Van Pelt */"
-            },
             css: {
-               src: [ ],
-               dest: '',
-
+                src: 'pre-build/client/css/*.css',
+                dest: 'build/client/css/style.css',
             },
             extCss: {
-                src: [ ],
-                dest: '',
+                src: 'pre-build/client/ext/css/*.css',
+                dest: 'build/client/css/ext.css',
             },
             js: {
-                src: '',
-                dest: 'build/client/js',
+                src: 'pre-build/client/js/*.js',
+                dest: 'build/client/js/script.js',
             },
             extJs: {
-                src: [ ],
-                dest: '',
+                src: 'pre-build/client/ext/js/*.js',
+                dest: 'build/client/js/ext.js',
             }
-        }
     });
 
-    grunt.registerTask('default', [ 'clean', 'less', 'copy' ]);
+    grunt.registerTask('default', [ 'clean', 'copy', 'less', 'concat']);
 };
