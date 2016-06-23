@@ -7,7 +7,10 @@ module.exports = function(grunt) {
     // Clean
     /*************************************************************************/
     grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.config('clean', [ 'build' ]);
+    grunt.config('clean', {
+        pre: 'build',
+        post: 'build/intermediates'
+    });
 
     /*************************************************************************/
     // JS lint
@@ -30,7 +33,7 @@ module.exports = function(grunt) {
                 expand: true,
                 cwd: 'src/client/less',
                 src: '*',
-                dest: 'pre-build/client/css/',
+                dest: 'build/intermediates/css',
                 ext: '.css'
             }],
         },
@@ -51,29 +54,29 @@ module.exports = function(grunt) {
             src: 'index.html',
             dest: 'build/client'
         },
-        js: {
-            expand: true,
-            cwd: 'src/client/js',
-            src: '*.js',
-            dest: 'pre-build/client/js'
-        },
-        extJs: {
-            expand: true,
-            cwd: 'src/client/ext/js',
-            src: '*.js',
-            dest: 'pre-build/client/ext/js'
-        },
-        extCss: {
-            expand: true,
-            cwd: 'src/client/ext/css',
-            src: '*.css',
-            dest: 'pre-build/client/ext/css'
-        },
+        // js: {
+        //     expand: true,
+        //     cwd: 'src/client/js',
+        //     src: '*.js',
+        //     dest: 'build/client/assets/js'
+        // },
+        // extJs: {
+        //     expand: true,
+        //     cwd: 'src/client/ext/js',
+        //     src: '*.js',
+        //     dest: 'build/client/assets/ext/js'
+        // },
+        // extCss: {
+        //     expand: true,
+        //     cwd: 'src/client/ext/css',
+        //     src: '*.css',
+        //     dest: 'build/intermediates/client/ext/css'
+        // },
         img: {
             expand: true,
             cwd: 'src/client/img',
             src: '*',
-            dest: 'build/client/img'
+            dest: 'build/client/assets/images'
         },
         server: {
             expand: true,
@@ -141,6 +144,7 @@ module.exports = function(grunt) {
             }
         }
     });
+
     /*************************************************************************/
     // Concat
     /*************************************************************************/
@@ -148,22 +152,19 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.config('concat', {
             css: {
-                src: 'pre-build/client/css/*.css',
-                dest: 'build/client/css/style.css',
-            },
-            extCss: {
-                src: 'pre-build/client/ext/css/*.css',
-                dest: 'build/client/css/ext.css',
+                src: ['src/client/ext/css/*.css', 'build/intermediates/css/*.css'],
+                dest: 'build/client/assets/css/style.css',
             },
             js: {
-                src: 'pre-build/client/js/*.js',
-                dest: 'build/client/js/script.js',
+                src: ['src/client/ext/js/*.js', 'src/client/js/*.js'],
+                dest: 'build/client/assets/js/script.js',
+                options: {
+                    banner: '// NFL Predictor - Dylan Vu, Anthony Van Pelt\n// ' + new Date().toString() + '\n;(function() {\n',
+                    separator: '\n})();\n(function() {\n',
+                    footer: '})();\n'
+                }
             },
-            extJs: {
-                src: 'pre-build/client/ext/js/*.js',
-                dest: 'build/client/js/ext.js',
-            }
     });
 
-    grunt.registerTask('default', [ 'clean', 'copy', 'less', 'concat']);
+    grunt.registerTask('default', [ 'clean:pre', 'copy', 'less', 'concat', 'clean:post']);
 };
