@@ -1,5 +1,4 @@
 var _ = require('underscore');
-var url = require('url');
 var data = require('./data.js');
 data.initialize(function() {
 	console.log("Data has been parsed. App is now ready");
