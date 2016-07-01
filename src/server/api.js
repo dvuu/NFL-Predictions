@@ -11,6 +11,7 @@ module.exports = function(app) {
 	// Returns list of all games.
 	app.get('/api/games', function(req, res) {
 		console.log("Client requested list of all games...");
+		// Use res.send(data.GAMES) over res.end;
 		res.writeHead(200,{'Content-Type': 'application/json'});
 	    res.end(JSON.stringify(data.GAMES));
 	});
@@ -43,7 +44,7 @@ module.exports = function(app) {
 		console.log("Client requested plays from game " + gameId + "...");
 		var game = data.GAMES[gameId];
 		if (gameId == game.gameId) {
- 			var plays = game.plays;
+ 			plays = game.plays;
  		}
 		res.writeHead(200,{'Content-Type': 'application/json'});
         res.end(JSON.stringify(plays));

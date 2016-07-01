@@ -58,7 +58,7 @@ function findAndFixBadPlays(plays, applyFix) {
 		if (pts1Cur > pts1Next && pts1Cur > pts1Prev) {
 			badPlays[curPlay.pid] = { type: 'SAME SCORE BUG' };
 			if (applyFix) {
-				if (curPlay.fum && curPlay.pts != 0) {
+				if (curPlay.fum && curPlay.pts !== 0) {
 					var ph = curPlay.ptsd;
 					curPlay.ptsd = curPlay.ptso;
 					curPlay.ptso = ph;
@@ -72,7 +72,7 @@ function findAndFixBadPlays(plays, applyFix) {
 		if (pts2Cur > pts2Next && pts2Cur > pts2Prev) {
 			badPlays[curPlay.pid] = { type: 'SAME SCORE BUG' };
 			if (applyFix) {
-				if (curPlay.fum && curPlay.pts != 0) {
+				if (curPlay.fum && curPlay.pts !== 0) {
 					var ph = curPlay.ptsd;
 					curPlay.ptsd = curPlay.ptso;
 					curPlay.ptso = ph;
