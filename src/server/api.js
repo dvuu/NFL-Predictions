@@ -78,13 +78,16 @@ module.exports = function(app) {
     //returns top ten exciting games
     app.get('/api/excitingGames', function (req, res) {
     	var topTenExcitingGamesArr = [];
-    	var gamesRanking = {};
-    		_.each(data.GAMES, function(game) {
-    			gamesRanking[game.gameId] = game.sumGameStateChange();
-    		});
-    		topTenExcitingGamesArr.push(gamesRanking);
+		_.each(data.GAMES, function(game) {
+			var gamesRanking = {
+				'gameId': game.gameId,
+				'totalExcitement': game.sumGameStateChange()
+			};
+			topTenExcitingGamesArr.push(gamesRanking);
+		});
+    	var results = helpers.topN(topTenExcitingGamesArr, 10, Game.compareWpDiffTotalDec);
     	res.writeHead(200,{'Content-Type': 'application/json'});
-        res.end(JSON.stringify(gamesRanking));
+        res.end(JSON.stringify(results));
     });
 
 

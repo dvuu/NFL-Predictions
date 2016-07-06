@@ -25,7 +25,7 @@ Game.prototype.toJSON = function () {
 	delete copy.plays;
 	return copy;
 }
-
+// adds up all plays absolute WpDiff and return that number when called
 Game.prototype.sumGameStateChange = function() {
 	var changesInGame = 0;
 	for (var i = 0; i < this.plays.length; i++) {
@@ -35,6 +35,10 @@ Game.prototype.sumGameStateChange = function() {
 		}
 	}
 	return changesInGame;
+}
+
+Game.compareWpDiffTotal = function(a, b) {
+	return Math.abs(b.totalExcitement || 0) - Math.abs(a.totalExcitement || 0);
 }
 
 Game.compareWpDifference = function(play1, play2) {
