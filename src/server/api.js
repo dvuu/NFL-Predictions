@@ -20,7 +20,6 @@ module.exports = function(app) {
 	app.get('/api/games/:season', function(req, res) {
 		var season = req.params.season;
 		console.log("Client requested list of all games from season: " + season + "...");
-		var result = [ ];
 		var result = data.getGamesBySeasonAndOrWeek(season);
     	res.writeHead(200,{'Content-Type': 'application/json'});
 	    res.end(JSON.stringify(result));
@@ -31,7 +30,6 @@ module.exports = function(app) {
 		var season = req.params.season;
 		var week = req.params.week;
 		console.log("Client requested list of all games from season: " + season + ": Week " + week + "...");
-		var result = [ ];
 		var result = data.getGamesBySeasonAndOrWeek(season, week);
 		res.writeHead(200,{'Content-Type': 'application/json'});
         res.end(JSON.stringify(result));
@@ -43,7 +41,7 @@ module.exports = function(app) {
 		var plays = undefined;
 		console.log("Client requested plays from game " + gameId + "...");
 		var game = data.GAMES[gameId];
-		if (gameId == game.gameId) {
+		if (gameId == gameId) {
  			plays = game.plays;
  		}
 		res.writeHead(200,{'Content-Type': 'application/json'});
@@ -76,6 +74,23 @@ module.exports = function(app) {
     	res.writeHead(200,{'Content-Type': 'application/json'});
         res.end(JSON.stringify(results));
     });	
+
+    //returns top ten exciting games
+    app.get('/api/excitingGames', function (req, res) {
+    	var topTenExcitingGamesArr = [];
+    	var gamesRanking = {};
+    		_.each(data.GAMES, function(game) {
+    			gamesRanking[game.gameId] = game.sumGameStateChange();
+    		});
+    		topTenExcitingGamesArr.push(gamesRanking);
+    	res.writeHead(200,{'Content-Type': 'application/json'});
+        res.end(JSON.stringify(gamesRanking));
+    });
+
+
+    //returns top ten boring games
+
+
 
   //   app.get('/api/gamesByTeam/:teamAbbreviation', function(req, res) {
 		// var team = req.params.teamAbbreviation;

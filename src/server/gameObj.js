@@ -26,6 +26,17 @@ Game.prototype.toJSON = function () {
 	return copy;
 }
 
-Game.compareWpDifference = function(a, b) {
-	return Math.abs(b.homeWpDiff || 0) - Math.abs(a.homeWpDiff || 0);
+Game.prototype.sumGameStateChange = function() {
+	var changesInGame = 0;
+	for (var i = 0; i < this.plays.length; i++) {
+		if (i < this.plays.length - 1) {
+			var changeInPlays = Math.abs(this.plays[i].homeWpDiff);
+			changesInGame += changeInPlays;
+		}
+	}
+	return changesInGame;
+}
+
+Game.compareWpDifference = function(play1, play2) {
+	return Math.abs(play2.homeWpDiff || 0) - Math.abs(play1.homeWpDiff || 0);
 }
