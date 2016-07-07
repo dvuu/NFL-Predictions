@@ -53,13 +53,13 @@ NFL.Chart = function (plays, topTenPlays, game) {
     this.setPlays(plays);
 };
 
-NFL.Chart.prototype.render = function() {
+NFL.Chart.prototype.render = function(element) {
     var self = this;
-    Plotly.newPlot('chart', [this.playSeries], this.layout, {displayModeBar: false});
-    $('#chart')[0].on('plotly_hover', function (data) {
+    Plotly.newPlot(element, [this.playSeries], this.layout, {displayModeBar: false});
+    element.on('plotly_hover', function (data) {
         self.onHover(data, self.plays);
     });
-    $('#chart')[0].on('plotly_unhover', function(data) {
+    element.on('plotly_unhover', function(data) {
         NFL.PlayInfo.clearPlayInfo();
     });
 };

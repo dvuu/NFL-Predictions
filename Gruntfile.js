@@ -51,7 +51,7 @@ module.exports = function(grunt) {
         index: {
             expand: true,
             cwd: 'src/client',
-            src: 'index.html',
+            src: ['index.html', 'test.html'],
             dest: 'build/client'
         },
         topTen: {
@@ -157,19 +157,37 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.config('concat', {
-            css: {
-                src: ['src/client/ext/css/*.css', 'build/intermediates/css/*.css'],
-                dest: 'build/client/assets/css/style.css',
-            },
-            js: {
-                src: ['src/client/ext/js/*.js', 'src/client/js/*.js'],
-                dest: 'build/client/assets/js/script.js',
-                options: {
-                    banner: '// NFL Predictor - Dylan Vu, Anthony Van Pelt\n// ' + new Date().toString() + '\n;(function() {\n',
-                    separator: '\n})();\n(function() {\n',
-                    footer: '})();\n'
-                }
-            },
+        css: {
+            src: ['src/client/ext/css/*.css', 'build/intermediates/css/*.css'],
+            dest: 'build/client/assets/css/style.css',
+        },
+        jsCommon: {
+            src: ['src/client/ext/js/*.js', 'src/client/js/chartObj.js', 'src/client/js/playInfoObj.js', 'src/client/js/topTenObj.js'],
+            dest: 'build/client/assets/js/common.js',
+            options: {
+                banner: '// NFL Predictor - Dylan Vu, Anthony Van Pelt\n// ' + new Date().toString() + '\n;(function() {\n',
+                separator: '\n})();\n(function() {\n',
+                footer: '\n})();\n'
+            }
+        },
+        jsIndex: {
+            src: ['src/client/js/index.js'],
+            dest: 'build/client/assets/js/index.js',
+            options: {
+                banner: '// NFL Predictor - Dylan Vu, Anthony Van Pelt\n// ' + new Date().toString() + '\n;(function() {\n',
+                separator: '\n})();\n(function() {\n',
+                footer: '\n})();\n'
+            }
+        },
+        jsExciting: { 
+            src: ['src/client/js/test.js'],
+            dest: 'build/client/assets/js/test.js',
+            options: {
+                banner: '// NFL Predictor - Dylan Vu, Anthony Van Pelt\n// ' + new Date().toString() + '\n;(function() {\n',
+                separator: '\n})();\n(function() {\n',
+                footer: '\n})();\n'
+            }
+        }
     });
 
     grunt.registerTask('default', [ 'clean:pre', 'copy', 'less', 'concat', 'clean:post']);
