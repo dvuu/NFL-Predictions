@@ -78,21 +78,21 @@ module.exports = function(app) {
     //returns top ten exciting games
     app.get('/api/excitingGames', function (req, res) {
     	var topTenExcitingGamesArr = [];
-		_.each(data.GAMES, function(game) {
-			var gamesRanking = {
-				'gameId': game.gameId,
-				'totalExcitement': game.sumGameStateChange()
-			};
-			topTenExcitingGamesArr.push(gamesRanking);
-		});
-    	var results = helpers.topN(topTenExcitingGamesArr, 10, Game.compareWpDiffTotalDec);
+		helpers.findSumGameWPChange(topTenExcitingGamesArr, data);
+	    var results = helpers.topN(topTenExcitingGamesArr, 10, Game.compareWpDiffTotalDec);
     	res.writeHead(200,{'Content-Type': 'application/json'});
         res.end(JSON.stringify(results));
     });
 
 
     //returns top ten boring games
-
+	app.get('/api/boringGames', function (req, res) {
+	    	var topTenBoringGamesArr = [];
+			helpers.findSumGameWPChange(topTenBoringGamesArr, data);
+	    	var results = helpers.topN(topTenBoringGamesArr, 10, Game.compareWpDiffTotalAsc);
+	    	res.writeHead(200,{'Content-Type': 'application/json'});
+	        res.end(JSON.stringify(results));
+	    });
 
 
   //   app.get('/api/gamesByTeam/:teamAbbreviation', function(req, res) {

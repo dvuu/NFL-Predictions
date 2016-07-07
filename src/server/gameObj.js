@@ -26,7 +26,7 @@ Game.prototype.toJSON = function () {
 	return copy;
 }
 // adds up all plays absolute WpDiff and return that number when called
-Game.prototype.sumGameStateChange = function() {
+Game.prototype.sumGameWPChange = function() {
 	var changesInGame = 0;
 	for (var i = 0; i < this.plays.length; i++) {
 		if (i < this.plays.length - 1) {
@@ -37,8 +37,13 @@ Game.prototype.sumGameStateChange = function() {
 	return changesInGame;
 }
 
-Game.compareWpDiffTotal = function(a, b) {
+//tells the sort function to sort for the most exciting games to be up top
+Game.compareWpDiffTotalDec = function(a, b) {
 	return Math.abs(b.totalExcitement || 0) - Math.abs(a.totalExcitement || 0);
+}
+//tells the sort function to sort for the most boring games to be up top
+Game.compareWpDiffTotalAsc = function(a, b) {
+	return Math.abs(a.totalExcitement || 0) - Math.abs(b.totalExcitement || 0);
 }
 
 Game.compareWpDifference = function(play1, play2) {
