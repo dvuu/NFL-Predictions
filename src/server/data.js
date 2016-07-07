@@ -17,7 +17,7 @@ module.exports = {
         var self = this;
         csv.readCsv('../data/trained-data/GAME_ADJUSTED.csv', function(err, gamesDataRaw) {
             self.GAMES = createGames(gamesDataRaw);
-    	    csv.readCsv('../data/trained-data/PLAY_ADJUSTED.csv', function(err, playsDataRaw) {
+    	    csv.readCsv('../data/trained-data/RESULTS.csv', function(err, playsDataRaw) {
                 self.PLAYS = createPlays(playsDataRaw, gamesDataRaw, self.GAMES);
                 self.gamesBySeasonsAndWeeks = createGamesBySeasonAndWeek(self.GAMES);
                 callback && callback();
