@@ -48,18 +48,24 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.config('copy', {
-        html: {
+        index: {
             expand: true,
             cwd: 'src/client',
             src: 'index.html',
             dest: 'build/client'
         },
-        // js: {
-        //     expand: true,
-        //     cwd: 'src/client/js',
-        //     src: '*.js',
-        //     dest: 'build/client/assets/js'
-        // },
+        topTen: {
+            expand: true,
+            cwd: 'src/client/topTen',
+            src: '*.html',
+            dest: 'build/client'
+        },
+        topTenjs: {
+            expand: true,
+            cwd: 'src/client/topTen',
+            src: '*.js',
+            dest: 'build/client/assets/js'
+        },
         // extJs: {
         //     expand: true,
         //     cwd: 'src/client/ext/js',
