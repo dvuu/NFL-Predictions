@@ -78,7 +78,7 @@ module.exports = function(app) {
     //returns top ten exciting games
     app.get('/api/excitingGames', function (req, res) {
     	var topTenExcitingGamesArr = [];
-		helpers.findSumGameWPChange(topTenExcitingGamesArr, data.GAMES);
+		Game.findSumGameWPChange(topTenExcitingGamesArr, data.GAMES);
 	    var results = helpers.topN(topTenExcitingGamesArr, 10, Game.compareWpDiffTotalDec);
     	res.writeHead(200,{'Content-Type': 'application/json'});
         res.end(JSON.stringify(results));
@@ -88,7 +88,7 @@ module.exports = function(app) {
     //returns top ten boring games
 	app.get('/api/boringGames', function (req, res) {
     	var topTenBoringGamesArr = [];
-		helpers.findSumGameWPChange(topTenBoringGamesArr, data.GAMES);
+		Game.findSumGameWPChange(topTenBoringGamesArr, data.GAMES);
     	var results = helpers.topN(topTenBoringGamesArr, 10, Game.compareWpDiffTotalAsc);
     	res.writeHead(200,{'Content-Type': 'application/json'});
         res.end(JSON.stringify(results));

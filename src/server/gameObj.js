@@ -49,3 +49,14 @@ Game.compareWpDiffTotalAsc = function(a, b) {
 Game.compareWpDifference = function(play1, play2) {
 	return Math.abs(play2.homeWpDiff || 0) - Math.abs(play1.homeWpDiff || 0);
 }
+
+//adds up all of the win percentage differences together in a game
+Game.findSumGameWPChange = function(arr, games) {
+	_.each(games, function(game) {
+		var gamesRanking = {
+			'game': game,
+			'totalExcitement': game.sumGameWPChange()
+		}
+		arr.push(gamesRanking);
+	});
+}
