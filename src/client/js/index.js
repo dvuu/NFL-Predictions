@@ -46,9 +46,10 @@ function renderGame(game) {
 	$.ajax({ url: playUrl, success: function(playsResult) {
 		$.ajax({ url: topTenUrl, success: function(topTenResult) {
 			// Build chart
+			var element = $('#chart')[0];
 			var chart = new NFL.Chart(playsResult, topTenResult, game);
         	chart.setPlays(playsResult);
-        	chart.render();
+        	chart.render(element);
         	// Display top ten plays
 			var topTen = new NFL.TopTen(topTenResult, playsResult);
 			topTen.render();

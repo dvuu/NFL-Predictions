@@ -7,10 +7,10 @@ module.exports = {
     },
 
     //adds up all of the win percentage differences together in a game
-    findSumGameWPChange: function(arr, data){
-		_.each(data.GAMES, function(game) {
+    findSumGameWPChange: function(arr, games){
+		_.each(games, function(game) {
 			var gamesRanking = {
-				'gameId': game.gameId,
+				'game': game,
 				'totalExcitement': game.sumGameWPChange()
 			}
 			arr.push(gamesRanking);
