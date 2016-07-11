@@ -71,8 +71,10 @@ function renderGame(game) {
 
 function buildSeasonsFilter() {
 	$('.seasonsDropdown .dropdown-content').empty();
-	var results = [2012, 2013, 2014, 2015];
-	_.each(results, function(season) {
+	var years = [ ];
+	for (var i = 2000; i <= 2015; ++i)
+		years.push(i);
+	_.each(years, function(season) {
 		var $listItem = $('<a class="dropdownLink"></a>');
 		var $div = $('<div><span>' + season + '</span></div>');
 		$listItem.append($div);
