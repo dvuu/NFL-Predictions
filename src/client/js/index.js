@@ -4,9 +4,6 @@ $(document).ready(function() {
 	buildSeasonsFilter();
 	buildWeeksFilter();
 	renderFromQueryString();
-	window.addEventListener('popstate', function(e) {
-		renderFromQueryString();
-	});
 });
 
 function setSelectedSeasonText(season) {
@@ -25,16 +22,25 @@ function gameTitle(gameObj) {
 	return (gameObj.visitor + ' @ ' + gameObj.home); 
 }
 
+function parseQueryString() {
+	var searchQuery = document.location.search.replace('?', '');
+	var searchQueryArr = searchQuery.split('=');
+	var obj = { };
+	var key = searchQueryArr[0];
+	var value = searchQueryArr[1];
+	obj[key] = value;
+	return obj;
+}
+
 function renderFromQueryString() {
-	var queryString = window.location.search;
-	var queryParam = queryString.substr(5, 4);
+	var params = parseQueryString();
 	$.ajax({ url: '/api/games', success: function(result) {
-		setSelectedSeasonText(result[queryParam].season);
-		setSelectedWeekText(result[queryParam].week);
-		setSelectedGameText(gameTitle(result[queryParam]));
-		buildGamesFilter(result[queryParam].season, result[queryParam].week);
-		renderGame(result[queryParam]);
-		console.log('Requested gameId: ' + result[queryParam].gameId);
+		setSelectedSeasonText(result[params.gid].season);
+		setSelectedWeekText(result[params.gid].week);
+		setSelectedGameText(gameTitle(result[params.gid]));
+		buildGamesFilter(result[params.gid].season, result[params.gid].week);
+		renderGame(result[params.gid]);
+		console.log('Requested gameId: ' + result[params.gid].gameId);
 	}});
 }	
 
