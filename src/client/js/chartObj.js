@@ -17,6 +17,8 @@ NFL.Chart = function (plays, topTenPlays, game) {
     };
     this.layout = {
         title : this.chartTitle(game),
+        width: undefined,
+        height: undefined,
         xaxis: {
             title: 'Game time remaining (seconds)',
             // add padding so the labels aren't slammed against the axes
@@ -33,7 +35,7 @@ NFL.Chart = function (plays, topTenPlays, game) {
         range: [-0.1, 1],
         font: {
             family: 'Helvetica',
-            size: 18,
+            size: undefined,
             color: '#7f7f7f'
         },
         shapes: [

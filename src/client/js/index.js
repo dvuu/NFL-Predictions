@@ -48,6 +48,7 @@ function renderGame(game) {
 			// Build chart
 			var element = $('#chart')[0];
 			var chart = new NFL.Chart(playsResult, topTenResult, game);
+			chart.layout.font.size = 16;
         	chart.setPlays(playsResult);
         	chart.render(element);
         	// Display top ten plays
