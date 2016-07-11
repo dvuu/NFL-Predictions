@@ -28,7 +28,6 @@ function gameTitle(gameObj) {
 function renderFromQueryString() {
 	var queryString = window.location.search;
 	var queryParam = queryString.substr(5, 4);
-	var url = '/api/plays/' + queryParam;
 	$.ajax({ url: '/api/games', success: function(result) {
 		setSelectedSeasonText(result[queryParam].season);
 		setSelectedWeekText(result[queryParam].week);
@@ -102,15 +101,6 @@ function buildWeeksFilter(season) {
 	});
 }
 
-function onGameClick(e, game) {
-	$('.gamesDropdown .dropdownLink div').removeClass('activeFilterItem');
-    $(e.currentTarget).children('div').addClass('activeFilterItem');
-	setSelectedGameText(gameTitle(game));
-	history.pushState(null, null, '/?gid=' + game.gameId);
-	renderGame(game);
-	console.log('Requested gameId: ' + game.gameId);
-};
-
 function buildGamesFilter(season, week) {
 	$('.gamesDropdown .dropdown-content').empty();
 	$.ajax({ url: '/api/games/' + season + '/' + week, success: function(result) {
@@ -128,22 +118,11 @@ function buildGamesFilter(season, week) {
 	}});
 }
 
-// var rtime;
-// var timeout = false;
-// var delta = 200;
-// $(window).resize(function() {
-//     rtime = new Date();
-//     if (timeout === false) {
-//         timeout = true;
-//         setTimeout(resizeend, delta);
-//     }
-// });
-
-// function resizeend() {
-//     if (new Date() - rtime < delta) {
-//         setTimeout(resizeend, delta);
-//     } else {
-//         timeout = false;
-//         alert('Done resizing');
-//     }               
-// }
+function onGameClick(e, game) {
+	$('.gamesDropdown .dropdownLink div').removeClass('activeFilterItem');
+    $(e.currentTarget).children('div').addClass('activeFilterItem');
+	setSelectedGameText(gameTitle(game));
+	history.pushState(null, null, '/?gid=' + game.gameId);
+	renderGame(game);
+	console.log('Requested gameId: ' + game.gameId);
+};
