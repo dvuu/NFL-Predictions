@@ -2,10 +2,22 @@ var NFL = window.NFL = (window.NFL || { });
 
 $(document).ready(function() {
 	renderGames();
+	$('.excitingGames').click(function (e) {
+		history.pushState(null, null, '/topGames?type=excitingGames');
+		renderGames();
+		return false;
+	});
+	$('.boringGames').click(function (e) {
+		history.pushState(null, null, '/topGames?type=boringGames');
+		renderGames();
+		return false;
+	});
 });
 
 function renderGames() {
-	$.ajax({ url: '/api/excitingGames', success: function(results) {
+	$('#charts').empty();
+	var params = parseQueryString();
+	$.ajax({ url: '/api/' + params.type, success: function(results) {
 		var counter = 1;
 		var $row;
 		_.each(results, function(result) {
@@ -39,4 +51,14 @@ function buildElements(playsResult, game, gameId, counter) {
 	else {
 		$row.append($div[0]);
 	}
+}
+
+function parseQueryString() {
+	var searchQuery = document.location.search.replace('?', '');
+	var searchQueryArr = searchQuery.split('=');
+	var obj = { };
+	var key = searchQueryArr[0];
+	var value = searchQueryArr[1];
+	obj[key] = value;
+	return obj;
 }
