@@ -32,9 +32,8 @@ function renderGames() {
 }
 
 function buildElements(playsResult, game, gameId, counter) {
-	var gameClass = 'game-' + gameId;
 	var link = 'href="/?gid=' + gameId + '"';
-	var $div = $('<div class="col-md-4 ' + gameClass + '"></div>');
+	var $div = $('<div class="topGamesCharts col-md-4 col-xs-6"></div>');
 	var $aTag = $('<a class="topTenLink" ' + link + '>Top Game #' + counter + '</a>');
 	var chart = new NFL.Chart(playsResult, null, game);
 	chart.layout.width = 400;

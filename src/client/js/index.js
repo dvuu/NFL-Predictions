@@ -70,7 +70,7 @@ function renderGame(game) {
 }
 
 function buildSeasonsFilter() {
-	$('.seasonsDropdown .dropdown-content').empty();
+	$('.seasonsDropdown .filterDropdown-content').empty();
 	var years = [ ];
 	for (var i = 2000; i <= 2015; ++i)
 		years.push(i);
@@ -86,12 +86,12 @@ function buildSeasonsFilter() {
 			setSelectedGameText(' -- ');
 			buildWeeksFilter(season);
 		});
-		$('.seasonsDropdown .dropdown-content').append($listItem);
+		$('.seasonsDropdown .filterDropdown-content').append($listItem);
 	});
 }
 
 function buildWeeksFilter(season) {
-	$('.weeksDropdown .dropdown-content').empty();
+	$('.weeksDropdown .filterDropdown-content').empty();
 	var results = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 
 		11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
 	_.each(results, function(week) {
@@ -105,12 +105,12 @@ function buildWeeksFilter(season) {
 			setSelectedGameText(' -- ');
 			buildGamesFilter(season, week);
 		});
-		$('.weeksDropdown .dropdown-content').append($listItem);
+		$('.weeksDropdown .filterDropdown-content').append($listItem);
 	});
 }
 
 function buildGamesFilter(season, week) {
-	$('.gamesDropdown .dropdown-content').empty();
+	$('.gamesDropdown .filterDropdown-content').empty();
 	$.ajax({ url: '/api/games/' + season + '/' + week, success: function(result) {
 		_.each(result, function(game) {
 			var $listItem = $('<a class="dropdownLink"></a>');
@@ -119,7 +119,7 @@ function buildGamesFilter(season, week) {
 			$listItem.click(function (e) {
 				onGameClick(e, game);
 			});
-			$('.gamesDropdown .dropdown-content').append($listItem);
+			$('.gamesDropdown .filterDropdown-content').append($listItem);
 		});
 	}, error: function() {
 		console.log('error');

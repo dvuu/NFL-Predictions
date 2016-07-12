@@ -9,34 +9,49 @@
 		<title>NFL Predictions</title>
 	</head>
 	<body>
-		<div class="container">
-			<div class="row">
-				<div class="header">
-					<h1><a href="/">NFL PREDICTIONS 2000-2015</a></h1>
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/">NFL PREDICTIONS 2000-2015</a>
 				</div>
-				<a class="test" href="/topGames">Top Games</a>
-				<nav>
+				<div class="collapse navbar-collapse">
+					<ul class="nav navbar-nav">
+						<li><a href="/">ABOUT</a></li>
+						<li class="dropdown">
+							<a href="/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">PREDICTIONS <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="/">BY GAME</a></li>
+								<li><a href="/topGames?type=excitingGames">TOP GAMES</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<div class="container main">
+			<div class="row">
+				<nav class="filter">
 					<span class="category">SEASON:</span>
-					<div class="seasonsDropdown dropdown">
+					<div class="seasonsDropdown filterDropdown">
 						<span class="selection">--</span>
 						<span class="caret"></span> 
-						<div class="dropdown-content season-content">
+						<div class="filterDropdown-content season-content">
 							<!-- list of seasons -->
 						</div>
 					</div>
 					<span class="category">WEEK:</span>
-					<div class="weeksDropdown dropdown">
+					<div class="weeksDropdown filterDropdown">
 						<span class="selection">--</span>
 						<span class="caret"></span> 
-						<div class="dropdown-content week-content">
+						<div class="filterDropdown-content week-content">
 							<!-- list of weeks -->
 						</div>
 					</div>
 					<span class="category">GAME:</span>
-					<div class="gamesDropdown dropdown">
+					<div class="gamesDropdown filterDropdown">
 						<span class="selection">--</span>
 						<span class="caret"></span> 
-						<div class="dropdown-content game-content">
+						<div class="filterDropdown-content game-content">
 							<!-- list of games -->
 						</div>
 					</div>
