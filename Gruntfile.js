@@ -51,7 +51,7 @@ module.exports = function(grunt) {
         index: {
             expand: true,
             cwd: 'src/client',
-            src: ['index.html', 'test.html'],
+            src: ['index.html', 'topGames.html'],
             dest: 'build/client'
         },
         topTen: {
@@ -179,9 +179,9 @@ module.exports = function(grunt) {
                 footer: '\n})();\n'
             }
         },
-        jsExciting: { 
-            src: ['src/client/js/test.js'],
-            dest: 'build/client/assets/js/test.js',
+        jsTopGames: { 
+            src: ['src/client/js/topGames.js'],
+            dest: 'build/client/assets/js/topGames.js',
             options: {
                 banner: '// NFL Predictor - Dylan Vu, Anthony Van Pelt\n// ' + new Date().toString() + '\n;(function() {\n',
                 separator: '\n})();\n(function() {\n',

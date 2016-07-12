@@ -64,16 +64,16 @@ function pointsCall(currentPlay, nextPlay) {
             return 'Safety'
         case 3:
             // if the case is 3 pts it's a regular field goal and give 3 pts to off
-            return 'Regular Feild Goal'
+            return 'Field Goal'
         case 6:
             // if the case is 6 pts it's just a touchdown and give 6 pts to off
-            return 'Only a Touchdown'
+            return 'Touchdown'
         case 7:
             // if the case is 7 pts it's a touchdown with a field goal and give 7 pts to off
-            return 'Touchdown & Feild Goal'
+            return 'Touchdown & Field Goal'
         case 8:
             // if the case is 8 pts it's just a touchdown with a convertion and give 8 pts to def
-            return 'Touchdown & Convertion'
+            return 'Touchdown & Conversion'
     }
 }
 

@@ -9,7 +9,7 @@ app.get('/topGames', function(req, res) {
 	var option = {
 		root: __dirname + '/../client/'
 	}
-	res.sendFile('test.html', option, function(err) {
+	res.sendFile('topGames.html', option, function(err) {
 		if (err) {
 			console.log(err);
 			res.status(err.status).end();
