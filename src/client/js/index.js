@@ -23,6 +23,8 @@ function gameTitle(gameObj) {
 }
 
 function parseQueryString() {
+	if (document.location.search.indexOf('?') < 0) 
+		return { gid: 2120};
 	var searchQuery = document.location.search.replace('?', '');
 	var searchQueryArr = searchQuery.split('=');
 	var obj = { };
