@@ -51,7 +51,7 @@ var Play = module.exports.Play = function (playDataRaw, nextPlayDataRaw, idx, ga
 	this.wpDifference(isLastPlay, nextPlayDataRaw);
 	this.fixSecondsForOvertime(playDataRaw.Seconds);
 	this.findCurrentScore();
-	this.yardsGained(isLastPlay, nextPlayDataRaw);
+	this.findYardsGained(isLastPlay, nextPlayDataRaw);
 }
 
 Play.prototype.fixSecondsForOvertime = function(seconds) {
@@ -63,7 +63,8 @@ Play.prototype.findCurrentScore = function() {
 	this.ptsVisitor = (this.visitor == this.offense ? this.ptsOffense : this.ptsDefense);
 }
 
-Play.prototype.yardsGained = function(isLastPlay, nextPlayDataRaw) {
+// TODO: Check to see if still using
+Play.prototype.findYardsGained = function(isLastPlay, nextPlayDataRaw) {
 	if (!isLastPlay) {
 		this.ydsGained = (nextPlayDataRaw.Yardline - this.offYardline);
 	}
