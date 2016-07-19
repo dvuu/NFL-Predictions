@@ -52,12 +52,15 @@ function renderGame(game) {
 	$('.topPlays').empty();
 	$.ajax({ url: playUrl, success: function(playsResult) {
 		$.ajax({ url: topTenUrl, success: function(topTenResult) {
+			// Build field widget
+			var field = new NFL.FieldWidget();
 			// Build chart
 			var element = $('#chart')[0];
 			var chart = new NFL.Chart(playsResult, topTenResult, game);
 			chart.layout.font.size = 16;
         	chart.setPlays(playsResult);
         	chart.render(element);
+        	chart.setFieldWidget(field);
         	// Display top ten plays
 			var topTen = new NFL.TopTen(topTenResult, playsResult);
 			topTen.render();

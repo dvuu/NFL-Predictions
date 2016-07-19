@@ -53,6 +53,7 @@ NFL.Chart = function (plays, topTenPlays, game) {
         ]
     };
     this.setPlays(plays);
+    this.field = null;
 };
 
 NFL.Chart.prototype.render = function(element) {
@@ -103,6 +104,10 @@ NFL.Chart.prototype.updateSeries = function() {
     }
 };
 
+NFL.Chart.prototype.setFieldWidget = function (field) {
+    this.field = field;
+}
+
 // Hover event handler
 NFL.Chart.prototype.onHover = function(data, plays) {
     // Check for weird, unexpected input, just cause
@@ -129,4 +134,5 @@ NFL.Chart.prototype.onHover = function(data, plays) {
 
     // Update the play-info section to show hovered plays
     NFL.PlayInfo.showPlayInfo(playOne, playTwo);
+    this.field.setState(playOne, playTwo);
 };

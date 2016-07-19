@@ -1,0 +1,25 @@
+@WIDTH: 1000px;
+@HEIGHT: 425px;
+@ARROWHEIGHT: 100px;
+
+.fieldWidget {
+	background-image: url(../images/football_field.png);
+	width: @WIDTH;
+	height: @HEIGHT;
+}
+
+.fieldWidget .fieldArrow {
+	// visibility: hidden;
+	position: relative;
+	top: (@HEIGHT / 2) - (@ARROWHEIGHT / 2);
+	width: 300px;
+	height: @ARROWHEIGHT;
+	z-index: 9999;
+}
+
+.flipped {
+	-moz-transform: scaleX(-1);
+	-o-transform: scaleX(-1);
+	-webkit-transform: scaleX(-1);
+	transform: scaleX(-1);
+}
