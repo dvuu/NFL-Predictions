@@ -103,8 +103,15 @@ NFL.Chart.prototype.updateSeries = function() {
     }
 };
 
-NFL.Chart.prototype.setFieldWidget = function (field) {
-    this.field = field;
+NFL.Chart.prototype.setHover = function (play) {
+    Plotly.Fx.hover('chart',[
+        {curveNumber:0, pointNumber: play.idx},
+        {curveNumber:0, pointNumber: (play.idx + 1)}
+    ]);
+}
+
+NFL.Chart.prototype.clearHover = function () {
+    Plotly.Fx.hover('chart', [ ]);
 }
 
 // Hover event handler
@@ -135,3 +142,7 @@ NFL.Chart.prototype.onHover = function(data, plays) {
     NFL.PlayInfo.showPlayInfo(playOne, playTwo);
     this.field.setState(playOne, playTwo);
 };
+
+NFL.Chart.prototype.setFieldWidget = function (field) {
+    this.field = field;
+}

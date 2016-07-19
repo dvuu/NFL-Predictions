@@ -13,21 +13,24 @@ NFL.TopTen.prototype.render = function () {
 		$('.topPlays').append($playElement);
 		//event function that when you hover top ten it will dislay where it is located on the chart
 		$playElement.on('mouseenter', function( ) {
-			Plotly.Fx.hover('chart',[
-  				{curveNumber:0, pointNumber: play.idx},
-  				{curveNumber:0, pointNumber: (play.idx + 1)}
-  			]);
+			// Trigger chart hover UI
+			self.chart.setHover(play);
+			// Update field widget
   			var startState = play.idx + 1 === null ? null : self.playsResult[play.idx];
   			var endState = play.idx + 1 < self.playsResult.length ? self.playsResult[play.idx + 1] : null;
   			NFL.PlayInfo.showPlayInfo(startState, endState);
   			self.field.setState(startState, endState);
 		});
 		$playElement.on('mouseleave', function( ) {
-			Plotly.Fx.hover('chart', [ ]);
+			self.chart.clearHover();
   			NFL.PlayInfo.clearPlayInfo();
 		});
 	});
 };
+
+NFL.TopTen.prototype.setChart = function (chart) {
+	this.chart = chart;
+}
 
 NFL.TopTen.prototype.setFieldWidget = function (field) {
     this.field = field;

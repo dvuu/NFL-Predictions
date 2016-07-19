@@ -64,6 +64,7 @@ function renderGame(game) {
         	// Display top ten plays
 			var topTen = new NFL.TopTen(topTenResult, playsResult);
 			topTen.render();
+			topTen.setChart(chart);
 			topTen.setFieldWidget(field);
 		}});
 	}});
