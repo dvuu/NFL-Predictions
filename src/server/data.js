@@ -36,9 +36,6 @@ module.exports = {
             };
         }
         else {
-            // var arr = this.gamesBySeasonsAndWeeks[season][week].map(function(gameId) {
-            //    return this.GAMES[gameId];
-            // });
             for (var i = 0; i < this.gamesBySeasonsAndWeeks[season][week].length; i++) {
                 var gameId = this.gamesBySeasonsAndWeeks[season][week][i];
                 arr.push(this.GAMES[gameId]);

@@ -19,7 +19,12 @@ NFL.FieldWidget.prototype.setState = function (previousState, currentState) {
 	setArrow(startingYardline, endingYardline, isVisitorOffense);
 }
 
+NFL.FieldWidget.prototype.clearField = function() {
+	$('.fieldArrow').addClass('hidden');
+}
+
 function setArrow (startingYardline, endingYardline, isVisitorOffense) {
+	$('.fieldArrow').removeClass('hidden');
 	var arrowLeft = startingYardline;
 	var arrowRight = endingYardline;
 	if (isVisitorOffense) {
@@ -37,4 +42,8 @@ function setArrow (startingYardline, endingYardline, isVisitorOffense) {
 		'left': arrowLeftInPixels, 
 		'width': arrowLengthInPixels
 	});
+}
+
+function setYellowAndBlueLines() {
+
 }

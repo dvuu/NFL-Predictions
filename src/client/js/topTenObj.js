@@ -24,6 +24,7 @@ NFL.TopTen.prototype.render = function () {
 		$playElement.on('mouseleave', function( ) {
 			self.chart.clearHover();
   			NFL.PlayInfo.clearPlayInfo();
+  			self.field.clearField();
 		});
 	});
 };

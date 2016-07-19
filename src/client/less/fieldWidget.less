@@ -9,7 +9,6 @@
 }
 
 .fieldWidget .fieldArrow {
-	// visibility: hidden;
 	position: relative;
 	top: (@HEIGHT / 2) - (@ARROWHEIGHT / 2);
 	width: 300px;
@@ -22,4 +21,16 @@
 	-o-transform: scaleX(-1);
 	-webkit-transform: scaleX(-1);
 	transform: scaleX(-1);
+}
+
+.verticalLine {
+	position: absolute;
+	height: @HEIGHT;
+	border-left: solid blue;
+	border-right: solid yellow;
+	left: 100px;
+}
+
+.hidden {
+	visibility: hidden;
 }

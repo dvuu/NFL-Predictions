@@ -63,6 +63,7 @@ NFL.Chart.prototype.render = function(element) {
     });
     element.on('plotly_unhover', function(data) {
         NFL.PlayInfo.clearPlayInfo();
+        self.field.clearField();
     });
 };
 
