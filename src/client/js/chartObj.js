@@ -53,7 +53,6 @@ NFL.Chart = function (plays, topTenPlays, game) {
         ]
     };
     this.setPlays(plays);
-    this.field = null;
 };
 
 NFL.Chart.prototype.render = function(element) {

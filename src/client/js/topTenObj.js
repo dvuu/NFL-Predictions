@@ -17,8 +17,10 @@ NFL.TopTen.prototype.render = function () {
   				{curveNumber:0, pointNumber: play.idx},
   				{curveNumber:0, pointNumber: (play.idx + 1)}
   			]);
-  			NFL.PlayInfo.showPlayInfo(play.idx + 1 === null ? null : self.playsResult[play.idx],
-  						 play.idx + 1 < self.playsResult.length ? self.playsResult[play.idx + 1] : null);
+  			var startState = play.idx + 1 === null ? null : self.playsResult[play.idx];
+  			var endState = play.idx + 1 < self.playsResult.length ? self.playsResult[play.idx + 1] : null;
+  			NFL.PlayInfo.showPlayInfo(startState, endState);
+  			self.field.setState(startState, endState);
 		});
 		$playElement.on('mouseleave', function( ) {
 			Plotly.Fx.hover('chart', [ ]);
@@ -26,6 +28,10 @@ NFL.TopTen.prototype.render = function () {
 		});
 	});
 };
+
+NFL.TopTen.prototype.setFieldWidget = function (field) {
+    this.field = field;
+}
 
 function playDescription(play) {
 	var homeWpDiff = (play.homeWpDiff * 100).toFixed(2);
