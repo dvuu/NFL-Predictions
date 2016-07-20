@@ -5,7 +5,7 @@ var TOTALWIDTH = 1000;
 var ENDZONEWIDTH = 90;
 var YARDSPERPIXEL = ((TOTALWIDTH - (ENDZONEWIDTH * 2)) / 100);;
 
-function findYardsPerPixel(yards) {
+function yardLineToPixelOffset(yards) {
 	return (yards * YARDSPERPIXEL) + ENDZONEWIDTH;
 }
 
@@ -45,8 +45,8 @@ function setArrow(startingYardline, endingYardline, isVisitorOffense) {
 	else {
 		$('.fieldArrow').removeClass('flipped');
 	}
-	var arrowStartInPixels = findYardsPerPixel(arrowStartingLeft);
-	var arrowEndInPixels = findYardsPerPixel(arrowEndingRight);
+	var arrowStartInPixels = yardLineToPixelOffset(arrowStartingLeft);
+	var arrowEndInPixels = yardLineToPixelOffset(arrowEndingRight);
 	var arrowLengthInPixels = Math.abs(arrowEndInPixels - arrowStartInPixels);
 	$('.fieldArrow').css({
 		'left': arrowStartInPixels, 
@@ -63,8 +63,8 @@ function setBlueAndYellowLine(startingYardline, endingYardline, yardsToGo, isVis
 		blueLineLeft = 100 - endingYardline;
 		yellowLineRight = 100 - (endingYardline + yardsToGo);
 	}
-	var blueLinePositionInPixels = findYardsPerPixel(blueLineLeft);
-	var yellowLinePositionInPixels = findYardsPerPixel(yellowLineRight);
+	var blueLinePositionInPixels = yardLineToPixelOffset(blueLineLeft);
+	var yellowLinePositionInPixels = yardLineToPixelOffset(yellowLineRight);
 	$('.verticalLineBlue').css({
 		'left': blueLinePositionInPixels
 	});
@@ -77,7 +77,7 @@ function setFootballSprite (isVisitorOffense) {
 	$('.footballSprite').removeClass('hidden');
 	if(isVisitorOffense) {
 		$('.footballSprite').css({
-			'left': TOTALWIDTH - (ENDZONEWIDTH / 2)
+			'left': TOTALWIDTH - ((ENDZONEWIDTH / 2) + 10)
 		})
 	}
 	else {
