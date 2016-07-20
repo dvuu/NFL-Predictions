@@ -23,12 +23,14 @@ NFL.FieldWidget.prototype.setState = function(previousState, currentState) {
 	var isVisitorOffense = (this.previousState.visitor === this.previousState.offense);
 	setArrow(startingYardline, endingYardline, isVisitorOffense);
 	setBlueAndYellowLine(startingYardline, endingYardline, yardsToGo, isVisitorOffense);
+	setFootballSprite(isVisitorOffense);
 }
 
 NFL.FieldWidget.prototype.clearField = function() {
 	$('.fieldArrow').addClass('hidden');
 	$('.verticalLineBlue').addClass('hidden');
 	$('.verticalLineYellow').addClass('hidden');
+	$('.footballSprite').addClass('hidden');
 }
 
 function setArrow(startingYardline, endingYardline, isVisitorOffense) {
@@ -69,4 +71,18 @@ function setBlueAndYellowLine(startingYardline, endingYardline, yardsToGo, isVis
 	$('.verticalLineYellow').css({
 		'left': yellowLinePositionInPixels
 	});
+}
+
+function setFootballSprite (isVisitorOffense) {
+	$('.footballSprite').removeClass('hidden');
+	if(isVisitorOffense) {
+		$('.footballSprite').css({
+			'left': TOTALWIDTH - (ENDZONEWIDTH / 2)
+		})
+	}
+	else {
+		$('.footballSprite').css({
+			'left': ENDZONEWIDTH / 2
+		})
+	}
 }
