@@ -1,8 +1,8 @@
 var NFL = window.NFL = (window.NFL || { });
 
-var TOTALHEIGHT = 425;
+var TOTALHEIGHT = 444.33;
 var TOTALWIDTH = 1000;
-var ENDZONEWIDTH = 90;
+var ENDZONEWIDTH = 84;
 var YARDSPERPIXEL = ((TOTALWIDTH - (ENDZONEWIDTH * 2)) / 100);;
 
 function yardLineToPixelOffset(yards) {
@@ -17,6 +17,10 @@ NFL.FieldWidget = function() {
 NFL.FieldWidget.prototype.setState = function(previousState, currentState) {
 	this.previousState = previousState;
 	this.currentState = currentState;
+	if (previousState.offense !== currentState.offense) {
+		this.clearField();
+		return;
+	}
 	var startingYardline = previousState.offYardline;
 	var endingYardline = currentState.offYardline;
 	var yardsToGo = currentState.yardsToGoForFirstDown;
@@ -28,25 +32,44 @@ NFL.FieldWidget.prototype.setState = function(previousState, currentState) {
 
 NFL.FieldWidget.prototype.clearField = function() {
 	$('.fieldArrow').addClass('hidden');
-	$('.verticalLineBlue').addClass('hidden');
-	$('.verticalLineYellow').addClass('hidden');
+	$('.verticalLine').addClass('hidden');
 	$('.footballSprite').addClass('hidden');
 }
 
 function setArrow(startingYardline, endingYardline, isVisitorOffense) {
 	$('.fieldArrow').removeClass('hidden');
-	var arrowStartingLeft = startingYardline;
-	var arrowEndingRight = endingYardline;
-	if (isVisitorOffense) {
-		$('.fieldArrow').addClass('flipped');
-		arrowStartingLeft = 100 - endingYardline;
-		arrowEndingRight = 100 - startingYardline;
+	var arrowLeft, arrowRight;
+	if (startingYardline > endingYardline) {
+		// Negative yards gained
+		if (isVisitorOffense) {
+			$('.fieldArrow').removeClass('flipped');
+			arrowLeft = 100 - startingYardline;
+			arrowRight = 100 - endingYardline;
+		}
+		else {
+			$('.fieldArrow').addClass('flipped');
+			arrowLeft = endingYardline;
+			arrowRight = startingYardline;
+		}
+		// Change color for negative yards
+		$('.fieldArrow').addClass('negativeYard');
 	}
 	else {
-		$('.fieldArrow').removeClass('flipped');
+		// Positive yards gained
+		if (isVisitorOffense) {
+			$('.fieldArrow').addClass('flipped');
+			arrowLeft = 100 - endingYardline;
+			arrowRight = 100 - startingYardline;
+		}
+		else {
+			$('.fieldArrow').removeClass('flipped');
+			arrowLeft = startingYardline;
+			arrowRight = endingYardline;
+		}
+		$('.fieldArrow').removeClass('negativeYard');
 	}
-	var arrowStartInPixels = yardLineToPixelOffset(arrowStartingLeft);
-	var arrowEndInPixels = yardLineToPixelOffset(arrowEndingRight);
+	var arrowStartInPixels = yardLineToPixelOffset(arrowLeft);
+	var arrowEndInPixels = yardLineToPixelOffset(arrowRight);
 	var arrowLengthInPixels = Math.abs(arrowEndInPixels - arrowStartInPixels);
 	$('.fieldArrow').css({
 		'left': arrowStartInPixels, 
@@ -55,16 +78,23 @@ function setArrow(startingYardline, endingYardline, isVisitorOffense) {
 }
 
 function setBlueAndYellowLine(startingYardline, endingYardline, yardsToGo, isVisitorOffense) {
+	$('.verticalLineGrayDashed').removeClass('hidden');
 	$('.verticalLineBlue').removeClass('hidden');
 	$('.verticalLineYellow').removeClass('hidden');
-	var blueLineLeft = endingYardline;
-	var yellowLineRight = endingYardline + yardsToGo;
+	var blueLineDashed = startingYardline;
+	var blueLine = endingYardline;
+	var yellowLine = endingYardline + yardsToGo;
 	if (isVisitorOffense) {
-		blueLineLeft = 100 - endingYardline;
-		yellowLineRight = 100 - (endingYardline + yardsToGo);
+		blueLineDashed = 100 - startingYardline;
+		blueLine = 100 - endingYardline;
+		yellowLine = 100 - (endingYardline + yardsToGo);
 	}
-	var blueLinePositionInPixels = yardLineToPixelOffset(blueLineLeft);
-	var yellowLinePositionInPixels = yardLineToPixelOffset(yellowLineRight);
+	var grayLineDashedPositionInPixels = yardLineToPixelOffset(blueLineDashed)
+	var blueLinePositionInPixels = yardLineToPixelOffset(blueLine);
+	var yellowLinePositionInPixels = yardLineToPixelOffset(yellowLine);
+	$('.verticalLineGrayDashed').css({
+		'left': grayLineDashedPositionInPixels
+	});
 	$('.verticalLineBlue').css({
 		'left': blueLinePositionInPixels
 	});

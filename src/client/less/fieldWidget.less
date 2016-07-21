@@ -1,9 +1,18 @@
 @WIDTH: 1000px;
-@HEIGHT: 425px;
+@HEIGHT: 444.33px;
 @ARROWHEIGHT: 100px;
 
+.fieldWidgetContainer {
+	background-image: url(../images/main_field_background.jpg);
+	background-size: @WIDTH @HEIGHT;
+	width: @WIDTH;
+	height: @HEIGHT;
+	padding: 0;
+}
+
 .fieldWidget {
-	background-image: url(../images/football_field.png);
+	background-image: url(../images/main_field.png);
+	background-size: @WIDTH @HEIGHT;
 	width: @WIDTH;
 	height: @HEIGHT;
 	padding: 0;
@@ -31,6 +40,10 @@
 	height: @HEIGHT;
 }
 
+.verticalLineGrayDashed {
+	border-left: dashed #ccc;
+}
+
 .verticalLineBlue {
 	border-left: solid blue;
 }
@@ -44,4 +57,8 @@
 	top: 360px;
 	height: 40px;
 	width: 40px;
+}
+
+.negativeYard {
+	background-color: red;
 }
