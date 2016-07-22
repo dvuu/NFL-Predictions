@@ -44,7 +44,7 @@ NFL.FieldWidget.prototype.setState = function(previousState, currentState) {
 	}
 
 	this.setArrow(startingYardline, endingYardline, isVisitorOffense);
-	this.setFootballSprite(isVisitorOffense);
+	// this.setFootballSprite(isVisitorOffense);
 }
 
 NFL.FieldWidget.prototype.clearField = function() {
@@ -135,16 +135,16 @@ NFL.FieldWidget.prototype.setYellowLine = function(endingYardline, yardsToGo, is
 	});
 }
 
-NFL.FieldWidget.prototype.setFootballSprite = function(isVisitorOffense) {
-	$('.footballSprite').removeClass('hidden');
-	if(isVisitorOffense) {
-		$('.footballSprite').css({
-			'left': TOTALWIDTH - ((ENDZONEWIDTH / 2) + 10)
-		})
-	}
-	else {
-		$('.footballSprite').css({
-			'left': ENDZONEWIDTH / 2
-		})
-	}
-}
+// NFL.FieldWidget.prototype.setFootballSprite = function(isVisitorOffense) {
+// 	$('.footballSprite').removeClass('hidden');
+// 	if(isVisitorOffense) {
+// 		$('.footballSprite').css({
+// 			'left': TOTALWIDTH - ((ENDZONEWIDTH / 2) + 10)
+// 		})
+// 	}
+// 	else {
+// 		$('.footballSprite').css({
+// 			'left': ENDZONEWIDTH / 2
+// 		})
+// 	}
+// }
