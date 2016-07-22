@@ -54,6 +54,7 @@ var Play = module.exports.Play = function (playDataRaw, nextPlayDataRaw, idx, ga
 	}
 
 	// Overtime Fix
+	var seconds = playDataRaw.Seconds;
 	this.time = (this.inOvertime ? seconds = seconds - 900 : seconds);
 
 	// Find points for home/visitor

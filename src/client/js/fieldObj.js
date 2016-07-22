@@ -2,7 +2,7 @@ var NFL = window.NFL = (window.NFL || { });
 
 var TOTALHEIGHT = 444.33;
 var TOTALWIDTH = 1000;
-var ENDZONEWIDTH = 84;
+var ENDZONEWIDTH = 82;
 var YARDSPERPIXEL = ((TOTALWIDTH - (ENDZONEWIDTH * 2)) / 100);;
 
 function yardLineToPixelOffset(yards) {
