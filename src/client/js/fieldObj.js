@@ -15,6 +15,7 @@ NFL.FieldWidget = function() {
 }
 
 NFL.FieldWidget.prototype.setState = function(previousState, currentState) {
+	clearTimeout(this.timer);
 	this.previousState = previousState;
 	this.currentState = currentState;
 	// if (previousState.offense !== currentState.offense) {
@@ -48,9 +49,11 @@ NFL.FieldWidget.prototype.setState = function(previousState, currentState) {
 }
 
 NFL.FieldWidget.prototype.clearField = function() {
-	$('.fieldArrow').addClass('hidden');
-	$('.verticalLine').addClass('hidden');
-	$('.footballSprite').addClass('hidden');
+	this.timer = setTimeout(function() {
+		$('.fieldArrow').addClass('hidden');
+		$('.verticalLine').addClass('hidden');
+	}, 3000);
+	// $('.footballSprite').addClass('hidden');
 }
 
 NFL.FieldWidget.prototype.clearLines = function() {
@@ -93,10 +96,10 @@ NFL.FieldWidget.prototype.setArrow = function(startingYardline, endingYardline, 
 	var arrowStartInPixels = yardLineToPixelOffset(arrowLeft);
 	var arrowEndInPixels = yardLineToPixelOffset(arrowRight);
 	var arrowLengthInPixels = Math.abs(arrowEndInPixels - arrowStartInPixels);
-	$('.fieldArrow').css({
+	$('.fieldArrow').animate({
 		'left': arrowStartInPixels, 
 		'width': arrowLengthInPixels
-	});
+	}, 100);
 }
 
 NFL.FieldWidget.prototype.setGrayLine = function(startingYardline, isVisitorOffense) {
@@ -106,9 +109,9 @@ NFL.FieldWidget.prototype.setGrayLine = function(startingYardline, isVisitorOffe
 		grayLineDashed = 100 - startingYardline;
 	}
 	var grayLineDashedPositionInPixels = yardLineToPixelOffset(grayLineDashed)
-	$('.verticalLineGrayDashed').css({
+	$('.verticalLineGrayDashed').animate({
 		'left': grayLineDashedPositionInPixels
-	});
+	}, 100);
 }
 
 NFL.FieldWidget.prototype.setBlueLine = function(endingYardline, isVisitorOffense) {
@@ -118,9 +121,9 @@ NFL.FieldWidget.prototype.setBlueLine = function(endingYardline, isVisitorOffens
 		blueLine = 100 - endingYardline;
 	}
 	var blueLinePositionInPixels = yardLineToPixelOffset(blueLine);
-	$('.verticalLineBlue').css({
+	$('.verticalLineBlue').animate({
 		'left': blueLinePositionInPixels
-	});
+	}, 100);
 }
 
 NFL.FieldWidget.prototype.setYellowLine = function(endingYardline, yardsToGo, isVisitorOffense) {
@@ -130,9 +133,9 @@ NFL.FieldWidget.prototype.setYellowLine = function(endingYardline, yardsToGo, is
 		yellowLine = 100 - (endingYardline + yardsToGo);
 	}
 	var yellowLinePositionInPixels = yardLineToPixelOffset(yellowLine);
-	$('.verticalLineYellow').css({
+	$('.verticalLineYellow').animate({
 		'left': yellowLinePositionInPixels
-	});
+	}, 100);
 }
 
 // NFL.FieldWidget.prototype.setFootballSprite = function(isVisitorOffense) {

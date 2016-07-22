@@ -1,6 +1,6 @@
 @WIDTH: 1000px;
 @HEIGHT: 444.33px;
-@ARROWHEIGHT: 100px;
+@ARROWHEIGHT: 80px;
 
 .fieldWidgetContainer {
 	background-image: url(../images/main_field_background.jpg);
@@ -17,13 +17,12 @@
 	height: @HEIGHT;
 	padding: 0;
 	position: relative;
-}
-
-.fieldWidget .fieldArrow {
-	position: absolute;
-	top: (@HEIGHT / 2) - (@ARROWHEIGHT / 2);
-	height: @ARROWHEIGHT;
-	z-index: 9999;
+	.fieldArrow {
+		position: absolute;
+		top: (@HEIGHT / 2) - (@ARROWHEIGHT / 2);
+		height: @ARROWHEIGHT;
+		z-index: 9999;
+	}
 }
 
 .flipped {
