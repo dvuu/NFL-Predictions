@@ -47,38 +47,34 @@ var Play = module.exports.Play = function (playDataRaw, nextPlayDataRaw, idx, ga
 	this.homeWp = (1 - playDataRaw.VisitorWP);
 	this.visitorWp = playDataRaw.VisitorWP;
 
-	// Added properties and values
-	this.wpDifference(isLastPlay, nextPlayDataRaw);
-	this.fixSecondsForOvertime(playDataRaw.Seconds);
-	this.findCurrentScore();
-	this.findYardsGained(isLastPlay, nextPlayDataRaw);
-}
-
-Play.prototype.fixSecondsForOvertime = function(seconds) {
-	this.time = (this.inOvertime ? seconds = seconds - 900 : seconds);
-}
-
-Play.prototype.findCurrentScore = function() {
-	this.ptsHome = (this.home == this.offense ? this.ptsOffense : this.ptsDefense);
-	this.ptsVisitor = (this.visitor == this.offense ? this.ptsOffense : this.ptsDefense);
-}
-
-// TODO: Check to see if still using
-Play.prototype.findYardsGained = function(isLastPlay, nextPlayDataRaw) {
-	if (!isLastPlay) {
-		this.ydsGained = (nextPlayDataRaw.Yardline - this.offYardline);
-	}
-}
-
-Play.prototype.wpDifference = function (isLastPlay, nextPlayDataRaw) {
+	// Win Difference
 	if (!isLastPlay) {
 		this.homeWpDiff = ((1 - nextPlayDataRaw.VisitorWP) - this.homeWp);
 		this.visitorWpDiff = (nextPlayDataRaw.VisitorWP - this.visitorWp);
 	}
+
+	// Overtime Fix
+	this.time = (this.inOvertime ? seconds = seconds - 900 : seconds);
+
+	// Find points for home/visitor
+	this.ptsHome = (this.home == this.offense ? this.ptsOffense : this.ptsDefense);
+	this.ptsVisitor = (this.visitor == this.offense ? this.ptsOffense : this.ptsDefense);
+
+	// Find Yards Gained
+	if (!isLastPlay) {
+		this.ydsGained = (nextPlayDataRaw.Yardline - this.offYardline);
+	}
+
+	// // Points Scored
+	// if (!isLastPlay) {
+	// 	var isHomeOffense = this.home === this.offense && this.home === nextPlayDataRaw.offense;
+	// 	if (isHomeOffense) {
+	// 		if (this.ptsOffense < nextPlayDataRaw.ptsOffense) {
+
+	// 		}
+	// 	}
+	// }
 }
-
-
-
 
 
 
