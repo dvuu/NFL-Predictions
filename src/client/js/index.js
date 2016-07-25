@@ -116,9 +116,11 @@ function renderGame(game) {
 			            enabled: true,
 			            symbol: 'circle',
 			            radius: 3,
-			            // fillColor:
 			        }
-		        }]
+		        }],
+				credits: {
+					enabled: false
+				},
 		    });
 			var chart = new NFL.Chart(playsResult, topTenResult, game);
 			chart.layout.font.size = 16;
