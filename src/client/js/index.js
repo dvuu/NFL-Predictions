@@ -68,12 +68,14 @@ function renderGame(game) {
 			topTen.setFieldWidget(field);
 		}});
 	}});
-	$('.homeLogo, .awayLogo').removeClass(function(idx, css) {
+	$('.homeLogo, .awayLogo, .homeEndzone, .awayEndzone').removeClass(function(idx, css) {
 		var match = css.match(/team\-\w*/);
 		return (match ? match.join(' ') : null);
 	});
 	$('.homeLogo').addClass('team-' + game.home.toLowerCase());
 	$('.awayLogo').addClass('team-' + game.visitor.toLowerCase());
+	$('.homeEndzone').addClass('team-' + game.home.toLowerCase());
+	$('.awayEndzone').addClass('team-' + game.visitor.toLowerCase());
 }
 
 function buildSeasonsFilter() {
