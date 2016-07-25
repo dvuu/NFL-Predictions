@@ -6,7 +6,7 @@ NFL.Chart2 = function (plays, topTenPlays, game) {
             type: 'line',
             zoomType: 'x'
         },
-        title: this.chartTitle(game),
+        title: 'Yo',
         xAxis: {
             title: 'Game time remaining (seconds)'
         },
@@ -21,15 +21,15 @@ NFL.Chart2 = function (plays, topTenPlays, game) {
         },
         series:{
             name: 'predictions',
-            data: this.data
+            data: [1,2,3,4,5,6]
         }
     };
-    this.setPlays(plays);
+    // this.setPlays(plays);
 }
 
-NFL.Chart2.prototype.render = function(element) {
-    $('#chart2').highcharts(this.chart);
-}
+// NFL.Chart2.prototype.render = function() {
+//     $('#chart2').highcharts();
+// }
 
 NFL.Chart2.prototype.chartTitle = function(game) {
     return (game.season + ' - WEEK ' + game.week + ': ' + game.visitor + ': ' + game.ptsVisitor 
