@@ -39,7 +39,7 @@ var Play = module.exports.Play = function (playDataRaw, nextPlayDataRaw, idx, ga
 	this.offensiveLineI = playDataRaw.olid;
 	this.winner = playDataRaw.Winner;
 	this.totalPtsScr = playDataRaw.TOTp;
-	this.scoreDiff = this.ptsOffense - this.ptsDefense;
+	this.scoreDiff = playDataRaw.Score;
 	this.AdjustedScore = playDataRaw.AdjustedScore;
 	this.vegasSpread = playDataRaw.Spread;
 	this.actualGameOutcome = playDataRaw.Result;

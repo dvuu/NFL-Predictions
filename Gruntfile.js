@@ -80,8 +80,8 @@ module.exports = function(grunt) {
         // },
         img: {
             expand: true,
-            cwd: 'src/client/img',
-            src: '*',
+            cwd: 'src/client/img/',
+            src: ['*', 'endzones/*'],
             dest: 'build/client/assets/images'
         },
         server: {
