@@ -54,74 +54,11 @@ function renderGame(game) {
 		$.ajax({ url: topTenUrl, success: function(topTenResult) {
 			// Build field widget
 			var field = new NFL.FieldWidget();
+			// Build chart (highcharts)
+			var chart2 = new NFL.Chart2(playsResult, topTenResult, game);
+			chart2.render($('#chart2'));
 			// Build chart
 			var element = $('#chart')[0];
-			var homeWp = [ ];
-			var visitorWp = [ ];
-			var time = [ ]; 
-			for (var i = 0; i < playsResult.length; i++) {
-				homeWp.push(playsResult[i].homeWp);
-				visitorWp.push(playsResult[i].visitorWp)
-				time.push(playsResult[i].time);
-			}
-			$('#chart2').highcharts({
-				chart: {
-		            type: 'line',
-		            zoomType: 'x'
-		        },
-				title: {
-		            text: 'Predictions',
-		            x: -20 //center
-		        },
-		        xAxis: {
-            		// time: time,
-        		},
-		        yAxis: {
-		            title: {
-		                text: game.home + ' Win Probability (%)'
-		            },
-		            min: 0,
-		            max: 1,
-		        },
-		        tooltip: {
-		            valueSuffix: '%',
-		            shared: true,
-		            crosshairs: true
-		        },
-		        plotOptions: {
-		            series: {
-		                lineWidth: 1
-		            }
-		        },
-		        legend: {
-		            layout: 'vertical',
-		            align: 'right',
-		            verticalAlign: 'middle',
-		            borderWidth: 0
-		        },
-		        series: [{
-		            name: game.home + ' WP',
-		            data: homeWp,
-		            marker: {
-			            enabled: true,
-			            symbol: 'circle',
-			            radius: 3,
-			            // fillColor:
-			        }
-		        },
-		        {
-		            name: game.visitor + ' WP',
-		            data: visitorWp,
-		            marker: {
-			            enabled: true,
-			            symbol: 'circle',
-			            radius: 3,
-			        }
-		        }],
-				credits: {
-					enabled: false
-				},
-		    });
 			var chart = new NFL.Chart(playsResult, topTenResult, game);
 			chart.layout.font.size = 16;
         	chart.setPlays(playsResult);
