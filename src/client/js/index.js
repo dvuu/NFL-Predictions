@@ -56,6 +56,10 @@ function renderGame(game) {
 			var field = new NFL.FieldWidget();
 			// Build chart
 			var element = $('#chart')[0];
+			var element2 = $('#chart2')[0];
+			var chart2 = new NFL.Chart2(playsResult, topTenResult, game);
+			chart2.setPlays(playsResult);
+			chart2.render(element2);
 			var chart = new NFL.Chart(playsResult, topTenResult, game);
 			chart.layout.font.size = 16;
         	chart.setPlays(playsResult);
