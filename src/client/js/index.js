@@ -57,6 +57,7 @@ function renderGame(game) {
 			// Build chart (highcharts)
 			var chart2 = new NFL.Chart2(playsResult, topTenResult, game);
 			chart2.render($('#chart2'));
+			chart2.setFieldWidget(field);
 			// Build chart
 			var element = $('#chart')[0];
 			var chart = new NFL.Chart(playsResult, topTenResult, game);

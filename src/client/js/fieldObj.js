@@ -35,7 +35,7 @@ NFL.FieldWidget.prototype.setState = function(previousState, currentState) {
 	var didPosessionChange = (this.previousState.offense !== this.currentState.offense);
 	if (didPosessionChange && this.previousState.ptsOffense < this.currentState.ptsDefense) {
 		endingYardline = 105;
-		this.clearLines();
+		this._clearLines();
 		this.setGrayLine(startingYardline, isVisitorOffense);
 	}
 	else {
@@ -52,11 +52,11 @@ NFL.FieldWidget.prototype.clearField = function() {
 	this.timer = setTimeout(function() {
 		$('.fieldArrow').addClass('hidden');
 		$('.verticalLine').addClass('hidden');
-	}, 3000);
+	}, 1000);
 	// $('.footballSprite').addClass('hidden');
 }
 
-NFL.FieldWidget.prototype.clearLines = function() {
+NFL.FieldWidget.prototype._clearLines = function() {
 	$('.verticalLineBlue').addClass('hidden');
 	$('.verticalLineYellow').addClass('hidden');
 }
