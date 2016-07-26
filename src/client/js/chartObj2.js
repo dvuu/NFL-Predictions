@@ -8,7 +8,10 @@ NFL.Chart2 = function (plays, topTenPlays, game) {
 	    },
 		title: {
 	        text: this.chartTitle(game),
-	        x: -20 //center
+	        align: 'center',
+	        style: {
+
+	        }
 	    },
 	    xAxis: {
 	    	title: {
@@ -46,6 +49,7 @@ NFL.Chart2 = function (plays, topTenPlays, game) {
 	        }
 	    },
 	    legend: {
+	    	enabled: true,
 	        layout: 'vertical',
 	        align: 'right',
 	        verticalAlign: 'middle',
@@ -106,9 +110,6 @@ NFL.Chart2.prototype.updateSeries = function() {
 		visitorWpArr.push(parseFloat(visitorWp));
 		var time = this.plays[i].time;
 		var minutes = Math.floor(time / 60);
-		if (minutes < 10) {
-			minutes = '0' + minutes;
-		}
 		var seconds = time - minutes * 60;
 		if (seconds < 10) {
 			seconds = '0' + seconds;
@@ -134,5 +135,6 @@ NFL.Chart2.prototype.clearHover = function (args) {
 }
 
 NFL.Chart2.prototype.render = function(element) {
+	// Use self or this?
 	element.highcharts(this.chartOptions);
 }

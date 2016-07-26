@@ -35,12 +35,12 @@ function buildElements(playsResult, game, gameId, counter) {
 	var link = 'href="/?gid=' + gameId + '"';
 	var $div = $('<div class="topGamesCharts col-md-4 col-xs-6"></div>');
 	var $aTag = $('<a class="topTenLink" ' + link + '>Top Game #' + counter + '</a>');
-	var chart = new NFL.Chart(playsResult, null, game);
-	chart.layout.width = 400;
-	chart.layout.height = 300;
-	chart.layout.font.size = 10;
-	chart.setPlays(playsResult);
-	chart.render($div[0]);
+	var chart2 = new NFL.Chart2(playsResult, null, game);
+	chart2.chartOptions.chart.width = 350;
+	chart2.chartOptions.chart.height = 250;
+	chart2.chartOptions.title.style.fontSize = '14px'
+	chart2.chartOptions.legend.enabled = false;
+	chart2.render($div);
 	$div.prepend($aTag[0]);
 	if (counter % 3 === 1) {
 		$row = $('<div class="row"></div>');
