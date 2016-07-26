@@ -1,7 +1,7 @@
 var NFL = window.NFL = (window.NFL || { });
 
 $(document).ready(function() {
-	$('body.hidden').fadeIn(2000).removeClass('hidden');
+	$('.mainContainer.hidden').fadeIn(2000).removeClass('hidden');
 	$('.content.hidden').fadeIn(2000).removeClass('hidden');
 	renderGames();
 	$('.excitingGames').click(function (e) {

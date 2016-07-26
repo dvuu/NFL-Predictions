@@ -1,7 +1,7 @@
 var NFL = window.NFL = (window.NFL || { });
 
 $(document).ready(function() {
-	$('body.hidden').fadeIn(1500).removeClass('hidden');
+	$('.mainContainer.hidden').fadeIn(1500).removeClass('hidden');
 	$('.main.hidden').fadeIn(1500).removeClass('hidden');
 	buildSeasonsFilter();
 	buildWeeksFilter();
