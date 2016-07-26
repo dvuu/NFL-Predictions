@@ -68,7 +68,7 @@ function renderGame(game) {
 			topTen.setFieldWidget(field);
 		}});
 	}});
-	$('.homeLogo, .awayLogo, homeEndzone, awayEndzone').removeClass(function(idx, css) {
+	$('.homeLogo, .awayLogo, .homeEndzone, .awayEndzone').removeClass(function(idx, css) {
 		var match = css.match(/team\-\w*/);
 		return (match ? match.join(' ') : null);
 	});
