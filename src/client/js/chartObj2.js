@@ -4,7 +4,8 @@ NFL.Chart2 = function (plays, topTenPlays, game) {
 	this.chartOptions = {
 		chart: {
 	        type: 'line',
-	        zoomType: 'x'
+	        zoomType: 'x',
+	        backgroundColor: 'transparent'
 	    },
 		title: {
 	        text: this.chartTitle(game),
@@ -30,7 +31,7 @@ NFL.Chart2 = function (plays, topTenPlays, game) {
 	    	formatter: function() {
 		        var s = '<span>Time: '+ this.x +'</span>';
 		        $.each(this.points, function(i, point) {
-		            s += '<br/><span style="color:'+ point.series.color +'">\u25CF</span>: ' + point.series.name + ': ' + point.y;
+		            s += '<br/><span style="color:'+ point.series.color +'">\u25CF</span>: ' + point.series.name + ': ' + point.y + '%';
 		        });
 		        return s;
 			},
