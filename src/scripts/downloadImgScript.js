@@ -20,8 +20,7 @@ var urls = {
 	'GB': 'http://fields.gridiron-uniforms.com/graphics/Packers.png',
 	'IND': 'http://fields.gridiron-uniforms.com/graphics/Colts.png',
 	'KC': 'http://fields.gridiron-uniforms.com/graphics/Chiefs.png',
-	'NO': 'http://fields.gridiron-uniforms.com/graphics/Patriots.png',
-	'MIN': 'http://fields.gridiron-uniforms.com/graphics/Saints.png',
+	'NO': 'http://fields.gridiron-uniforms.com/graphics/Saints.png',
 	'NYG': 'http://fields.gridiron-uniforms.com/graphics/Giants.png',
 	'NYJ': 'http://fields.gridiron-uniforms.com/graphics/Jets.png',
 	'SF': 'http://fields.gridiron-uniforms.com/graphics/sb/XLVII.png',
@@ -31,10 +30,12 @@ var urls = {
 	'HOU': 'http://img13.deviantart.net/8571/i/2015/054/5/9/football_field___texans__by_superman8193-d8jaudb.jpg',
 	'JAC': 'http://img15.deviantart.net/aa64/i/2015/054/8/c/football_field___jaguars__by_superman8193-d8jax57.jpg',
 	'OAK': 'http://fields.gridiron-uniforms.com/graphics/sb/XXXVII.png',
-	'LA': 'http://fields.gridiron-uniforms.com/graphics/sb/XXXIV.png',
+	'STL': 'http://fields.gridiron-uniforms.com/graphics/sb/XXXIV.png',
 	'WAS': 'http://fields.gridiron-uniforms.com/graphics/sb/XXVI.png',
 	'CLE': 'http://img08.deviantart.net/0fa1/i/2015/054/b/1/football_field___browns__by_superman8193-d8jazfb.jpg',
-	'CIN': 'http://fields.gridiron-uniforms.com/graphics/sb/XLI.png'
+	'CHI': 'http://fields.gridiron-uniforms.com/graphics/sb/XLI.png',
+	'NE': 'http://fields.gridiron-uniforms.com/graphics/sb/XLIX.png',
+
 }
 
 var options = { 
