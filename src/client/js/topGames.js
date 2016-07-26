@@ -1,14 +1,20 @@
 var NFL = window.NFL = (window.NFL || { });
 
 $(document).ready(function() {
+	$('body.hidden').fadeIn(2000).removeClass('hidden');
+	$('.content.hidden').fadeIn(2000).removeClass('hidden');
 	renderGames();
 	$('.excitingGames').click(function (e) {
+		$('.content').addClass('hidden');
 		history.pushState(null, null, '/topGames?type=excitingGames');
+		$('.content.hidden').fadeIn(2000).removeClass('hidden');
 		renderGames();
 		return false;
 	});
 	$('.boringGames').click(function (e) {
+		$('.content').addClass('hidden');
 		history.pushState(null, null, '/topGames?type=boringGames');
+		$('.content.hidden').fadeIn(2000).removeClass('hidden');
 		renderGames();
 		return false;
 	});

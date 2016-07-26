@@ -15,7 +15,7 @@ NFL.Chart2 = function (plays, topTenPlays, game) {
 	    },
 	    xAxis: {
 	    	title: {
-	    		text: 'Time Left (m:s)',
+	    		text: 'Time (m:s)',
 	    	},
 			categories: [ ],
 		},
@@ -27,6 +27,13 @@ NFL.Chart2 = function (plays, topTenPlays, game) {
 	        max: 100,
 	    },
 	    tooltip: {
+	    	formatter: function() {
+		        var s = '<span>Time: '+ this.x +'</span>';
+		        $.each(this.points, function(i, point) {
+		            s += '<br/><span style="color:'+ point.series.color +'">\u25CF</span>: ' + point.series.name + ': ' + point.y;
+		        });
+		        return s;
+			},
 		    valueSuffix: '%',
 	        shared: true,
 	        crosshairs: {
