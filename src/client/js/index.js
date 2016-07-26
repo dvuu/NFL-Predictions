@@ -2,6 +2,7 @@ var NFL = window.NFL = (window.NFL || { });
 
 $(document).ready(function() {
 	$('body.hidden').fadeIn(1500).removeClass('hidden');
+	$('.main.hidden').fadeIn(1500).removeClass('hidden');
 	buildSeasonsFilter();
 	buildWeeksFilter();
 	renderFromQueryString();
@@ -48,6 +49,8 @@ function renderFromQueryString() {
 }	
 
 function renderGame(game) {
+	$('.main').addClass('hidden');
+	$('.main.hidden').fadeIn(1500).removeClass('hidden');
 	var playUrl = '/api/plays/' + game.gameId;
 	var topTenUrl = '/api/topTen/' + game.gameId;
 	$('.topPlays').empty();
