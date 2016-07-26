@@ -6,3 +6,5 @@ bar*
 build/
 pre-build/
 RESULTS.csv
+node_modules/shelljs
+node_modules/request
