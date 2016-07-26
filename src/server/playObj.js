@@ -66,6 +66,8 @@ var Play = module.exports.Play = function (playDataRaw, nextPlayDataRaw, idx, ga
 		this.ydsGained = (nextPlayDataRaw.Yardline - this.offYardline);
 	}
 
+	
+
 	// Points Scored
 	// if (!isLastPlay) {
 	// 	var isHomeOffense = this.home === this.offense && this.home === nextPlayDataRaw.offense;
