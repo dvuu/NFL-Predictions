@@ -31,19 +31,27 @@ NFL.FieldWidget.prototype.setState = function(previousState, currentState) {
 		startingYardline = 0;
 	}
 
-	// Check for possesion change
-	var didPosessionChange = (this.previousState.offense !== this.currentState.offense);
-	if (didPosessionChange && this.previousState.ptsOffense < this.currentState.ptsDefense) {
-		endingYardline = 105;
-		this.clearLines();
-		this.setGrayLine(startingYardline, isVisitorOffense);
+	// Did points scored
+	if (previousState.ptsScored) {
+		if (previousState.ptsScored > 0) {
+			// offense scored
+			endingYardline = 105;
+			this.clearLines();
+			this.setGrayLine(startingYardline, isVisitorOffense);
+		}
+		else{
+			// defense scored
+			endingYardline = -5;
+			this.clearLines();
+			this.setGrayLine(startingYardline, isVisitorOffense);	
+		}
 	}
+	// No points scored
 	else {
 		this.setGrayLine(startingYardline, isVisitorOffense);
 		this.setBlueLine(endingYardline, isVisitorOffense);
 		this.setYellowLine(endingYardline, yardsToGo, isVisitorOffense);
 	}
-
 	this.setArrow(startingYardline, endingYardline, isVisitorOffense);
 	// this.setFootballSprite(isVisitorOffense);
 }
@@ -66,11 +74,13 @@ NFL.FieldWidget.prototype.setArrow = function(startingYardline, endingYardline, 
 	var arrowLeft, arrowRight;
 	if (startingYardline > endingYardline) {
 		// Negative yards gained
+		
 		if (isVisitorOffense) {
 			$('.fieldArrow').removeClass('flipped');
 			arrowLeft = 100 - startingYardline;
 			arrowRight = 100 - endingYardline;
 		}
+		
 		else {
 			$('.fieldArrow').addClass('flipped');
 			arrowLeft = endingYardline;
