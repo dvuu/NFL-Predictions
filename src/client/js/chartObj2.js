@@ -160,15 +160,18 @@ NFL.Chart2.prototype.setPlays = function(plays) {
 };
 
 NFL.Chart2.prototype.updateSeries = function() {
-	this.chartOptions.xAxis.categories = [ ];
-	this.chartOptions.series[0].data = [ ];
-	this.chartOptions.series[1].data = [ ];
+	// map play data to home and visitor arrays to pass to Highcharts
 	var homeData = _.map(this.plays, function(play) {
 		return {x: play.time, y: play.homeWp * 100};
 	});
 	var visitorData = _.map(this.plays, function(play) {
 		return {x: play.time, y: play.visitorWp * 100};
 	});
+	
+	// sort data by x value to keep Highcharts happy
+	homeData = _.sortBy(homeData, 'x');
+	visitorData = _.sortBy(visitorData, 'x');
+
 	this.chartOptions.series[0].data = homeData;
 	this.chartOptions.series[1].data = visitorData;
 }
