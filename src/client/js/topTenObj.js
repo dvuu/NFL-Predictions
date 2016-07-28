@@ -14,11 +14,11 @@ NFL.TopTen.prototype.render = function () {
 		//event function that when you hover top ten it will dislay where it is located on the chart
 		$playElement.on('mouseenter', function( ) {
 			// Trigger chart hover UI
-			self.chart.setHover(play);
 			// Update field widget
   			var startState = play.idx + 1 === null ? null : self.playsResult[play.idx];
   			var endState = play.idx + 1 < self.playsResult.length ? self.playsResult[play.idx + 1] : null;
   			NFL.PlayInfo.showPlayInfo(startState, endState);
+  			self.chart.setHover(endState);
   			self.field.setState(startState, endState);
 		});
 		$playElement.on('mouseleave', function( ) {

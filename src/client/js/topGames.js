@@ -44,7 +44,7 @@ function buildElements(playsResult, game, gameId, counter) {
 	var chart2 = new NFL.Chart2(playsResult, null, game);
 	chart2.chartOptions.chart.width = 350;
 	chart2.chartOptions.chart.height = 250;
-	chart2.chartOptions.title.style.fontSize = '14px';
+	chart2.chartOptions.subtitle.style.fontSize = '14px';
 	chart2.chartOptions.legend.enabled = false;
 	chart2.render($div);
 	$div.prepend($aTag[0]);

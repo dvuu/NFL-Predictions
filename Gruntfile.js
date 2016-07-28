@@ -162,7 +162,7 @@ module.exports = function(grunt) {
             dest: 'build/client/assets/css/style.css',
         },
         jsCommon: {
-            src: ['src/client/ext/js/jquery-1.12.3.min.js', 'src/client/ext/js/*.js', 'src/client/js/chartObj2.js', 'src/client/js/chartObj.js', 'src/client/js/playInfoObj.js', 'src/client/js/topTenObj.js', 'src/client/js/fieldObj.js'],
+            src: ['src/client/ext/js/jquery-1.12.3.min.js', 'src/client/ext/js/*.js', 'src/client/js/chartObj2.js', 'src/client/js/chartObj.js', 'src/client/js/playInfoObj.js', 'src/client/js/topTenObj.js', 'src/client/js/fieldObj.js', 'src/client/js/util.js'],
             dest: 'build/client/assets/js/common.js',
             options: {
                 banner: '// NFL Predictor - Dylan Vu, Anthony Van Pelt\n// ' + new Date().toString() + '\n;(function() {\n',

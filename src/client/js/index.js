@@ -6,6 +6,9 @@ $(document).ready(function() {
 	buildSeasonsFilter();
 	buildWeeksFilter();
 	renderFromQueryString();
+	window.addEventListener('popstate', function(e) {
+		renderFromQueryString();
+	});
 });
 
 function setSelectedSeasonText(season) {
@@ -58,21 +61,14 @@ function renderGame(game) {
 		$.ajax({ url: topTenUrl, success: function(topTenResult) {
 			// Build field widget
 			var field = new NFL.FieldWidget();
-			// Build chart (highcharts)
+			// Build chart
 			var chart2 = new NFL.Chart2(playsResult, topTenResult, game);
 			chart2.render($('#chart2'));
 			chart2.setFieldWidget(field);
-			// Build chart
-			var element = $('#chart')[0];
-			var chart = new NFL.Chart(playsResult, topTenResult, game);
-			chart.layout.font.size = 16;
-        	chart.setPlays(playsResult);
-        	chart.render(element);
-        	chart.setFieldWidget(field);
         	// Display top ten plays
 			var topTen = new NFL.TopTen(topTenResult, playsResult);
 			topTen.render();
-			topTen.setChart(chart);
+			topTen.setChart(chart2);
 			topTen.setFieldWidget(field);
 		}});
 	}});
