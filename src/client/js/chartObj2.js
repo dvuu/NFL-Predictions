@@ -27,21 +27,22 @@ NFL.Chart2 = function (plays, topTenPlays, game) {
 		        formatter: function() {
 		        	var time = this.value;
 		        	if (time <= 3600 && time >= 2701)
-		        		return 'START';
+		        		return 'Q1';
 		        	if (time <= 2700 && time >= 1801)
 		        		return 'Q2';
 		        	if (time <= 1800 && time >= 901)
 		        		return 'Q3';
 		        	if (time <= 900 && time >= 1)
 		        		return 'Q4';
-		        	if (time == 0) {
+		        	if (time <= 0 && time >= -899) {
 		        		if (isOvertime)
 		        			return 'OT';
 		        		return 'END';
 		        	}
-		        	if (time === -900)
+		        	if (time === -900) {
 		        		isOvertime = true;
 		        		return 'END';
+		        	}
 		        }
 		    }
 		},
@@ -57,15 +58,7 @@ NFL.Chart2 = function (plays, topTenPlays, game) {
 		        formatter: function() {
 		        	return this.value + '%';
 		        }
-		    },
-	        plotLines: [
-	        	{
-	                color: '#222',
-	                dashStyle: 'dot',
-	                value: 50,
-	                width: 2,
-	            }
-            ]
+		    }
 	    },
 	    tooltip: {
 	    	// TODO: create method to use in tooltip
@@ -77,9 +70,29 @@ NFL.Chart2 = function (plays, topTenPlays, game) {
 					seconds = '0' + seconds;
 				}
 				var timeFormatted = minutes + ':' + seconds;
-		        var s = '<span>Time: '+ timeFormatted +'</span>';
+				var quarter;
+	        	if (time <= 3600 && time >= 2701)
+	        		quarter = 'Q1';
+	        	if (time <= 2700 && time >= 1801)
+	        		quarter = 'Q2';
+	        	if (time <= 1800 && time >= 901)
+	        		quarter = 'Q3';
+	        	if (time <= 900 && time >= 1)
+	        		quarter = 'Q4';
+	        	if (time <= 0 && time >= -899) {
+	        		if (isOvertime) {
+	        			quarter = 'OT';
+	        		} else {
+	        			quarter = 'END';
+	        		}
+	        	}
+	        	if (time === -900) {
+	        		isOvertime = true;
+	        		quarter = 'END';
+	        	}
+		        var s = '<span>' + quarter + ', '+ timeFormatted +'</span>';
 		        $.each(this.points, function(i, point) {
-		            s += '<br/><span style="color:'+ point.series.color +'">\u25CF</span> ' + point.series.name + ': ' + (point.y).toFixed(2) + '%';
+		            s += '<br/><span style="color:'+ point.series.color +'">\u25CF</span> ' + point.series.name + ': ' + (point.y).toFixed(2) + '% WP';
 		        });
 		        return s;
 			},
@@ -119,7 +132,7 @@ NFL.Chart2 = function (plays, topTenPlays, game) {
 	        borderWidth: 0
 	    },
 	    series: [{
-	        name: game.home + ' WP',
+	        name: game.home,
 	        data: [ ],
 	        marker: {
 	            enabled: false,
@@ -128,7 +141,7 @@ NFL.Chart2 = function (plays, topTenPlays, game) {
 	        }
 	    },
 	    {
-	        name: game.visitor + ' WP',
+	        name: game.visitor,
 	        data: [ ],
 	        color: '#f45b5b',
 	        marker: {
