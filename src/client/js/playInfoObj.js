@@ -90,10 +90,10 @@ function swingStringHelper(play, class1, ptsGain, ydsGain, playTwo) {
         + '<br>Play: ' + play.type 
         + (ptsGain ? '<br>Points Scored: ' + ptsGain : '')
         + (!ptsGain ? '<br>Gained: ' + ydsGain + ' yds' : '')
-        + (playTwo.fumble ? '<br>Turnover: Fumble' : '')
-        + (playTwo.interception ? '<br>Turnover: Interception' : '')
-        + (playTwo.type == 'KOFF' ? '<br>Turnover: Scored' : '')
-        + (playTwo.type == 'PUNT' ? '<br>Turnover: 4th Down' : '')
+        + (play.fumble ? '<br>Turnover: Fumble' : '')
+        + (play.interception ? '<br>Turnover: Interception' : '')
+        + (play.type == 'KOFF' ? '<br>Turnover: Scored' : '')
+        + (play.type == 'PUNT' ? '<br>Turnover: 4th Down' : '')
         + (pointsCall(play, playTwo) ? '<br>Score Type: ' + pointsCall(play, playTwo) +'</p>' : ''));
 };
 
