@@ -42,22 +42,6 @@ function playInfoStringHelper (play, class1, class2) {
         /* + '<br>Ball On: ' + ballOn(play.offYardline) + '</p>'*/);
 };
 
-// keep track of points gained for both teams
-function pointLead(currentPlay, nextPlay) {
-    var team1 = currentPlay.offense;
-    var team2 = currentPlay.defense;
-    var team1Pts = currentPlay.ptsOffense;
-    var team2Pts = currentPlay.ptsDefense;
-    var nextTeam1Pts = nextPlay.offense == team1 ? nextPlay.ptsOffense : nextPlay.ptsDefense;
-    var nextTeam2Pts = nextPlay.defense == team2 ? nextPlay.ptsDefense : nextPlay.ptsOfense;
-    if (team1Pts != nextTeam1Pts) {
-        return Math.abs(nextTeam1Pts - team1Pts);
-    }
-    else if (team2Pts != nextTeam2Pts) {
-        return Math.abs(nextTeam2Pts - team2Pts);
-    }
-}
-
 // when points change state the type of score
 function pointsCall(currentPlay) {
     switch(Math.abs(currentPlay.ptsScored)){
