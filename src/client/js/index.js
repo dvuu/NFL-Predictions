@@ -3,6 +3,7 @@ var NFL = window.NFL = (window.NFL || { });
 $(document).ready(function() {
 	$('.mainContainer.hidden').fadeIn(1500).removeClass('hidden');
 	$('.main.hidden').fadeIn(1500).removeClass('hidden');
+	$('.playSwing').html('<p><br/><em>Hover over the chart or Top 10 plays for more info<em><p>');
 	buildSeasonsFilter();
 	buildWeeksFilter();
 	renderFromQueryString();

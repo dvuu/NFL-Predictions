@@ -18,7 +18,7 @@ NFL.PlayInfo = {
     clearPlayInfo: function () {
 	    $('.playOne').html('');
 	    $('.playTwo').html('');
-	    $('.playSwing').html('<p><br><em>Hover over the chart or Top 10 plays for more info<em><p>');
+	    $('.playSwing').html('<p><br/><em>Hover over the chart or Top 10 plays for more info<em><p>');
 	}
 };
 

@@ -75,7 +75,7 @@ NFL.Chart2 = function (plays, topTenPlays, game) {
 	    		if (index == plays.length - 1)
 	    			quarterStr = 'END';
 	    		var timeFormatted = NFL.Util.getTimeInQuarter(play);
-		        var s = '<span>' + quarterStr + '<br/>'+ timeFormatted +'</span>';
+		        var s = '<span>' + quarterStr + ', '+ timeFormatted + '<br/>' + game.visitor + ': ' + play.ptsVisitor + ', ' + game.home + ': ' + play.ptsHome + '</span>';
 		        $.each(this.points, function(i, point) {
 		            s += '<br/><span style="color:'+ point.series.color +'">\u25CF</span> ' + point.series.name + ': ' + (point.y).toFixed(2) + '% WP';
 		        });
@@ -150,7 +150,7 @@ NFL.Chart2.prototype.subtitle = function(game) {
     return game.visitor + ': ' + game.ptsVisitor + ' @ ' + game.home + ': ' + game.ptsHome;
 };
 
-NFL.Chart2.prototype.setFieldWidget = function (field) {
+NFL.Chart2.prototype.setFieldWidget = function(field) {
     this.field = field;
 }
 
@@ -173,28 +173,33 @@ NFL.Chart2.prototype.updateSeries = function() {
 	this.chartOptions.series[1].data = visitorData;
 }
 
-NFL.Chart2.prototype.onHover = function (args) {
-	var playOne = (args.index > 0) ? this.plays[args.index - 1] : null;
-	var playTwo = this.plays[args.index];
+NFL.Chart2.prototype.setBall = function(currentState) {
 	$('.ball').removeClass('hidden');
-	if (playTwo.offense === playTwo.home) {
+	if (currentState.offense === currentState.home) {
 		$('.ball').removeClass('ballAway');
 		$('.ball').addClass('ballHome');
 	} else {
 		$('.ball').removeClass('ballHome');
 		$('.ball').addClass('ballAway');
 	}
-	NFL.PlayInfo.showPlayInfo(playOne, playTwo);
-	this.field.setState(playOne, playTwo);
 }
 
-NFL.Chart2.prototype._onClearHover = function (args) {
+NFL.Chart2.prototype.onHover = function(args) {
+	var previousState = (args.index > 0) ? this.plays[args.index - 1] : null;
+	var currentState = this.plays[args.index];
+	$('.ball').removeClass('hidden');
+	this.setBall(currentState);
+	NFL.PlayInfo.showPlayInfo(previousState, currentState);
+	this.field.setState(previousState, currentState);
+}
+
+NFL.Chart2.prototype._onClearHover = function(args) {
 	$('.ball').addClass('hidden');
 	NFL.PlayInfo.clearPlayInfo();
 	this.field.clearField();
 }
 
-NFL.Chart2.prototype.clearHover = function (args) {
+NFL.Chart2.prototype.clearHover = function(args) {
 	$('.ball').addClass('hidden');
 	NFL.PlayInfo.clearPlayInfo();
 	// this.highchart.xAxis[0].update({ plotLines: [ ] });
@@ -207,6 +212,7 @@ NFL.Chart2.prototype.clearHover = function (args) {
 }
 
 NFL.Chart2.prototype.setHover = function(play) {
+	this.setBall(play);
 	this.highchart.tooltip.refresh([this.highchart.series[0].points[play.idx], this.highchart.series[1].points[play.idx]]);
 	// this.highchart.xAxis[0].update({
  //                                plotLines: [{
