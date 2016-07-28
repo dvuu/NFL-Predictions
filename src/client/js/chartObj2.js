@@ -1,11 +1,12 @@
 var NFL = window.NFL = (window.NFL || { });
 NFL.Chart2 = function (plays, topTenPlays, game) {
 	var self = this;
+	var isOvertime = false;
 	this.chartOptions = {
 		chart: {
+			backgroundColor: 'transparent',
 	        type: 'line',
-	        zoomType: 'x',
-	        backgroundColor: 'transparent'
+	        zoomType: 'x'
 	    },
 		title: {
 	        text: this.chartTitle(game),
@@ -16,34 +17,79 @@ NFL.Chart2 = function (plays, topTenPlays, game) {
 	    },
 	    xAxis: {
 	    	title: {
-	    		text: 'Time (m:s)',
+	    		text: 'QUARTER',
 	    	},
-			categories: [ ],
+	    	labels: {
+                rotation: 0
+            },
+	    	reversed: true,
+	    	tickInterval: 900,
+	    	labels: {
+	    		rotation: 0,
+	    		// TODO: create method to use in labels
+		        formatter: function() {
+		        	var time = this.value;
+		        	if (time <= 3600 && time >= 2701)
+		        		return 'START';
+		        	if (time <= 2700 && time >= 1801)
+		        		return 'Q2';
+		        	if (time <= 1800 && time >= 901)
+		        		return 'Q3';
+		        	if (time <= 900 && time >= 1)
+		        		return 'Q4';
+		        	if (time == 0) {
+		        		if (isOvertime)
+		        			return 'OT';
+		        		return 'END';
+		        	}
+		        	if (time === -900)
+		        		isOvertime = true;
+		        		return 'END';
+		        }
+		    }
 		},
 	    yAxis: {
 	        title: {
-	            text: 'Win Probability (%)'
+	            text: 'WIN PROBABILITY (%)'
 	        },
 	        min: 0,
 	        max: 100,
+	        plotLines: [
+	        	{
+	                color: '#222',
+	                dashStyle: 'dot',
+	                value: 50,
+	                width: 2,
+	            }
+            ]
 	    },
 	    tooltip: {
+	    	// TODO: create method to use in tooltip
 	    	formatter: function() {
-		        var s = '<span>Time: '+ this.x +'</span>';
+	    		var time = this.x;
+				var minutes = Math.floor(time / 60);
+				var seconds = time - minutes * 60;
+				if (seconds < 10) {
+					seconds = '0' + seconds;
+				}
+				var timeFormatted = minutes + ':' + seconds;
+		        var s = '<span>Time: '+ timeFormatted +'</span>';
 		        $.each(this.points, function(i, point) {
-		            s += '<br/><span style="color:'+ point.series.color +'">\u25CF</span>: ' + point.series.name + ': ' + point.y + '%';
+		            s += '<br/><span style="color:'+ point.series.color +'">\u25CF</span> ' + point.series.name + ': ' + (point.y).toFixed(2) + '%';
 		        });
 		        return s;
 			},
 		    valueSuffix: '%',
 	        shared: true,
 	        crosshairs: {
-	        	width: 3
+	        	color: 'black',
+	        	dashStyle: 'dot',
+	        	width: 1
 	        }
 	    },
 	    plotOptions: {
 	        series: {
-	            lineWidth: 1,
+	            lineWidth: 3,
 	            point: {
 	                events: {
 	            		mouseOver: function () {
@@ -52,6 +98,12 @@ NFL.Chart2 = function (plays, topTenPlays, game) {
 	            		mouseOut: function () {
 	            			self.clearHover(this)
 	            		}
+	            	}
+	            },
+	            states: {
+	            	hover: {
+	            		enabled: true,
+	            		lineWidth: 3
 	            	}
 	            }
 	        }
@@ -67,10 +119,9 @@ NFL.Chart2 = function (plays, topTenPlays, game) {
 	        name: game.home + ' WP',
 	        data: [ ],
 	        marker: {
-	            enabled: true,
+	            enabled: false,
 	            symbol: 'circle',
-	            radius: 3,
-	            // fillColor:
+	            radius : 3
 	        }
 	    },
 	    {
@@ -78,9 +129,9 @@ NFL.Chart2 = function (plays, topTenPlays, game) {
 	        data: [ ],
 	        color: '#f45b5b',
 	        marker: {
-	            enabled: true,
+	            enabled: false,
 	            symbol: 'circle',
-	            radius: 3,
+	            radius : 3
 	        }
 	    }],
 		credits: {
@@ -108,26 +159,14 @@ NFL.Chart2.prototype.updateSeries = function() {
 	this.chartOptions.xAxis.categories = [ ];
 	this.chartOptions.series[0].data = [ ];
 	this.chartOptions.series[1].data = [ ];
-	var homeWpArr = [ ];
-	var visitorWpArr = [ ];
-	var timeArr = [ ];
-	for (var i = 0; i < this.plays.length; i++) {
-		var homeWp = (this.plays[i].homeWp * 100).toFixed(2);
-		var visitorWp = (this.plays[i].visitorWp * 100).toFixed(2);
-		homeWpArr.push(parseFloat(homeWp));
-		visitorWpArr.push(parseFloat(visitorWp));
-		var time = this.plays[i].time;
-		var minutes = Math.floor(time / 60);
-		var seconds = time - minutes * 60;
-		if (seconds < 10) {
-			seconds = '0' + seconds;
-		}
-		var timeFormatted = minutes + ':' + seconds;
-		timeArr.push(timeFormatted);
-	}
-	this.chartOptions.xAxis.categories = timeArr;
-	this.chartOptions.series[0].data = homeWpArr;
-	this.chartOptions.series[1].data = visitorWpArr;
+	var homeData = _.map(this.plays, function(play) {
+		return {x: play.time, y: play.homeWp * 100};
+	});
+	var visitorData = _.map(this.plays, function(play) {
+		return {x: play.time, y: play.visitorWp * 100};
+	});
+	this.chartOptions.series[0].data = homeData;
+	this.chartOptions.series[1].data = visitorData;
 }
 
 NFL.Chart2.prototype.onHover = function (args) {
@@ -143,6 +182,5 @@ NFL.Chart2.prototype.clearHover = function (args) {
 }
 
 NFL.Chart2.prototype.render = function(element) {
-	// Use self or this?
 	element.highcharts(this.chartOptions);
 }
