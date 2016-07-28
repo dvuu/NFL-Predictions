@@ -15,7 +15,6 @@ NFL.FieldWidget = function() {
 }
 
 NFL.FieldWidget.prototype.setState = function(previousState, currentState) {
-	clearTimeout(this.timer);
 	this.previousState = previousState;
 	this.currentState = currentState;
 	// if (previousState.offense !== currentState.offense) {
@@ -36,13 +35,13 @@ NFL.FieldWidget.prototype.setState = function(previousState, currentState) {
 		if (previousState.ptsScored > 0) {
 			// offense scored
 			endingYardline = 105;
-			this.clearLines();
+			this._clearLines();
 			this.setGrayLine(startingYardline, isVisitorOffense);
 		}
 		else{
 			// defense scored
 			endingYardline = -5;
-			this.clearLines();
+			this._clearLines();
 			this.setGrayLine(startingYardline, isVisitorOffense);	
 		}
 	}
@@ -57,10 +56,8 @@ NFL.FieldWidget.prototype.setState = function(previousState, currentState) {
 }
 
 NFL.FieldWidget.prototype.clearField = function() {
-	this.timer = setTimeout(function() {
-		$('.fieldArrow').addClass('hidden');
-		$('.verticalLine').addClass('hidden');
-	}, 1000);
+	$('.fieldArrow').addClass('hidden');
+	$('.verticalLine').addClass('hidden');
 	// $('.footballSprite').addClass('hidden');
 }
 
