@@ -84,7 +84,9 @@ NFL.FieldWidget.prototype.setArrow = function(startingYardline, endingYardline, 
 			arrowRight = startingYardline;
 		}
 		// Change color for negative yards
-		$('.fieldArrow').addClass('negativeYard');
+		$('.fieldArrow').addClass('negativeYards');
+		$('.fieldArrow').removeClass('positiveYards');
+		$('.fieldArrow').removeClass('turnover');
 	}
 	else {
 		// Positive yards gained
@@ -98,7 +100,9 @@ NFL.FieldWidget.prototype.setArrow = function(startingYardline, endingYardline, 
 			arrowLeft = startingYardline;
 			arrowRight = endingYardline;
 		}
-		$('.fieldArrow').removeClass('negativeYard');
+		$('.fieldArrow').removeClass('negativeYards');
+		$('.fieldArrow').addClass('positiveYards');
+		$('.fieldArrow').removeClass('turnover');
 	}
 	var arrowStartInPixels = yardLineToPixelOffset(arrowLeft);
 	var arrowEndInPixels = yardLineToPixelOffset(arrowRight);
@@ -106,6 +110,9 @@ NFL.FieldWidget.prototype.setArrow = function(startingYardline, endingYardline, 
 	$('.fieldArrow').css({
 		'left': arrowStartInPixels, 
 		'width': arrowLengthInPixels
+	});
+	$('.fieldArrow .arrowStem').css({
+		'width': arrowLengthInPixels - 8
 	});
 }
 

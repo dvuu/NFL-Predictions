@@ -1,6 +1,6 @@
 @WIDTH: 1000px;
 @HEIGHT: 444.33px;
-@ARROWHEIGHT: 80px;
+@ARROWHEIGHT: 20px;
 
 .fieldWidgetContainer {
 	background-image: url(../images/main_field_background.jpg);
@@ -62,4 +62,70 @@
 
 .negativeYard {
 	background-color: red;
+}
+
+// Inspired by http://jsfiddle.net/mmansion/DpNYu/
+
+@POSITIVE_YARDS_COLOR: #00ff00;
+@NEGATIVE_YARDS_COLOR: #ff7000;
+@TURNOVER_COLOR: red;
+
+.fieldArrow {
+    .arrowPartsContainer {
+        position: relative;
+    }
+
+    .arrowStem {
+        display: inline-block;
+        height: 5px;
+        position: absolute;
+        top: (@ARROWHEIGHT / 2) - 2.5;
+    }
+
+    .arrowHead {
+	position: absolute;
+	    display: inline-block;
+	    width: 0;
+	    height: 0;
+		border-top: 10px solid transparent;
+		border-bottom: 10px solid transparent;
+		border-left: 10px solid green;
+		right: 0;
+		i {
+		    display: block;
+		    position: relative;
+		    top: -10px;
+		    left: -10px;
+		    width: 0;
+		    height: 0;
+			border-top: 10px solid transparent;
+			border-bottom: 10px solid transparent;
+			border-left: 3px solid transparent;
+		}
+	}
+
+    &.positiveYards {
+        .arrowHead {
+            border-left: 10px solid @POSITIVE_YARDS_COLOR;
+        }
+        .arrowStem {
+            background-color: @POSITIVE_YARDS_COLOR;
+        }
+    }
+    &.negativeYards {
+        .arrowHead {
+            border-left: 10px solid @NEGATIVE_YARDS_COLOR;
+        }
+        .arrowStem {
+            background-color: @NEGATIVE_YARDS_COLOR;
+        }
+    }
+    &.turnover {
+        .arrowHead {
+            border-left: 10px solid @TURNOVER_COLOR;
+        }
+        .arrowStem {
+            background-color: @TURNOVER_COLOR;
+        }
+    }
 }
