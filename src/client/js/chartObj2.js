@@ -19,9 +19,6 @@ NFL.Chart2 = function (plays, topTenPlays, game) {
 	    	title: {
 	    		text: 'QUARTER',
 	    	},
-	    	labels: {
-                rotation: 0
-            },
 	    	reversed: true,
 	    	tickInterval: 900,
 	    	labels: {
@@ -50,10 +47,17 @@ NFL.Chart2 = function (plays, topTenPlays, game) {
 		},
 	    yAxis: {
 	        title: {
-	            text: 'WIN PROBABILITY (%)'
+	            text: 'WIN PROBABILITY'
 	        },
 	        min: 0,
 	        max: 100,
+	        labels: {
+	    		rotation: 0,
+	    		// TODO: create method to use in labels
+		        formatter: function() {
+		        	return this.value + '%';
+		        }
+		    },
 	        plotLines: [
 	        	{
 	                color: '#222',
@@ -83,8 +87,7 @@ NFL.Chart2 = function (plays, topTenPlays, game) {
 	        shared: true,
 	        crosshairs: {
 	        	color: 'black',
-	        	dashStyle: 'dot',
-	        	width: 1
+	        	dashStyle: 'solid'
 	        }
 	    },
 	    plotOptions: {
@@ -172,11 +175,20 @@ NFL.Chart2.prototype.updateSeries = function() {
 NFL.Chart2.prototype.onHover = function (args) {
 	var playOne = (args.index > 0) ? this.plays[args.index - 1] : null;
 	var playTwo = this.plays[args.index];
+	$('.ball').removeClass('hidden');
+	if (playTwo.offense === playTwo.home) {
+		$('.ball').removeClass('ballAway');
+		$('.ball').addClass('ballHome');
+	} else {
+		$('.ball').removeClass('ballHome');
+		$('.ball').addClass('ballAway');
+	}
 	NFL.PlayInfo.showPlayInfo(playOne, playTwo);
 	this.field.setState(playOne, playTwo);
 }
 
 NFL.Chart2.prototype.clearHover = function (args) {
+	$('.ball').addClass('hidden');
 	NFL.PlayInfo.clearPlayInfo();
 	this.field.clearField();
 }
