@@ -39,9 +39,10 @@ function playInfoStringHelper (play, class1, class2) {
         + ' (<span class="' + class2 + '">' + homeWp + '%</span>)'
         + '<br>Offense: ' + play.offense
         + '<br>Down: ' + play.down 
-        + '<br>Ball On: ' + ballOn(play.offYardline) + '</p>');
+        /* + '<br>Ball On: ' + ballOn(play.offYardline) + '</p>'*/);
 };
 
+// keep track of points gained for both teams
 function pointLead(currentPlay, nextPlay) {
     var team1 = currentPlay.offense;
     var team2 = currentPlay.defense;
@@ -57,8 +58,9 @@ function pointLead(currentPlay, nextPlay) {
     }
 }
 
-function pointsCall(currentPlay, nextPlay) {
-    switch(pointLead(currentPlay, nextPlay)){
+// when points change state the type of score
+function pointsCall(currentPlay) {
+    switch(Math.abs(currentPlay.ptsScored)){
         case 2:
             // if the case is 2 pts it's a safety and give 2 pts to def
             return 'Safety';
@@ -67,13 +69,16 @@ function pointsCall(currentPlay, nextPlay) {
             return 'Field Goal';
         case 6:
             // if the case is 6 pts it's just a touchdown and give 6 pts to off
-            return 'Touchdown'
+            return 'Touchdown';
         case 7:
             // if the case is 7 pts it's a touchdown with a field goal and give 7 pts to off
-            return 'Touchdown & XP'
+            return 'Touchdown & XP';
         case 8:
             // if the case is 8 pts it's just a touchdown with a convertion and give 8 pts to def
-            return 'Touchdown & 2 pt. Conversion'
+            return 'Touchdown & 2 pt. Conversion';
+        default:
+            // if it is anything other than points score above return nothing
+            return '';
     }
 }
 
@@ -101,6 +106,10 @@ function swingStringHelper(play, class1, ptsGain, ydsGain, playTwo) {
         + '<br>Play: ' + play.type 
         + (ptsGain ? '<br>Points Scored: ' + ptsGain : '')
         + (!ptsGain ? '<br>Gained: ' + ydsGain + ' yds' : '')
+        + (playTwo.fumble ? '<br>Turnover: Fumble' : '')
+        + (playTwo.interception ? '<br>Turnover: Interception' : '')
+        + (playTwo.type == 'KOFF' ? '<br>Turnover: Scored' : '')
+        + (playTwo.type == 'PUNT' ? '<br>Turnover: 4th Down' : '')
         + (pointsCall(play, playTwo) ? '<br>Score Type: ' + pointsCall(play, playTwo) +'</p>' : ''));
 };
 

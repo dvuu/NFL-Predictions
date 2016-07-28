@@ -46,6 +46,7 @@ var Play = module.exports.Play = function (playDataRaw, nextPlayDataRaw, idx, ga
 	this.inOvertime = playDataRaw.InOT;
 	this.homeWp = (1 - playDataRaw.VisitorWP);
 	this.visitorWp = playDataRaw.VisitorWP;
+	
 
 	// Win Difference
 	if (!isLastPlay) {
@@ -64,6 +65,32 @@ var Play = module.exports.Play = function (playDataRaw, nextPlayDataRaw, idx, ga
 	// Find Yards Gained
 	if (!isLastPlay) {
 		this.ydsGained = (nextPlayDataRaw.Yardline - this.offYardline);
+	}
+	
+	this.ptsScored = pointLead(playDataRaw, nextPlayDataRaw);
+	
+	function pointLead(playDataRaw, nextPlayDataRaw) {
+		// check to see if there is another play
+		if (nextPlayDataRaw) {
+		    var team1 = playDataRaw.off;
+		    var team2 = playDataRaw.def;
+		    var team1Pts = playDataRaw.ptso;
+		    var team2Pts = playDataRaw.ptsd;
+		    var nextTeam1Pts = nextPlayDataRaw.off == team1 ? nextPlayDataRaw.ptso : nextPlayDataRaw.ptsd;
+		    var nextTeam2Pts = nextPlayDataRaw.def == team2 ? nextPlayDataRaw.ptsd : nextPlayDataRaw.ptso;
+		    if (team1Pts != nextTeam1Pts) {
+		        return nextTeam1Pts - team1Pts;
+		    }
+		    else if (team2Pts != nextTeam2Pts) {
+		        return -(nextTeam2Pts - team2Pts);
+		    }
+		    else{
+		    	return 0;
+		    }
+		}
+		else {
+			return 0;
+		}
 	}
 
 	
