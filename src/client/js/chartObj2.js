@@ -84,7 +84,7 @@ NFL.Chart2 = function (plays, topTenPlays, game) {
 		    valueSuffix: '%',
 	        shared: true,
 	        crosshairs: {
-	        	color: 'black',
+	        	color: '#ccc',
 	        	dashStyle: 'solid'
 	        }
 	    },
