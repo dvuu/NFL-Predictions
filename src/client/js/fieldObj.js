@@ -17,21 +17,17 @@ NFL.FieldWidget = function() {
 NFL.FieldWidget.prototype.setState = function(previousState, currentState) {
 	this.previousState = previousState;
 	this.currentState = currentState;
-	// if (previousState.offense !== currentState.offense) {
-	// 	this.clearField();
-	// 	return;
-	// }
 
-	var startingYardline = previousState.offYardline;
+	var startingYardline = previousState ? previousState.offYardline : 0;
 	var endingYardline = currentState.offYardline;
 	var yardsToGo = currentState.yardsToGoForFirstDown;
-	var isVisitorOffense = (this.previousState.visitor === this.previousState.offense);
-	if (this.previousState.type === 'KOFF') {
+	var isVisitorOffense = previousState ? (previousState.visitor === previousState.offense) : (currentState.visitor === currentState.offense);
+	if (!previousState || previousState.type === 'KOFF') {
 		startingYardline = 0;
 	}
 
 	// Did points scored
-	if (previousState.ptsScored) {
+	if (previousState && previousState.ptsScored) {
 		if (previousState.ptsScored > 0) {
 			// offense scored
 			endingYardline = 105;

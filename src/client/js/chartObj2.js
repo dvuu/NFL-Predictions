@@ -169,8 +169,8 @@ NFL.Chart2.prototype.updateSeries = function() {
 	});
 	
 	// sort data by x value to keep Highcharts happy
-	homeData = _.sortBy(homeData, 'x');
-	visitorData = _.sortBy(visitorData, 'x');
+	homeData = _.sortBy(homeData, function(play) { return -play.x; });
+	visitorData = _.sortBy(visitorData, function(play) { return -play.x; });
 
 	this.chartOptions.series[0].data = homeData;
 	this.chartOptions.series[1].data = visitorData;
