@@ -120,7 +120,7 @@ NFL.Chart2 = function (plays, topTenPlays, game) {
 	        name: game.home,
 	        data: [ ],
 	        marker: {
-	            enabled: false,
+	            enabled: true,
 	            symbol: 'circle',
 	            radius : 3
 	        }
@@ -130,7 +130,7 @@ NFL.Chart2 = function (plays, topTenPlays, game) {
 	        data: [ ],
 	        color: '#f45b5b',
 	        marker: {
-	            enabled: false,
+	            enabled: true,
 	            symbol: 'circle',
 	            radius : 3
 	        }
