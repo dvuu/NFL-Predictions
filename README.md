@@ -11,7 +11,7 @@ TBD
 - Hovering over the chart reveals a tooltip popup that contains quarter, time, and scores of the current play along with the win probability after the play had been made.
 - While hovering over chart, additional play information such as type of play, yard gain/loss, win probability swing, down, and yards to go is displayed below on the bird's eye view field widget. 
 - A top plays widget to the right of the chart displays a list of the top 10 plays of a selected game containing play type, team who made the play, time it was made, the quarter it happened in, and the win probability swing.
-- Hovering over the top plays widget highlights the corresponding play plot and reaveals the tooltip on the chart while also displaying additional play information on the field widget below.
+- Hovering over the top plays widget highlights the corresponding play plot and reveals the tooltip on the chart while also displaying additional play information on the field widget below.
 
 #### Future Development:
 - Migrate data to a SQL database
