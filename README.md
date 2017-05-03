@@ -24,7 +24,7 @@ TBD
 - Bootstrap
 
 ### Data
-- [NFL Data from armchairanalysis](http://www.armchairanalysis.com/)
+[NFL Data from armchairanalysis](http://www.armchairanalysis.com/)
 
 ### Future Development
 - Migrate data to a SQL database
@@ -37,7 +37,7 @@ TBD
 | | | Manager/Mentor |
 
 #### Background information about this project...
-Anthony and I came from a program called Year Up, a non-profit that empowers low-income urban young adults by hands on training and internships that lead to careers in IT in just one year without a single dime coming out of students pockets. 
+Anthony and I came from a program called Year Up, a non-profit that empowers low-income urban young adults by providing hands on training and internships that lead to careers in IT in just one year without a single dime coming out of students pockets. 
 
 After 6 months of training, we were selected by Salesforce to be interns on the data science team. However, we did not have any data science knowledge (long story). Thanks to our incredible mentor, Greg, we were able to make it work. Under his wing, we reviewed the HTML and CSS we briefly covered at Year Up, and then spent 2 months learning JavaScript before beginning to work on NFL Predictor.
 
