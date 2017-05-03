@@ -33,7 +33,7 @@ TBD
 | ![alt text](https://avatars3.githubusercontent.com/u/16613572?v=3&s=300) | ![alt text](https://avatars0.githubusercontent.com/u/19943214?v=3&s=300 "Anthony Van Pelt") | ![alt text](https://avatars0.githubusercontent.com/u/325055?v=3&s=300 "Greg Pascale")
 |:---:|:---:|:---:|
 | Dylan Vu | Anthony Van Pelt | Greg Pascale |
-| @dylanvu | @AnthonyVanPelt | @gpascale |
+| [@dylanvu](https://github.com/dylanvu) | [@AnthonyVanPelt](https://github.com/AnthonyVanPelt) | [@gpascale](https://github.com/gpascale) |
 | | | Manager/Mentor |
 
 #### Background information about this project...
