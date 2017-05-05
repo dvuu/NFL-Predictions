@@ -1,12 +1,12 @@
 # NFL Predictor
 
-### About
+## About
 NFL Predictor is an interactive web application that presents rich visualizations of play-by-play win probabilities of all NFL games from 2000 to 2015. This project was built during my internship at Salesforce alongside another intern, Anthony Van Pelt, under the guidance of our manager and mentor, Greg Pascale. The idea of this project was to use NFL data as a proxy to Salesforce data to showcase a machine learning algorithm. We were tasked with visualizing the win probabilities outputted by a random forest model trained on a set of NFL data.
 
-### Demo
+## Demo
 [![NFL Predictor Demo](http://img.youtube.com/vi/XxzFLxDKDis/0.jpg)](http://www.youtube.com/watch?v=XxzFLxDKDis "NFL Predictor")
 
-### Features
+## Features
 - Select and filter historical NFL games between 2000 - 2015 by seasons and weeks.
 - Hovering over the chart reveals a tooltip popup that contains quarter, time, and scores of the current play along with the win probability after the play had been made.
 - While hovering over chart, additional play information such as type of play, yard gain/loss, win probability swing, down, and yards to go is displayed below on the bird's eye view field widget. 
@@ -14,7 +14,7 @@ NFL Predictor is an interactive web application that presents rich visualization
 - Hovering over the top plays widget highlights the corresponding play plot and reveals the tooltip on the chart while also displaying additional play information on the field widget below.
 - View top 12 most exciting and top 12 most boring games. Exciting/boring games are defined by the sum of the absolute values of changes in win probability.
 
-### Technology
+## Technology
 - HTML
 - CSS
 - JavaScript
@@ -24,20 +24,20 @@ NFL Predictor is an interactive web application that presents rich visualization
 - Highcharts
 - Bootstrap
 
-### Data
+## Data
 [NFL Data from armchairanalysis](http://www.armchairanalysis.com/)
 
-### Future Development
+## Future Development
 - Migrate data to a SQL database
 
-### Contributors
+## Contributors
 | ![alt text](https://avatars3.githubusercontent.com/u/16613572?v=3&s=300) | ![alt text](https://avatars0.githubusercontent.com/u/19943214?v=3&s=300 "Anthony Van Pelt") | ![alt text](https://avatars0.githubusercontent.com/u/325055?v=3&s=300 "Greg Pascale")
 |:---:|:---:|:---:|
 | Dylan Vu | Anthony Van Pelt | Greg Pascale |
 | [@dylanvu](https://github.com/dylanvu) | [@AnthonyVanPelt](https://github.com/AnthonyVanPelt) | [@gpascale](https://github.com/gpascale) |
 | | | Manager/Mentor |
 
-#### Background information about this project...
+## Background information about this project...
 Anthony and I came from a program called Year Up, a non-profit that empowers low-income urban young adults by providing hands on training and internships that lead to careers in IT in just one year without a single dime coming out of students pockets. 
 
 After 6 months of training, we were selected by Salesforce to be interns on the data science team. However, we did not have any data science knowledge (long story). Thanks to our incredible mentor, Greg, we were able to make it work. Under his wing, we reviewed the HTML and CSS we briefly covered at Year Up, and then spent 2 months learning JavaScript before beginning to work on NFL Predictor.
