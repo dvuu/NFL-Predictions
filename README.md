@@ -1,7 +1,7 @@
 # NFL Predictor
 
 ## About
-NFL Predictor is an interactive web application that presents rich visualizations of play-by-play win probabilities of all NFL games from 2000 to 2015. This project was built during my internship at Salesforce alongside another intern, Anthony Van Pelt, under the guidance of our manager and mentor, Greg Pascale. The idea of this project was to use NFL data as a proxy to Salesforce data to showcase a machine learning algorithm. We were tasked with visualizing the win probabilities outputted by a random forest model trained on a set of NFL data.
+NFL Predictor is an interactive web application that presents rich visualizations of play-by-play win probabilities of all NFL games from 2000 to 2015. To showcase a machine learning algorithm, we were tasked with visualizing the win probabilities outputted by a random forest model trained on a set of NFL data.
 
 ## Demo
 [![NFL Predictor Demo](http://img.youtube.com/vi/XxzFLxDKDis/0.jpg)](http://www.youtube.com/watch?v=XxzFLxDKDis "NFL Predictor")
@@ -26,22 +26,3 @@ NFL Predictor is an interactive web application that presents rich visualization
 
 ## Data
 [NFL Data from armchairanalysis](http://www.armchairanalysis.com/)
-
-## Future Development
-- Migrate data to a SQL database
-
-## Contributors
-| ![alt text](https://avatars3.githubusercontent.com/u/16613572?v=3&s=300) | ![alt text](https://avatars0.githubusercontent.com/u/19943214?v=3&s=300 "Anthony Van Pelt") | ![alt text](https://avatars0.githubusercontent.com/u/325055?v=3&s=300 "Greg Pascale")
-|:---:|:---:|:---:|
-| Dylan Vu | Anthony Van Pelt | Greg Pascale |
-| [@dylanvu](https://github.com/dylanvu) | [@AnthonyVanPelt](https://github.com/AnthonyVanPelt) | [@gpascale](https://github.com/gpascale) |
-| | | Manager/Mentor |
-
-## Background information about this project...
-Anthony and I came from a program called Year Up, a non-profit that empowers low-income urban young adults by providing hands on training and internships that lead to careers in IT in just one year without a single dime coming out of students pockets. 
-
-After 6 months of training, we were selected by Salesforce to be interns on the data science team. However, we did not have any data science knowledge (long story). Thanks to our incredible mentor, Greg, we were able to make it work. Under his wing, we reviewed the HTML and CSS we briefly covered at Year Up, and then spent 2 months learning JavaScript before beginning to work on NFL Predictor.
-
-Our team wanted us to have something to take with us at the end of internship so our boss thought of visualizing NFL win probabilities. Without exposing company secrets and getting sued (🤞🏼), the idea was to use NFL data as an analogy to Salesforce data to showcase a machine learning algorithm. From learning how to think like a programmer to actually doing the code, it was stressful but rewarding.
-
-Special thanks to our mentor Greg (@gpascale) for being patient, open minded, and helping us the whole way!
