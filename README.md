@@ -4,9 +4,9 @@
 NFL Predictor is an interactive web application that presents rich visualizations of play-by-play win probabilities of all NFL games from 2000 to 2015. To showcase a machine learning algorithm, we were tasked with visualizing the win probabilities outputted by a random forest model trained on a set of NFL data. This project was built during my internship at Salesforce to visualize a prediction algorithm using NFL data for demonstration purposes.
 
 ## Contributors
-[@dylanvu](https://github.com/dylanvu) - Intern
-[@AnthonyVanPelt](https://github.com/AnthonyVanPelt) - Intern
-[@gpascale](https://github.com/gpascale) - Manager
+- [@dylanvu](https://github.com/dylanvu) - Intern
+- [@AnthonyVanPelt](https://github.com/AnthonyVanPelt) - Intern
+- [@gpascale](https://github.com/gpascale) - Manager
 
 ## Demo
 [![NFL Predictor Demo](http://img.youtube.com/vi/XxzFLxDKDis/0.jpg)](http://www.youtube.com/watch?v=XxzFLxDKDis "NFL Predictor")
