@@ -9,6 +9,7 @@ NFL Predictor is an interactive web application that presents rich visualization
 - [@gpascale](https://github.com/gpascale) - Manager
 
 ## Demo
+[NFL Predictor Demo](http://www.youtube.com/watch?v=XxzFLxDKDis)
 [![NFL Predictor Demo](http://img.youtube.com/vi/XxzFLxDKDis/0.jpg)](http://www.youtube.com/watch?v=XxzFLxDKDis "NFL Predictor")
 
 ## Features
